@@ -7,22 +7,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import vn.iotstar.entity.Product;
+import vn.iotstar.entity.Cart;
 
-public interface ProductService {
+public interface CartService {
 
 	void deleteById(Long id);
 
 	long count();
 
-	Optional<Product> findById(Long id);
+	Optional<Cart> findById(Long id);
 
-	List<Product> findAll();
+	List<Cart> findAll();
 
-	Page<Product> findAll(Pageable pageable);
+	Page<Cart> findAll(Pageable pageable);
 
-	List<Product> findAll(Sort sort);
+	List<Cart> findAll(Sort sort);
 
-	<S extends Product> S save(S entity);
-	
+	<S extends Cart> S save(S entity);
+
 }
