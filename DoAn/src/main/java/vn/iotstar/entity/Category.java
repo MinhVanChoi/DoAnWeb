@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,6 +20,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,7 +42,11 @@ public class Category {
 	private String slug;
 	private String image;
 	private boolean isDelete = false;
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private Set<Product> products = new HashSet<>();

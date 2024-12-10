@@ -4,12 +4,17 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +38,10 @@ public class Style {
     )
     private List<Category> categories = new ArrayList<>();
 	private boolean isDelete = false;
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
 }

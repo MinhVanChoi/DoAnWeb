@@ -12,7 +12,7 @@ import vn.iotstar.entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>{
 	Optional<Product> findBySlug(String slug);
-	@Query("SELECT p FROM Product p WHERE p.isBan = flase")
+	@Query("SELECT p FROM Product p WHERE p.isBan = false")
 	List<Product> findUnBannedProduct();
 	@Query("SELECT p FROM Product p WHERE p.isBan = true")
 	List<Product> findBannedProduct();
