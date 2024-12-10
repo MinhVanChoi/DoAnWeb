@@ -30,5 +30,8 @@ public interface UserService {
 
 	Role createRole(String name);
 	User createUser();
-	User login(String email, String password);
+	Boolean login(String email, String password);
+	Boolean checkUserbyEmail(String email);
+	Boolean checkPasswordUser(String email, String password);
+	User getUserbyEmail(String email);
 }

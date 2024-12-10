@@ -4,7 +4,6 @@ import java.net.http.HttpRequest;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -42,15 +41,11 @@ public class SecurityConfig {
 	SecurityFilterChain secutiryFilterChain(HttpSecurity http) throws Exception{
 		return http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
-		                .requestMatchers("/", "/css/**", "/js/**", "/img/**").permitAll()
-							.requestMatchers("/").permitAll()
+		                .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/lib/**", "/scss/**").permitAll()
 							.requestMatchers("/register").permitAll()
-							.requestMatchers("/").permitAll()
+							.requestMatchers("/login").permitAll()
 						    .requestMatchers("/customer/**").authenticated() 
-						 )
-	            .formLogin(form -> form
-	                .loginPage("/login") 
-	                .permitAll() 
+						 
 	            )
 	            .build(); 
 		

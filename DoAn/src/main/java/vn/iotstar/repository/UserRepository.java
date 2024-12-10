@@ -10,5 +10,7 @@ import vn.iotstar.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 	Optional<User> findBySlug(String slug);
-	Optional<User> findByEmail(String email);
+	User findUserByEmail(String email);
+	User getUserByEmail(String email);
+	
 }

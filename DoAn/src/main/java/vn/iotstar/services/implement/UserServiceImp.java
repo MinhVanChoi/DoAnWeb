@@ -16,14 +16,20 @@ import org.springframework.stereotype.Service;
 
 import vn.iotstar.entity.Role;
 import vn.iotstar.entity.User;
-import vn.iotstar.entity.UserLevel;
 import vn.iotstar.repository.RoleRepository;
-import vn.iotstar.repository.UserLevelRepository;
 import vn.iotstar.repository.UserRepository;
 import vn.iotstar.services.UserService;
+import vn.iotstar.configs.SecurityConfig;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class UserServiceImp implements UserService{
+
+	
+
+	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	 
 	@Autowired
 	private UserRepository userRepository;
 
@@ -106,12 +112,41 @@ public class UserServiceImp implements UserService{
 		}
 
 		
-		@Override
-		public User login(String email, String password) {
-		    return userRepository.findByEmail(email)
-		            .filter(user -> BCrypt.checkpw(password, user.getPassword())) 
-		            .orElseThrow(() -> new NoSuchElementException("Invalid email or password")); 
-		}
+	public Boolean checkUserbyEmail(String email) {
+		User user = userRepository.findUserByEmail(email);
+		if (user == null)
+			return false;
+		return true;
+	}
+	
+	public Boolean checkPasswordUser(String email, String password)
+	{
+		User user = userRepository.findUserByEmail(email);
+		 if (user == null) {
+	            return false;
+	        }
+		 return passwordEncoder.matches(password, user.getPassword());
+		 
+	}
+	
+	public User getUserbyEmail(String email) {
+		return userRepository.getUserByEmail(email);
+	}
+
+	@Override
+	public Boolean login(String email, String password) {
+	    User user = userRepository.findUserByEmail(email);
+	    if (user == null) {
+	        return false; 
+	    }
+
+	    if (passwordEncoder.matches(password, user.getPassword())) {
+	        return true; 
+	    }
+
+	    return false; 
+	}
+	
 		
 
 
