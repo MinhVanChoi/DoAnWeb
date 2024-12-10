@@ -40,6 +40,7 @@ public class User {
 	private String avatar;
 	private boolean isEmailActive = false;
 	private boolean isPhoneActive = false;
+	private boolean isBan = false;
 	private Date createAt;
 	private Date updateAt;
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

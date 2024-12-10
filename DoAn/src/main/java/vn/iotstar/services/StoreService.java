@@ -25,4 +25,6 @@ public interface StoreService {
 
 	<S extends Store> S save(S entity);
 
+	Optional<Store> findBySlug(String slug);
+
 }

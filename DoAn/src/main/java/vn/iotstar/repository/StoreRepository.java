@@ -13,4 +13,5 @@ import vn.iotstar.entity.Store;
 public interface StoreRepository extends JpaRepository <Store, Long>   {
 	Optional<Store> findByName (String name);
 	Page<Store> findByNameContaining (String name, Pageable pageable);
+	Optional<Store> findBySlug(String slug);
 }

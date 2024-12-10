@@ -52,5 +52,15 @@ public class ProductServiceImp implements ProductService{
 	public void deleteById(Long id) {
 		productRepository.deleteById(id);
 	}
+
+	@Override
+	public List<Product> findUnBannedProduct() {
+		return productRepository.findUnBannedProduct();
+	}
+
+	@Override
+	public List<Product> findBannedProduct() {
+		return productRepository.findBannedProduct();
+	}
 	
 }

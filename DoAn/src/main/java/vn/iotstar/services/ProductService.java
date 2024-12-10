@@ -24,5 +24,9 @@ public interface ProductService {
 	List<Product> findAll(Sort sort);
 
 	<S extends Product> S save(S entity);
+
+	List<Product> findBannedProduct();
+
+	List<Product> findUnBannedProduct();
 	
 }

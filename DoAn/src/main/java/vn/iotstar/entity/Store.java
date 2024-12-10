@@ -30,6 +30,7 @@ public class Store {
 	private String images;
 	private boolean isActive = false;
 	private boolean isOpen = false;
+	private boolean isBan = false;
 	private float point;
 	private float rating;
 	private Date createAt;

@@ -7,24 +7,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import vn.iotstar.entity.User;
+import vn.iotstar.entity.Category;
 
-public interface UserService {
+public interface CategoryService {
 
 	void deleteById(Long id);
 
 	long count();
 
-	Optional<User> findById(Long id);
+	Optional<Category> findById(Long id);
 
-	List<User> findAll();
+	List<Category> findAll();
 
-	Page<User> findAll(Pageable pageable);
+	Page<Category> findAll(Pageable pageable);
 
-	List<User> findAll(Sort sort);
+	List<Category> findAll(Sort sort);
 
-	<S extends User> S save(S entity);
-
-	Optional<User> findBySlug(String slug);
+	<S extends Category> S save(S entity);
 
 }

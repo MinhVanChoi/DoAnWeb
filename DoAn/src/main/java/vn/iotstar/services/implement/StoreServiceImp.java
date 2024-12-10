@@ -52,5 +52,10 @@ public class StoreServiceImp implements StoreService{
 	public void deleteById(Long id) {
 		storeRepository.deleteById(id);
 	}
+
+	@Override
+	public Optional<Store> findBySlug(String slug) {
+		return storeRepository.findBySlug(slug);
+	}
 	
 }
