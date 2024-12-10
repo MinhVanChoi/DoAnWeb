@@ -56,7 +56,7 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<UserFollowProduct> followProducts = new ArrayList<>();
 	@ManyToOne
-	@JoinColumn(name = "user_level_id", nullable = false)
+	@JoinColumn(name = "user_level_id", nullable = true)
 	private UserLevel userlevel;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Order> oders = new ArrayList<>();

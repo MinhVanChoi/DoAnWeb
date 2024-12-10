@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import vn.iotstar.entity.Role;
 import vn.iotstar.entity.User;
 
 public interface UserService {
@@ -27,4 +28,7 @@ public interface UserService {
 
 	Optional<User> findBySlug(String slug);
 
+	Role createRole(String name);
+	User createUser();
+	User login(String email, String password);
 }
