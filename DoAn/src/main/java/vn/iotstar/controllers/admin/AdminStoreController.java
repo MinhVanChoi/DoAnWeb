@@ -30,8 +30,8 @@ public class AdminStoreController {
 		return "admin/store-list";
 	}
 	@GetMapping("/{slug}")
-	public ModelAndView viewStore(ModelMap model, @PathVariable("slug") String slug) {
-		Optional<Store> optStore = storeService.findBySlug(slug);
+	public ModelAndView viewStore(ModelMap model, @PathVariable("slug") String slugStore) {
+		Optional<Store> optStore = storeService.findBySlug(slugStore);
 		if(optStore.isPresent()) {
 			Store store = optStore.get();
 			model.addAttribute("store", store);
@@ -40,11 +40,12 @@ public class AdminStoreController {
 		return new ModelAndView("foward:/admin/stores");
 	}
 	@PostMapping("/ban/{slug}")
-	public ModelAndView banStore(ModelMap model, @PathVariable("slug") String slug) {
-		Optional<Store> optStore = storeService.findBySlug(slug);
+	public ModelAndView banStore(ModelMap model, @PathVariable("slug") String slugStore) {
+		Optional<Store> optStore = storeService.findBySlug(slugStore);
 		if(optStore.isPresent()) {
 			Store store = optStore.get();
 			store.setBan(true);
+			model.addAttribute("store", store);
 			return new ModelAndView("profile-store", model);
 		}
 		return new ModelAndView("foward:/admin/stores");

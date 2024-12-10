@@ -49,6 +49,11 @@ public class ProductServiceImp implements ProductService{
 	}
 
 	@Override
+	public Optional<Product> findBySlug(String slug) {
+		return productRepository.findBySlug(slug);
+	}
+
+	@Override
 	public void deleteById(Long id) {
 		productRepository.deleteById(id);
 	}

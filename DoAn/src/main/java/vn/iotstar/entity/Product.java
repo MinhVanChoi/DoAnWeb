@@ -40,6 +40,7 @@ public class Product {
 	private int sold;
 	private boolean isActice = false;
 	private boolean isSelling = false;
+	private boolean isBan = false;
 	private Date createAt;
 	private Date updateAt;
 	@ManyToOne

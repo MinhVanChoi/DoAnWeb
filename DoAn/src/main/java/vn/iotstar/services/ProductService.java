@@ -28,5 +28,7 @@ public interface ProductService {
 	List<Product> findBannedProduct();
 
 	List<Product> findUnBannedProduct();
+
+	Optional<Product> findBySlug(String slug);
 	
 }

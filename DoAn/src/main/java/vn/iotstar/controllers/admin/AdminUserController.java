@@ -27,9 +27,9 @@ public class AdminUserController {
 		model.addAttribute("listuser", list);
 		return "/admin/user-list";
 	}
-	@GetMapping("{slug}")
-	public ModelAndView viewUser(ModelMap model, @PathVariable("slug") String slug) {
-		Optional<User> optUser = userService.findBySlug(slug);
+	@GetMapping("/{slug}")
+	public ModelAndView viewUser(ModelMap model, @PathVariable("slug") String slugUser) {
+		Optional<User> optUser = userService.findBySlug(slugUser);
 		if(optUser.isPresent()) {
 			User user = optUser.get();
 			model.addAttribute("user", user);
@@ -38,12 +38,13 @@ public class AdminUserController {
 		return new ModelAndView("foward:/admin/users", model);
 	}
 	@PostMapping("/ban/{slug}")
-	public ModelAndView banUser(ModelMap model, @PathVariable("slug") String slug) {
-		Optional<User> optUser = userService.findBySlug(slug);
+	public ModelAndView banUser(ModelMap model, @PathVariable("slug") String slugUser) {
+		Optional<User> optUser = userService.findBySlug(slugUser);
 		if(optUser.isPresent()) {
 			User user = optUser.get();
 			user.setBan(true);
 			userService.save(user);
+			model.addAttribute("user", user);
 			return new ModelAndView("profile-user", model);
 		}
 		return new ModelAndView("foward:/admin/users", model);
