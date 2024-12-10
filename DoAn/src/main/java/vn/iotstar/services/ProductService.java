@@ -25,8 +25,10 @@ public interface ProductService {
 
 	<S extends Product> S save(S entity);
 
-	Page<Product> findByNameContaining(String name, Pageable pageable);
+	List<Product> findBannedProduct();
 
-	Optional<Product> findByName(String name);
+	List<Product> findUnBannedProduct();
+
+	Optional<Product> findBySlug(String slug);
 	
 }
