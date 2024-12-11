@@ -50,6 +50,8 @@ public class AdminCommissionController {
 		if(result.hasErrors()) {
 			return new ModelAndView("admin/commission-add");
 		}
+		
+		
 		Commission commission = new Commission();
 		BeanUtils.copyProperties(commissionModel, commission);
 		commissionService.save(commission);

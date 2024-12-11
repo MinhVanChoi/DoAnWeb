@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category List</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Search Form and Size Selection Form Combined -->
+    <form action="/admin/categories/searchpaginated" method="get">
+        <label for="name">Search by Name:</label>
+        <input type="text" id="name" name="name" value="" placeholder="Enter category name..." />
+
+        <!-- Size selection dropdown -->
+        <label for="size">Show:</label>
+        <select name="size" id="size" onchange="this.form.submit()">
+            <option value="3" th:selected="${categoryPage != null && categoryPage.size == 3}">3</option>
+            <option value="5" th:selected="${categoryPage != null && categoryPage.size == 5}">5</option>
+            <option value="10" th:selected="${categoryPage != null && categoryPage.size == 10}">10</option>
+            <option value="15" th:selected="${categoryPage != null && categoryPage.size == 15}">15</option>
+            <option value="20" th:selected="${categoryPage != null && categoryPage.size == 20}">20</option>
+        </select>
+
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Display message if no content -->
+    <div th:if="${categoryPage == null || !categoryPage.hasContent()}">
+        No categories found
+    </div>
+
+    <!-- Display the category list if content exists -->
+    <div th:if="${categoryPage != null && categoryPage.hasContent()}">
+        <div class="container">
+            <h1>Category List</h1>
+            <a href="/admin/categories/add" class="btn btn-primary">Add New Category</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through categories -->
+                    <tr th:each="category : ${categoryPage.content}">
+                        <td th:text="${category.id}"></td>
+                        <td th:text="${category.name}"></td>
+                        <td>
+                            <span th:text="${category.delete ? 'Deleted' : 'Active'}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}" class="btn btn-warning">Edit</a>
+                            <a th:href="@{/admin/categories/delete/{id}(id=${category.id})}" class="btn btn-danger" 
+                               th:if="${!category.delete}">Delete</a>
+                            <a th:href="@{/admin/categories/restore/{id}(id=${category.id})}" class="btn btn-success" 
+                               th:if="${category.delete}">Restore</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+		
+		<div th:if="${categoryPage.totalPages > 1}">
+		    <ul class="pagination">
+		        <li th:each="pageNumber : ${#numbers.sequence(1, categoryPage.totalPages)}"
+		            th:classappend="${pageNumber == categoryPage.number + 1} ? 'page-item active' : 'page-item'">
+		            <a th:href="@{/admin/categories/searchpaginated(name=${name != null ? name : ''}, size=${categoryPage.size}, page=${pageNumber})}"
+		               th:text="${pageNumber}"></a>
+		        </li>
+		    </ul>
+		</div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+    <form th:action="@{/admin/categories/insert}" method="post" enctype="multipart/form-data">
+
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name"  name = "name" required/> <!-- Sửa cate.name thành name -->
+        </div>
+
+  
+        <div>
+            <button type="submit" th:text="Update"></button> <!-- Sửa category thành cate -->
+            <a th:href="@{/admin/categories}">Cancel</a>
+        </div>
+    </form>
+</body>	
+</html>

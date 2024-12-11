@@ -25,4 +25,6 @@ public interface CategoryService {
 
 	<S extends Category> S save(S entity);
 
+	Page<Category> findByNameContaining(String name, Pageable pageable);
+
 }
