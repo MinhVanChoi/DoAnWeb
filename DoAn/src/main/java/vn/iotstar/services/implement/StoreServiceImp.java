@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import vn.iotstar.entity.Store;
+import vn.iotstar.entity.User;
 import vn.iotstar.repository.StoreRepository;
 import vn.iotstar.services.StoreService;
 
@@ -56,6 +57,11 @@ public class StoreServiceImp implements StoreService{
 	@Override
 	public Optional<Store> findBySlug(String slug) {
 		return storeRepository.findBySlug(slug);
+	}
+
+	@Override
+	public List<Store> findByOwner(User user) {
+		return storeRepository.findByOwner(user);
 	}
 	
 }

@@ -65,7 +65,7 @@ public class AdminUserLevelController {
 		userLevelService.save(userLevel);
 		return new ModelAndView("foward:/admin/userlevel");
 	}
-	@PostMapping("delete/{id}")
+	@GetMapping("delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") Long idUserLevel) {
 		Optional<UserLevel> optUserLevel = userLevelService.findById(idUserLevel);
 		if(optUserLevel.isPresent()) {
@@ -75,7 +75,7 @@ public class AdminUserLevelController {
 		}
 		return new ModelAndView("redirect:/admin/userlevel");
 	}
-	@PostMapping("restore/{id}")
+	@GetMapping("restore/{id}")
 	public ModelAndView restore(ModelMap model, @PathVariable("id") Long idUserLevel) {
 		Optional<UserLevel> optUserLevel = userLevelService.findById(idUserLevel);
 		if(optUserLevel.isPresent()) {

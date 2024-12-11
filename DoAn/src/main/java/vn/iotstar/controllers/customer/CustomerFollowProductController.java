@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpSession;
 import vn.iotstar.entity.Product;
 import vn.iotstar.entity.User;
 import vn.iotstar.entity.UserFollowProduct;
@@ -27,15 +28,15 @@ public class CustomerFollowProductController {
 	@Autowired
 	ProductService productService;
 	@GetMapping
-	public String followedProduct(Model model) {
-		User user = new User();
+	public String followedProduct(Model model, HttpSession session) {
+		User user = (User)session.getAttribute("user");
 		List<UserFollowProduct> list = userFollowProductService.findByUser(user);
 		model.addAttribute("listuserfollowproduct", list);
 		return "user/follow-product";
 	}
 	@PostMapping("/follow/{slug}")
-	public void followProduct(@PathVariable("slug") String slugProduct) {
-		User user = new User();
+	public void followProduct(@PathVariable("slug") String slugProduct, HttpSession session) {
+		User user = (User)session.getAttribute("user");
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
 		if(optProduct.isPresent()) {
 			Product product = optProduct.get();
@@ -48,15 +49,14 @@ public class CustomerFollowProductController {
 		}
 	}
 	@PostMapping("unfollow/{slug}")
-	public ModelAndView unFollowProduct(@PathVariable("slug") String slugProduct) {
-		User user = new User();
+	public ModelAndView unFollowProduct(@PathVariable("slug") String slugProduct, HttpSession session) {
+		User user = (User)session.getAttribute("user");
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
 		if(optProduct.isPresent()) {
 			Product product = optProduct.get();
 			UserFollowProductId userFollowProductId = new UserFollowProductId(user.getId(), product.getId());
 			Optional<UserFollowProduct> optUserFollowProduct = userFollowProductService.findById(userFollowProductId);
 			if(optUserFollowProduct.isPresent()) {
-				UserFollowProduct userFollowProduct = optUserFollowProduct.get();
 				userFollowProductService.deleteById(userFollowProductId);
 			}
 		}

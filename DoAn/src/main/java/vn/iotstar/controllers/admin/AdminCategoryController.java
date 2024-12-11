@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import vn.iotstar.Constain;
 import vn.iotstar.entity.Category;
 import vn.iotstar.services.CategoryService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +53,7 @@ public class AdminCategoryController {
 		}
 		return new ModelAndView("forward:/admin/categories", model);
 	}
-	@PostMapping("/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") Long cateid) {
 		Optional<Category> optCate = cateService.findById(cateid);
 		if(optCate.isPresent()) {
@@ -62,7 +63,7 @@ public class AdminCategoryController {
 		}
 		return new ModelAndView("redirect:/admin/categories");
 	}
-	@PostMapping("/restore/{id}")
+	@GetMapping("/restore/{id}")
 	public ModelAndView restore(ModelMap model, @PathVariable("id") Long cateid) {
 		Optional<Category> optCate = cateService.findById(cateid);
 		if(optCate.isPresent()) {
@@ -79,6 +80,7 @@ public class AdminCategoryController {
 		}
 		Category category = new Category();
 		BeanUtils.copyProperties(categoryModel, category);
+		category.setSlug(Constain.generateSlug(category.getName()));
 		cateService.save(category);
 		return new ModelAndView("forward:/admin/categories", model);
 	}
