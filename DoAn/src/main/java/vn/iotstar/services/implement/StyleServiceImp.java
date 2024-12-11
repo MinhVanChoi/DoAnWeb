@@ -52,5 +52,12 @@ public class StyleServiceImp implements StyleService{
 	public void deleteById(Long id) {
 		styleRepository.deleteById(id);
 	}
+
+	@Override
+	public Page<Style> findByNameContaining(String name, Pageable pageable) {
+		return styleRepository.findByNameContaining(name, pageable);
+	}
+
+	
 	
 }

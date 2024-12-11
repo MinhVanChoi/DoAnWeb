@@ -34,7 +34,7 @@ public class AdminStoreController {
 	private Page<Store> getPaginatedResult(Optional<Integer> page, Optional<Integer> size, String nameFilter) {
 	    int currentPage = page.orElse(1);  
 	    int pageSize = size.orElse(3);  
-	    Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("fullname"));
+	    Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("name"));
 	    
 	    if (StringUtils.hasText(nameFilter)) {
 	        return storeService.findByNameContaining(nameFilter, pageable);

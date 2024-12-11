@@ -25,4 +25,6 @@ public interface StyleService {
 
 	<S extends Style> S save(S entity);
 
+	Page<Style> findByNameContaining(String name, Pageable pageable);
+
 }
