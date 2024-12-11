@@ -1,10 +1,13 @@
 package vn.iotstar.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -41,7 +44,11 @@ public class User {
 	private boolean isEmailActive = false;
 	private boolean isPhoneActive = false;
 	private boolean isBan = false;
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(

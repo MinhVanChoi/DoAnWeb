@@ -1,8 +1,11 @@
 package vn.iotstar.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -12,6 +15,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,7 +39,11 @@ public class Commission {
 	@Column(nullable = false, columnDefinition = "nvarchar(300)")
 	private String description;
 	private boolean isDelete;
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
 	@OneToMany(mappedBy = "commission", cascade = CascadeType.ALL)
 	private List<Store> stores = new ArrayList<>();

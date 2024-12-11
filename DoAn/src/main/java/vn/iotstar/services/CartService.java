@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import vn.iotstar.entity.Cart;
+import vn.iotstar.entity.Store;
+import vn.iotstar.entity.User;
 
 public interface CartService {
 
@@ -24,5 +26,7 @@ public interface CartService {
 	List<Cart> findAll(Sort sort);
 
 	<S extends Cart> S save(S entity);
+
+	Optional<Cart> findByUserAndStore(User user, Store store);
 
 }

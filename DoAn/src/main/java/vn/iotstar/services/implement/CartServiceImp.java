@@ -10,6 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import vn.iotstar.entity.Cart;
+import vn.iotstar.entity.Store;
+import vn.iotstar.entity.User;
 import vn.iotstar.repository.CartRepository;
 import vn.iotstar.services.CartService;
 
@@ -51,6 +53,11 @@ public class CartServiceImp implements CartService{
 	@Override
 	public void deleteById(Long id) {
 		cartRepository.deleteById(id);
+	}
+
+	@Override
+	public Optional<Cart> findByUserAndStore(User user, Store store) {
+		return cartRepository.findByUserAndStore(user, store);
 	}
 	
 }

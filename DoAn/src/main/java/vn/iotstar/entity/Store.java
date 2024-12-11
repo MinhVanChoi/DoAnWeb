@@ -1,8 +1,11 @@
 package vn.iotstar.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,7 +36,11 @@ public class Store {
 	private boolean isBan = false;
 	private float point;
 	private float rating;
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
 	private List<User> staffIds;
