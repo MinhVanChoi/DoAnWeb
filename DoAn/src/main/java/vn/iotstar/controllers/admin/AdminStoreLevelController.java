@@ -65,7 +65,7 @@ public class AdminStoreLevelController {
 		storeLevelService.save(storeLevel);
 		return new ModelAndView("foward:/admin/storelevel");
 	}
-	@PostMapping("/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") Long idStoreLevel) {
 		Optional<StoreLevel> optStoreLevel = storeLevelService.findById(idStoreLevel);
 		if(optStoreLevel.isPresent()) {
@@ -75,7 +75,7 @@ public class AdminStoreLevelController {
 		}
 		return new ModelAndView("redirect:/admin/storelevel");
 	}
-	@PostMapping("/restore/{id}")
+	@GetMapping("/restore/{id}")
 	public ModelAndView restore(ModelMap model, @PathVariable("id") Long idStoreLevel) {
 		Optional<StoreLevel> optStoreLevel = storeLevelService.findById(idStoreLevel);
 		if(optStoreLevel.isPresent()) {

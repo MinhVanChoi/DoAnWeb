@@ -44,7 +44,7 @@ public class RegisterController {
 		String slug = Constain.generateSlug(fullname);
 		int random = (int)(Math.random()*100);
 		Optional<User> optUser = userService.findBySlug(slug);
-		while(optUser.isPresent()) {
+		if(optUser.isPresent()) {
 			slug = slug + "-" + random;
 		}
 		User newUser = new User();

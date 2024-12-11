@@ -65,7 +65,7 @@ public class AdminStyleController {
 		styleService.save(style);
 		return new ModelAndView("foward:/admin/styles");
 	}
-	@PostMapping("/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") Long idStyle) {
 		Optional<Style> optStyle = styleService.findById(idStyle);
 		if(optStyle.isPresent()) {
@@ -75,7 +75,7 @@ public class AdminStyleController {
 		}
 		return new ModelAndView("redirect:/admin/style");
 	}
-	@PostMapping("/restore/{id}")
+	@GetMapping("/restore/{id}")
 	public ModelAndView restore(ModelMap model, @PathVariable("id") Long idStyle) {
 		Optional<Style> optStyle = styleService.findById(idStyle);
 		if(optStyle.isPresent()) {

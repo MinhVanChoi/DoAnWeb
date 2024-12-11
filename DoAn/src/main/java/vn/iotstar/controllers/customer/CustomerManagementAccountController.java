@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import vn.iotstar.entity.User;
 import vn.iotstar.services.UserService;
@@ -22,8 +23,8 @@ public class CustomerManagementAccountController {
 	@Autowired
 	UserService userService;
 	@GetMapping
-	public String managementAccount(Model model) {
-		User user = new User();
+	public String managementAccount(Model model, HttpSession session) {
+		User user = (User)session.getAttribute("user");
 		model.addAttribute("user", user);
 		return "user/management-account";
 	}

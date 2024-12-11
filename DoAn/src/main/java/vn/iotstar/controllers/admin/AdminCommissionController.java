@@ -65,7 +65,7 @@ public class AdminCommissionController {
 		commissionService.save(commission);
 		return new ModelAndView("foward:/admin/commissions");
 	}
-	@PostMapping("/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") Long idCommission) {
 		Optional<Commission> optCommission = commissionService.findById(idCommission);
 		if(optCommission.isPresent()) {
@@ -75,7 +75,7 @@ public class AdminCommissionController {
 		}
 		return new ModelAndView("redirect:/admin/commissions");
 	}
-	@PostMapping("/restore/{id}")
+	@GetMapping("/restore/{id}")
 	public ModelAndView restore(ModelMap model, @PathVariable("id") Long idCommission) {
 		Optional<Commission> optCommission = commissionService.findById(idCommission);
 		if(optCommission.isPresent()) {
