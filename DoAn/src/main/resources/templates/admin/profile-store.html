@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết Cửa hàng</title>
+    <link rel="stylesheet" href="path/to/your/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Chi tiết Cửa hàng</h1>
+
+        <div class="store-details">
+            <p><strong>Tên cửa hàng:</strong> <span th:text="${store.name}"></span></p>
+            <p><strong>Mô tả:</strong> <span th:text="${store.bio}"></span></p>
+            <p><strong>Địa chỉ:</strong> <span th:text="${store.address}"></span></p>
+            <p><strong>Trạng thái hoạt động:</strong> <span th:text="${store.isActive} ? 'Đang hoạt động' : 'Ngừng hoạt động'"></span></p>
+            <p><strong>Trạng thái cấm:</strong> <span th:text="${store.isBan} ? 'Đã cấm' : 'Chưa cấm'"></span></p>
+            <p><strong>Điểm đánh giá:</strong> <span th:text="${store.rating}"></span></p>
+        </div>
+
+        <div class="actions">
+            <!-- Cấm hoặc mở cấm cửa hàng -->
+            <form th:action="@{/admin/stores/ban/{slug}(slug=${store.slug})}" method="post" style="display:inline;">
+                <button type="submit" th:disabled="${store.isBan}" class="btn btn-danger">Cấm</button>
+            </form>
+            <a href="/admin/stores" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Cấp Độ Cửa Hàng</title>
+    <link rel="stylesheet" href="path/to/your/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Thêm Cấp Độ Cửa Hàng</h1>
+
+        <!-- Form Thêm Cấp Độ Cửa Hàng -->
+        <form th:action="@{/admin/storelevel/insert}" method="post">
+            <div class="form-group">
+                <label for="name">Tên Cấp Độ</label>
+                <input type="text" id="name" name="name"  class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="minPoint">Điểm Tối Thiểu</label>
+                <input type="number" id="minPoint" name="minPoint" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="discount">Chiết Khấu (%)</label>
+                <input type="number" id="discount" name="discount"  class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Thêm Cấp Độ</button>
+            <a href="/admin/storelevel" class="btn btn-secondary">Quay lại</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -35,9 +35,9 @@ public class AdminStoreController {
 		if(optStore.isPresent()) {
 			Store store = optStore.get();
 			model.addAttribute("store", store);
-			return new ModelAndView("profile-store", model);
+			return new ModelAndView("admin/profile-store", model);
 		}
-		return new ModelAndView("foward:/admin/stores");
+		return new ModelAndView("forward:/admin/stores");
 	}
 	@PostMapping("/ban/{slug}")
 	public ModelAndView banStore(ModelMap model, @PathVariable("slug") String slugStore) {
@@ -46,8 +46,9 @@ public class AdminStoreController {
 			Store store = optStore.get();
 			store.setBan(true);
 			model.addAttribute("store", store);
-			return new ModelAndView("profile-store", model);
+			storeService.save(store);
 		}
-		return new ModelAndView("foward:/admin/stores");
+		
+		return new ModelAndView("redirect:/admin/stores");
 	}
 }

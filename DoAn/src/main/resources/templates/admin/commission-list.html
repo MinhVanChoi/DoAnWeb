@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+	<html lang="vi">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Danh sách Commission</title>
+	    <link rel="stylesheet" href="path/to/your/styles.css">
+	</head>
+	
+	<body>
+	    <div class="container">
+	        <h1>Danh sách Commission</h1>
+	        <!-- Button thêm Commission -->
+	        <a href="/admin/commissions/add" class="btn btn-primary">Thêm Commission</a>
+	        
+	        <!-- Bảng danh sách Commission -->
+	        <table class="table">
+	            <thead>
+	                <tr>
+	                    <th>ID</th>
+	                    <th>Tên Commission</th>
+	                    <th>Chi phí (%)</th>
+	                    <th>Mô tả</th>
+	                    <th>Trạng thái</th>
+	                    <th>Hành động</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <!-- Duyệt qua danh sách Commission -->
+	                <th:block th:each="commission : ${listcommission}">
+	                    <tr>
+	                        <!-- Hiển thị ID Commission -->
+	                        <td th:text="${commission.id}"></td>
+	                        
+	                        <!-- Hiển thị tên Commission -->
+	                        <td th:text="${commission.name}"></td>
+	                        
+	                        <!-- Hiển thị chi phí (Hoa hồng) -->
+	                        <td th:text="${commission.cost} + '%'"></td>
+	                        
+	                        <!-- Hiển thị mô tả -->
+	                        <td th:text="${commission.description}"></td>
+	                        
+	                        <!-- Hiển thị trạng thái (Đã xóa hay chưa) -->
+	                        <td>
+	                            <span th:if="${commission.isDelete}">Đã xóa</span>
+	                            <span th:if="${not commission.isDelete}">Đang hoạt động</span>
+	                        </td>
+	                        
+	                        <!-- Hành động: Chỉnh sửa, Xóa -->
+	                        <td>
+	                            <!-- Chỉnh sửa -->
+	                            <a th:href="@{/admin/commissions/edit/{id}(id=${commission.id})}" class="btn btn-warning">Chỉnh sửa</a>
+	                            
+	                            <!-- Xóa -->
+	                            <a th:href="@{/admin/commissions/delete/{id}(id=${commission.id})}" class="btn btn-danger">Xóa</a>
+	                        </td>
+	                    </tr>
+	                </th:block>
+	            </tbody>
+	        </table>
+	    </div>
+	</body>
+	
+	
+	</html>

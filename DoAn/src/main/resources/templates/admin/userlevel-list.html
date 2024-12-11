@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Level List</title>
+</head>
+<body>
+    <h1>User Levels</h1>
+
+    <a href="/admin/userlevel/add">Add New User Level</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Min Points</th>
+                <th>Discount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="userLevel : ${listuserlevel}">
+                <tr>
+                    <td th:text="${userLevel.name}"></td>
+                    <td th:text="${userLevel.minPoint}"></td>
+                    <td th:text="${userLevel.discount}"></td>
+
+                    <!-- Displaying Status (Active/Inactive) -->
+                    <td>
+                        <span th:text="${userLevel.isDelete ? 'Inactive' : 'Active'}"></span>
+                    </td>
+
+                    <td>
+                        <!-- Actions for Edit, Delete, Restore -->
+                        <a th:href="@{/admin/userlevel/edit/{id}(id=${userLevel.id})}">Edit</a> | 
+                        <a th:href="@{/admin/userlevel/delete/{id}(id=${userLevel.id})}" th:text="Delete"></a> |
+                        <a th:href="@{/admin/userlevel/restore/{id}(id=${userLevel.id})}" th:text="Restore"></a>
+                    </td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+</body>
+</html>

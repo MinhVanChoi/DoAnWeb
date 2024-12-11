@@ -43,7 +43,7 @@ public class AdminUserLevelController {
 			model.addAttribute("userlevel", userLevel);
 			return new ModelAndView("admin/userlevel-edit", model);
 		}
-		return new ModelAndView("foward:/admin/userlevel");
+		return new ModelAndView("forward:/admin/userlevel");
 	}
 	@PostMapping("/insert")
 	public ModelAndView insert(ModelMap model, @Valid @ModelAttribute("userlevel") UserLevel userLevelModel, BindingResult result) {
@@ -53,7 +53,7 @@ public class AdminUserLevelController {
 		UserLevel userLevel = new UserLevel();
 		BeanUtils.copyProperties(userLevelModel, userLevel);
 		userLevelService.save(userLevel);
-		return new ModelAndView("foward:/admin/userlevel");
+		return new ModelAndView("forward:/admin/userlevel");
 	}
 	@PostMapping("/update")
 	public ModelAndView update(ModelMap model, @Valid @ModelAttribute("userlevel") UserLevel userLevelModel, BindingResult result) {
@@ -63,7 +63,7 @@ public class AdminUserLevelController {
 		UserLevel userLevel = new UserLevel();
 		BeanUtils.copyProperties(userLevelModel, userLevel);
 		userLevelService.save(userLevel);
-		return new ModelAndView("foward:/admin/userlevel");
+		return new ModelAndView("forward:/admin/userlevel");
 	}
 	@GetMapping("delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") Long idUserLevel) {

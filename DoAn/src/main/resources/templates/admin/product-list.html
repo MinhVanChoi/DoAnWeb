@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Sản phẩm</title>
+    <link rel="stylesheet" href="path/to/your/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Danh sách Sản phẩm</h1>
+        
+        <!-- Các nút lọc sản phẩm -->
+        <div class="filter-buttons">
+            <a href="/admin/products" class="btn btn-secondary">Tất cả sản phẩm</a>
+            <a href="/admin/products/banned-product" class="btn btn-danger">Sản phẩm bị cấm</a>
+            <a href="/admin/products/unbanned-product" class="btn btn-success">Sản phẩm chưa cấm</a>
+        </div>
+
+        <!-- Bảng Danh sách Sản phẩm -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Trạng thái bán</th>
+                    <th>Trạng thái cấm</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Duyệt qua danh sách sản phẩm -->
+                <th:block th:each="product : ${listproduct}">
+                    <tr>
+                        <!-- Hiển thị ID sản phẩm -->
+                        <td th:text="${product.id}"></td>
+                        
+                        <!-- Hiển thị tên sản phẩm -->
+                        <td th:text="${product.name}"></td>
+                        
+                        <!-- Hiển thị giá sản phẩm -->
+                        <td th:text="${product.price}"></td>
+                        
+                        <!-- Trạng thái bán: Hiển thị "Đang bán" hoặc "Ngừng bán" -->
+                        <td>
+                            <span th:if="${product.isSelling}">Đang bán</span>
+                            <span th:if="${not product.isSelling}">Ngừng bán</span>
+                        </td>
+                        
+                        <!-- Trạng thái cấm: Hiển thị "Đã cấm" hoặc "Chưa cấm" -->
+                        <td>
+                            <span th:if="${product.isBan}">Đã cấm</span>
+                            <span th:if="${not product.isBan}">Chưa cấm</span>
+                        </td>
+                        
+                        <!-- Hành động: Xem, Cấm, Mở cấm -->
+                        <td>
+                            <!-- Xem chi tiết sản phẩm -->
+                            <a th:href="@{/admin/products/{slug}(slug=${product.slug})}" class="btn btn-info">Xem</a>
+                            
+                            <!-- Cấm sản phẩm -->
+                            <form th:action="@{/admin/products/ban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
+                                <button type="submit" th:disabled="${product.isBan}" class="btn btn-danger">Cấm</button>
+                            </form>
+                            
+                            <!-- Mở cấm sản phẩm -->
+                            <form th:action="@{/admin/products/unban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
+                                <button type="submit" th:disabled="${not product.isBan}" class="btn btn-success">Mở cấm</button>
+                            </form>
+                        </td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

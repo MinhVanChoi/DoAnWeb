@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Cửa hàng</title>
+    <link rel="stylesheet" href="path/to/your/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Danh sách Cửa hàng</h1>
+
+        <!-- Bảng Danh sách Cửa hàng -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Cửa hàng</th>
+                    <th>Trạng thái hoạt động</th>
+                    <th>Trạng thái cấm</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Duyệt qua danh sách cửa hàng -->
+                <th:block th:each="store : ${liststore}">
+                    <tr>
+                        <!-- Hiển thị ID cửa hàng -->
+                        <td th:text="${store.id}"></td>
+
+                        <!-- Hiển thị tên cửa hàng -->
+                        <td th:text="${store.name}"></td>
+
+                        <!-- Trạng thái hoạt động -->
+                        <td>
+                            <span th:if="${store.isActive}">Đang hoạt động</span>
+                            <span th:if="${not store.isActive}">Ngừng hoạt động</span>
+                        </td>
+
+                        <!-- Trạng thái cấm -->
+                        <td>
+                            <span th:if="${store.isBan}">Đã cấm</span>
+                            <span th:if="${not store.isBan}">Chưa cấm</span>
+                        </td>
+
+                        <!-- Hành động: Xem chi tiết, cấm cửa hàng -->
+                        <td>
+                            <a th:href="@{/admin/stores/{slug}(slug=${store.slug})}" class="btn btn-info">Xem</a>
+                            
+                            <!-- Cấm cửa hàng -->
+                            <form th:action="@{/admin/stores/ban/{slug}(slug=${store.slug})}" method="post" style="display:inline;">
+                                <button type="submit" th:disabled="${store.isBan}" class="btn btn-danger">Cấm</button>
+                            </form>
+                        </td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

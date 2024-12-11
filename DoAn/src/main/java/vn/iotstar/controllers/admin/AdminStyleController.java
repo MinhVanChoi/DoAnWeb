@@ -43,7 +43,7 @@ public class AdminStyleController {
 			model.addAttribute("style", style);
 			return new ModelAndView("admin/style-edit", model);
 		}
-		return new ModelAndView("foward:/admin/styles");
+		return new ModelAndView("forward:/admin/styles");
 	}
 	@PostMapping("/insert")
 	public ModelAndView insert(ModelMap model, @Valid @ModelAttribute("style") Style styleModel,BindingResult result) {
@@ -53,7 +53,7 @@ public class AdminStyleController {
 		Style style = new Style();
 		BeanUtils.copyProperties(styleModel, style);
 		styleService.save(style);
-		return new ModelAndView("foward:/admin/styles");
+		return new ModelAndView("forward:/admin/styles");
 	}
 	@PostMapping("/update")
 	public ModelAndView update(ModelMap model, @Valid @ModelAttribute("style") Style styleModel,BindingResult result) {
@@ -63,7 +63,7 @@ public class AdminStyleController {
 		Style style = new Style();
 		BeanUtils.copyProperties(styleModel, style);
 		styleService.save(style);
-		return new ModelAndView("foward:/admin/styles");
+		return new ModelAndView("forward:/admin/styles");
 	}
 	@GetMapping("/delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") Long idStyle) {
@@ -71,9 +71,10 @@ public class AdminStyleController {
 		if(optStyle.isPresent()) {
 			Style style = optStyle.get();
 			style.setDelete(true);
+			styleService.save(style);
 			model.addAttribute("style", style);
 		}
-		return new ModelAndView("redirect:/admin/style");
+		return new ModelAndView("redirect:/admin/styles");
 	}
 	@GetMapping("/restore/{id}")
 	public ModelAndView restore(ModelMap model, @PathVariable("id") Long idStyle) {
@@ -81,8 +82,9 @@ public class AdminStyleController {
 		if(optStyle.isPresent()) {
 			Style style = optStyle.get();
 			style.setDelete(false);
+			styleService.save(style);
 			model.addAttribute("style", style);
 		}
-		return new ModelAndView("redirect:/admin/style");
+		return new ModelAndView("redirect:/admin/styles");
 	}
 }

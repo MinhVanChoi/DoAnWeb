@@ -9,6 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -28,6 +30,7 @@ import lombok.NoArgsConstructor;
 public class Style {
 	@Id
 	@Column(name = "style_id")
+	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
     @ManyToMany

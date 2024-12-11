@@ -33,7 +33,7 @@ public class AdminUserController {
 		if(optUser.isPresent()) {
 			User user = optUser.get();
 			model.addAttribute("user", user);
-			return new ModelAndView("profile-user", model);
+			return new ModelAndView("/admin/profile-user", model);
 		}
 		return new ModelAndView("foward:/admin/users", model);
 	}
@@ -45,7 +45,7 @@ public class AdminUserController {
 			user.setBan(true);
 			userService.save(user);
 			model.addAttribute("user", user);
-			return new ModelAndView("profile-user", model);
+			return new ModelAndView("/admin/profile-user", model);
 		}
 		return new ModelAndView("foward:/admin/users", model);
 	}

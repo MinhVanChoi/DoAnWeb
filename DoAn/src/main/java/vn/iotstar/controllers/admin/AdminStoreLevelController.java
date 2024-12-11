@@ -43,7 +43,7 @@ public class AdminStoreLevelController {
 			model.addAttribute("storelevel", storeLevel);
 			return new ModelAndView("admin/storelevel-edit");
 		}
-		return new ModelAndView("foward:/admin/storelevel");
+		return new ModelAndView("forward:/admin/storelevel");
 	}
 	@PostMapping("/insert")
 	public ModelAndView insert(ModelMap model, @Valid @ModelAttribute("storelevel") StoreLevel storeLevelModel, BindingResult result) {
@@ -53,7 +53,7 @@ public class AdminStoreLevelController {
 		StoreLevel storeLevel = new StoreLevel();
 		BeanUtils.copyProperties(storeLevelModel, storeLevel);
 		storeLevelService.save(storeLevel);
-		return new ModelAndView("foward:/admin/storelevel");
+		return new ModelAndView("forward:/admin/storelevel");
 	}
 	@PostMapping("/update")
 	public ModelAndView update(ModelMap model, @Valid @ModelAttribute("storelevel") StoreLevel storeLevelModel, BindingResult result) {
@@ -63,7 +63,7 @@ public class AdminStoreLevelController {
 		StoreLevel storeLevel = new StoreLevel();
 		BeanUtils.copyProperties(storeLevelModel, storeLevel);
 		storeLevelService.save(storeLevel);
-		return new ModelAndView("foward:/admin/storelevel");
+		return new ModelAndView("forward:/admin/storelevel");
 	}
 	@GetMapping("/delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") Long idStoreLevel) {

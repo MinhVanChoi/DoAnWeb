@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.validation.Valid;
+import vn.iotstar.entity.Category;
 import vn.iotstar.entity.Commission;
 import vn.iotstar.services.CommissionService;
 
@@ -29,7 +30,7 @@ public class AdminCommissionController {
 	public String all(Model model) {
 		List<Commission> list = commissionService.findAll();
 		model.addAttribute("listcommission", list);
-		return "/admin/commission-list";
+		return "admin/commission-list";
 	}
 	@GetMapping("/add")
 	public String add() {
@@ -43,7 +44,7 @@ public class AdminCommissionController {
 			model.addAttribute("commission", commission);
 			return new ModelAndView("admin/commission-edit");
 		}
-		return new ModelAndView("foward:/admin/commissions");
+		return new ModelAndView("forward:/admin/commissions");
 	}
 	@PostMapping("/insert")
 	public ModelAndView insert(ModelMap model, @Valid @ModelAttribute("commission") Commission commissionModel, BindingResult result) {
@@ -55,8 +56,10 @@ public class AdminCommissionController {
 		Commission commission = new Commission();
 		BeanUtils.copyProperties(commissionModel, commission);
 		commissionService.save(commission);
-		return new ModelAndView("foward:/admin/commissions");
+		return new ModelAndView("forward:/admin/commissions",model);
 	}
+	
+	
 	@PostMapping("/update")
 	public ModelAndView update(ModelMap model, @Valid @ModelAttribute("commission") Commission commissionModel, BindingResult result) {
 		if(result.hasErrors()) {
@@ -64,8 +67,11 @@ public class AdminCommissionController {
 		}
 		Commission commission = new Commission();
 		BeanUtils.copyProperties(commissionModel, commission);
+		Optional<Commission> optComm = commissionService.findById(commission.getId());
+		Commission commissionold = optComm.get();
+		commission.setCreateAt(commissionold.getCreateAt());
 		commissionService.save(commission);
-		return new ModelAndView("foward:/admin/commissions");
+		return new ModelAndView("forward:/admin/commissions");
 	}
 	@GetMapping("/delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") Long idCommission) {

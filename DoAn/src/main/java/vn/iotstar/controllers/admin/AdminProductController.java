@@ -46,9 +46,9 @@ public class AdminProductController {
 		if(optProduct.isPresent()) {
 			Product product = optProduct.get();
 			model.addAttribute("product", product);
-			return new ModelAndView("profile-product", model);
+			return new ModelAndView("admin/profile-product", model);
 		}
-		return new ModelAndView("foward:/admin/products");
+		return new ModelAndView("forward:/admin/products");
 	}
 	@PostMapping("/ban/{slug}")
 	public ModelAndView banProduct(ModelMap model, @PathVariable("slug") String slugProduct) {
@@ -56,10 +56,11 @@ public class AdminProductController {
 		if(optProduct.isPresent()) {
 			Product product = optProduct.get();
 			product.setBan(true);
+			productService.save(product);
 			model.addAttribute("product", product);
-			return new ModelAndView("profile-product", model);
+			return new ModelAndView("admin/profile-product", model);
 		}
-		return new ModelAndView("foward:/admin/products");
+		return new ModelAndView("forward:/admin/products");
 	}
 	@PostMapping("/unban/{slug}")	
 	public ModelAndView unbanProduct(ModelMap model, @PathVariable("slug") String slugProduct) {
@@ -68,8 +69,9 @@ public class AdminProductController {
 			Product product = optProduct.get();
 			product.setBan(false);
 			model.addAttribute("product", product);
-			return new ModelAndView("profile-product", model);
+			productService.save(product);
+			return new ModelAndView("admin/profile-product", model);
 		}
-		return new ModelAndView("foward:/admin/products");
+		return new ModelAndView("forward:/admin/products");
 	}
 }
