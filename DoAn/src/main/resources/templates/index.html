@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html xmlns:th="http://www.thymeleaf.org">
 
 
 <head>
@@ -65,16 +64,15 @@
                         <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
 						
                     </div>
-					    <div th:if="${sessionScope.account == null}">
+					    <div th:if="${session.user == null}">
 				        <a th:href="@{/login}">Login</a>
 				        <a th:href="@{/register}">Register</a>
 				    </div>
-				    <div th:unless="${sessionScope.account == null}">
-				        <a th:href="@{/profile}" th:text="${sessionScope.account.fullname}"></a>
+				    <div th:unless="${session.user == null}">
+				        <a th:href="@{/profile}" th:text="${session.user.fullname}"></a>
 				        <a th:href="@{/logout}">Logout</a>
 				    </div>
-					<a href="/login" class="nav-item nav-link">Đăng nhập</a>
-					<a href="/register" class="nav-item nav-link">Đăng kí</a>
+					
 
 					
                 </div>

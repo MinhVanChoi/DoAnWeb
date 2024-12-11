@@ -28,12 +28,12 @@ public interface UserService {
 
 	Optional<User> findBySlug(String slug);
 
-	Role createRole(String name);
-	User createUser();
 	User login(String email, String password);
-	Boolean checkUserbyEmail(String email);
-	Boolean checkPasswordUser(String email, String password);
+
 	User getUserbyEmail(String email);
-	 String MaHoaMatKhau(String mk);
-	   String chuyenthanhSlug(String slug);
+
+	Boolean checkUserbyEmail(String email);
+
+	Role createRole(String roleName);
+
 }
