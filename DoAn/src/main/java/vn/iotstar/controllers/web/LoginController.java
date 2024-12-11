@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
 import vn.iotstar.services.UserService;
 import vn.iotstar.entity.User;
 
@@ -24,12 +25,23 @@ public class LoginController {
 	
 	  @PostMapping("/login")
 		public String handleLogin(@RequestParam(name = "email", required = true) String email,
-				@RequestParam(name = "password", required = true) String password) {
+				@RequestParam(name = "password", required = true) String password,
+				HttpSession session) {
+		  User user = userService.login(email, password);
 			
-			if (userService.login(email, password) == false) {
-				return "redirect:/login?error!";
+			if (user == null) {
+				return "redirect:/login?error=true";
 			}
-			return "redirect:/login?succesfull";
+			
+			session.setAttribute("user", user); 
+
+			return "redirect:/home"; 
 		}
+	  
+	  @GetMapping("/logout")
+	    public String handleLogout(HttpSession session) {
+	        session.invalidate();
+	        return "redirect:/login"; 
+	    }
 }
 

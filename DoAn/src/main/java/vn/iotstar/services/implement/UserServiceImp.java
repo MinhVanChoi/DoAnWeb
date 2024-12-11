@@ -110,6 +110,24 @@ public class UserServiceImp implements UserService{
 
 		    return userRepository.save(user);
 		}
+		
+		
+		public String MaHoaMatKhau(String mk) {
+	return BCrypt.hashpw(mk, BCrypt.gensalt());
+}
+		
+		
+		   public String chuyenthanhSlug(String slug) {
+		        if (slug == null || slug.isEmpty()) {
+		            return "";
+		        }
+		        String result = slug.toLowerCase()
+		                            .trim()
+		                            .replaceAll("[^a-z0-9\\s-]", "")
+		                            .replaceAll("[\\s_-]+", "-") 
+		                            .replaceAll("^-+|-+$", ""); 
+		        return result;
+		    }
 
 		
 	public Boolean checkUserbyEmail(String email) {
@@ -134,17 +152,16 @@ public class UserServiceImp implements UserService{
 	}
 
 	@Override
-	public Boolean login(String email, String password) {
-	    User user = userRepository.findUserByEmail(email);
-	    if (user == null) {
-	        return false; 
-	    }
+	public User login(String email, String password) {
+		  User user = userRepository.findUserByEmail(email);
+		    if (user == null) {
+		        return null; 
+		    }
+		    if (passwordEncoder.matches(password, user.getPassword())) {
+		        return user; 
+		    }
 
-	    if (passwordEncoder.matches(password, user.getPassword())) {
-	        return true; 
-	    }
-
-	    return false; 
+		    return null;
 	}
 	
 		
