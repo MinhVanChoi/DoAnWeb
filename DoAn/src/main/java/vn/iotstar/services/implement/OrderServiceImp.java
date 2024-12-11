@@ -10,6 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import vn.iotstar.entity.Order;
+import vn.iotstar.entity.Store;
+import vn.iotstar.entity.User;
 import vn.iotstar.repository.OrderItemRepository;
 import vn.iotstar.repository.OrderRepository;
 import vn.iotstar.services.OrderService;
@@ -52,5 +54,15 @@ public class OrderServiceImp implements OrderService{
 	@Override
 	public void deleteById(Long id) {
 		orderRepository.deleteById(id);
+	}
+
+	@Override
+	public List<Order> findByUser(User user) {
+		return orderRepository.findByUser(user);
+	}
+
+	@Override
+	public List<Order> findByStore(Store store) {
+		return orderRepository.findByStore(store);
 	}
 }

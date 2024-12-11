@@ -38,8 +38,7 @@ public class CustomerCartController {
 	CartItemSerice cartItemSerice;
 	@Autowired
 	ProductService productService;
-	@GetMapping
-	
+	@RequestMapping("")
 	public String viewCart(Model model, HttpSession session) {
 		User user = (User)session.getAttribute("user");
 		List<Cart> carts = user.getCarts();

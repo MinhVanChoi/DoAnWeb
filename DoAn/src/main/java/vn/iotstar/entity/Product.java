@@ -65,7 +65,7 @@ public class Product {
 			inverseJoinColumns = @JoinColumn(name = "style_value_id"))
 	private List<StyleValue> styleValueIds = new ArrayList<>();
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-	private List<Review> reviews = new ArrayList<>();
+	private List<ReviewProduct> reviews = new ArrayList<>();
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems = new ArrayList<>();
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import vn.iotstar.entity.Order;
+import vn.iotstar.entity.Store;
+import vn.iotstar.entity.User;
 
 public interface OrderService {
 
@@ -24,5 +26,9 @@ public interface OrderService {
 	List<Order> findAll(Sort sort);
 
 	<S extends Order> S save(S entity);
+
+	List<Order> findByStore(Store store);
+
+	List<Order> findByUser(User user);
 
 }

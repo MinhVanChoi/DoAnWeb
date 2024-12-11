@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "reviews")
-public class Review {
+@Table(name = "review_orders")
+public class ReviewOrder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "review_id")
@@ -32,9 +32,6 @@ public class Review {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
-	@ManyToOne
-	@JoinColumn(name = "product_id", nullable = false)
-	private Product product;
 	@ManyToOne
 	@JoinColumn(name = "store_id", nullable = false)
 	private Store store;

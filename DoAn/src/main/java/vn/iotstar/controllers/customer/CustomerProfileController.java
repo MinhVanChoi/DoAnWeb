@@ -22,7 +22,7 @@ import vn.iotstar.services.UserService;
 public class CustomerProfileController {
 	@Autowired
 	UserService userService;
-	@GetMapping
+	@RequestMapping("")
 	public String profile(Model model, HttpSession session) {
 		User user = (User)session.getAttribute("user");
 		model.addAttribute("user", user);

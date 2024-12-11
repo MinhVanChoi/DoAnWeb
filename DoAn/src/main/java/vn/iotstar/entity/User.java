@@ -68,7 +68,7 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Order> oders = new ArrayList<>();
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Review> reviews = new ArrayList<>();
+	private List<ReviewOrder> reviews = new ArrayList<>();
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Cart> carts = new ArrayList<>();
     @ManyToOne

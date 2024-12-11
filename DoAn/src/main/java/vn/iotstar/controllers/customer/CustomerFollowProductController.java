@@ -27,15 +27,15 @@ public class CustomerFollowProductController {
 	UserFollowProductService userFollowProductService;
 	@Autowired
 	ProductService productService;
-	@GetMapping
+	@RequestMapping("")
 	public String followedProduct(Model model, HttpSession session) {
 		User user = (User)session.getAttribute("user");
 		List<UserFollowProduct> list = userFollowProductService.findByUser(user);
 		model.addAttribute("listuserfollowproduct", list);
 		return "user/follow-product";
 	}
-	@PostMapping("/follow/{slug}")
-	public void followProduct(@PathVariable("slug") String slugProduct, HttpSession session) {
+	@GetMapping("/follow/{slug}")
+	public ModelAndView followProduct(@PathVariable("slug") String slugProduct, HttpSession session) {
 		User user = (User)session.getAttribute("user");
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
 		if(optProduct.isPresent()) {
@@ -47,8 +47,10 @@ public class CustomerFollowProductController {
 			userFollowProduct.setProduct(product);
 			userFollowProductService.save(userFollowProduct);
 		}
+		//sua lai tra ve trang dang xem
+		return new ModelAndView("redirect:/follow-products");
 	}
-	@PostMapping("unfollow/{slug}")
+	@GetMapping("unfollow/{slug}")
 	public ModelAndView unFollowProduct(@PathVariable("slug") String slugProduct, HttpSession session) {
 		User user = (User)session.getAttribute("user");
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
@@ -60,6 +62,7 @@ public class CustomerFollowProductController {
 				userFollowProductService.deleteById(userFollowProductId);
 			}
 		}
+		//sua lai tra ve trang dang xem
 		return new ModelAndView("redirect:/follow-products");
 	}
 }
