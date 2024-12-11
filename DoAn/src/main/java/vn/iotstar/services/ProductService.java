@@ -30,5 +30,7 @@ public interface ProductService {
 	List<Product> findUnBannedProduct();
 
 	Optional<Product> findBySlug(String slug);
+
+	Page<Product> findByNameContaining(String name, Pageable pageable);
 	
 }

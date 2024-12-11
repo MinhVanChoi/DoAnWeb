@@ -1,50 +1,69 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh Sách Người Dùng</title>
-    <link rel="stylesheet" href="path/to/your/styles.css">
+    <title>User List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Danh Sách Người Dùng</h1>
+    <div class="container mt-5">
+        <h2>UserList</h2>
+        
+        <form action="/admin/users/searchpaginated" method="get" class="mb-3">
+            <input type="text" name="name" placeholder="Search by name" class="form-control" value="">
+            <select name="size" id="size" onchange="this.form.submit()">
+                <option value="3" th:selected="${userPage != null && userPage.size == 3}">3</option>
+                <option value="5" th:selected="${userPage != null && userPage.size == 5}">5</option>
+                <option value="10" th:selected="${userPage != null && userPage.size == 10}">10</option>
+                <option value="15" th:selected="${userPage != null && userPage.size == 15}">15</option>
+                <option value="20" th:selected="${userPage != null && userPage.size == 20}">20</option>
+            </select>
+            <button type="submit" class="btn btn-secondary mt-2">Search</button>
+        </form>
 
-        <!-- Bảng Danh Sách Người Dùng -->
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Tên</th>
-                    <th>Email</th>
-                    <th>Số điện thoại</th>
-                    <th>Trạng Thái</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <th:block th:each="user : ${listuser}">
-                    <tr>
-                        <td th:text="${user.id}"></td>
-                        <td th:text="${user.fullname}"></td>
-                        <td th:text="${user.email}"></td>
-                        <td th:text="${user.phone}"></td>
-                        <td>
-                            <span th:if="${user.isBan}">Bị Cấm</span>
-                            <span th:if="${not user.isBan}">Hoạt động</span>
-                        </td>
-                        <td>
-                            <a th:href="@{/admin/users/{slug}(slug=${user.slug})}" class="btn btn-info">Xem chi tiết</a>
+		<table class="table table-bordered">
+		    <thead>
+		        <tr>
+					<th>ID</th>
+					    <th>Tên</th>
+					    <th>Email</th>
+					    <th>Số điện thoại</th>
+					    <th>Trạng Thái</th>
+					    <th>Hành động</th>
 
-                            <!-- Cấm Người Dùng -->
-                            <form th:action="@{/admin/users/ban/{slug}(slug=${user.slug})}" method="post" style="display:inline;">
-                                <button type="submit" class="btn btn-danger" th:disabled="${user.isBan}">Cấm</button>
-                            </form>
-                        </td>
-                    </tr>
-                </th:block>
-            </tbody>
-        </table>
+						
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr th:each="user : ${userPage}">
+		            <td th:text="${user.id}"></td>
+		            <td th:text="${user.fullname}"></td>
+					<td th:text="${user.email}"></td>
+					<td th:text="${user.phone}"></td>
+		            <td th:text="${user.isBan} ? 'true' : 'false'"></td> 
+
+					<td>
+						<a th:href="@{/admin/users/{slug}(slug=${user.slug})}" class="btn btn-warning">Xem</a>
+
+					    <form th:action="@{/admin/users/ban/{slug}(slug=${user.slug})}" method="post" style="display:inline;">
+					        <button type="submit" class="btn btn-success">Ban</button>
+					    </form>
+					</td>
+		        </tr>
+		    </tbody>
+		</table>
+
+        <div th:if="${userPage.totalPages > 1}">
+            <ul class="pagination">
+                <li th:each="pageNumber : ${#numbers.sequence(1, userPage.totalPages)}"
+                    th:classappend="${pageNumber == userPage.number + 1} ? 'page-item active' : 'page-item'">
+                    <a th:href="@{/admin/users/searchpaginated(name=${name != null ? name : ''}, size=${userPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"></a>
+                    <span class="mx-2"></span>
+                </li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>

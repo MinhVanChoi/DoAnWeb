@@ -52,5 +52,11 @@ public class CommissionServiceImp implements CommissionService{
 	public void deleteById(Long id) {
 		commissionRepository.deleteById(id);
 	}
+
+	@Override
+	public Page<Commission> findByNameContaining(String name, Pageable pageable) {
+		return commissionRepository.findByNameContaining(name, pageable);
+	}
+	
 	
 }

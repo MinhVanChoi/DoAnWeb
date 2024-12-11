@@ -63,5 +63,10 @@ public class StoreServiceImp implements StoreService{
 	public List<Store> findByOwner(User user) {
 		return storeRepository.findByOwner(user);
 	}
+
+	@Override
+	public Page<Store> findByNameContaining(String name, Pageable pageable) {
+		return storeRepository.findByNameContaining(name, pageable);
+	}
 	
 }

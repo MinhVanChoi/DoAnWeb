@@ -1,6 +1,7 @@
 package vn.iotstar.controllers.admin;
 
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.iotstar.Constain;
 import vn.iotstar.entity.Category;
+import vn.iotstar.entity.Commission;
 import vn.iotstar.services.CategoryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,12 +44,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class AdminCategoryController {
 	@Autowired
 	CategoryService cateService;
-	@RequestMapping("")
-	public String all(Model model) {
-		List<Category> categories = cateService.findAll();
-		model.addAttribute("listcate", categories);
-		return "admin/category-list";
+	
+	private Page<Category> getPaginatedResult(Optional<Integer> page, Optional<Integer> size, String nameFilter) {
+	    int currentPage = page.orElse(1);  
+	    int pageSize = size.orElse(3);    
+	    Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("name"));
+	    
+	    if (StringUtils.hasText(nameFilter)) {
+	        return cateService.findByNameContaining(nameFilter, pageable);
+	    } else {
+	        return cateService.findAll(pageable);
+	    }
 	}
+	
+	
+	@RequestMapping("")
+	public String all(Model model, @RequestParam("page") Optional<Integer> page,
+	        @RequestParam("size") Optional<Integer> size) {
+
+	    // Use the helper method to get the paginated result
+	    Page<Category> resultPage = getPaginatedResult(page, size, null);
+	    
+	    // Handle pagination display
+	    int totalPages = resultPage.getTotalPages();
+	    List<Integer> pageNumbers = new ArrayList<>();
+	    int currentPage = resultPage.getNumber() + 1;  // Get the current page (1-based)
+
+	    // Generate page numbers (currentPage ± 2 range)
+	    if (totalPages > 0) {
+	        int start = Math.max(1, currentPage - 2);
+	        int end = Math.min(currentPage + 2, totalPages);
+	        for (int i = start; i <= end; i++) {
+	            pageNumbers.add(i);
+	        }
+	    }
+
+	    model.addAttribute("categoryPage", resultPage);  // Add paginated result to the model
+	    model.addAttribute("pageNumbers", pageNumbers);    // Add page numbers for pagination
+	    return "admin/category-list";  // Return the view
+	}
+	
+	
+	
 	@GetMapping("/add")
 	public String add(Model model) {
 		Category category = new Category();
@@ -117,45 +155,31 @@ public class AdminCategoryController {
 		return new ModelAndView("forward:/admin/categories", model);
 	}
 	
+
 	@RequestMapping("/searchpaginated")
 	public String search(ModelMap model,
 	        @RequestParam(name = "name", required = false) String name,
 	        @RequestParam("page") Optional<Integer> page,
 	        @RequestParam("size") Optional<Integer> size) {
-	    int count = (int) cateService.count();
-	    int currentPage = page.orElse(1);  // Default to page 1 if not provided
-	    int pageSize = size.orElse(3);     // Default to size 3 if not provided
-	    Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("name"));
-	    Page<Category> resultPage;
 
-	    // Check if the 'name' parameter is provided and filter based on it
-	    if (StringUtils.hasText(name)) {
-	        resultPage = cateService.findByNameContaining(name, pageable);
-	        model.addAttribute("name", name);  // Store 'name' in the model for search input box
-	    } else {
-	        resultPage = cateService.findAll(pageable);
-	    }
-
-	    // Handle pagination
+	    Page<Category> resultPage = getPaginatedResult(page, size, name);
+	    
 	    int totalPages = resultPage.getTotalPages();
+	    List<Integer> pageNumbers = new ArrayList<>();
+	    int currentPage = resultPage.getNumber() + 1;  
+
 	    if (totalPages > 0) {
 	        int start = Math.max(1, currentPage - 2);
 	        int end = Math.min(currentPage + 2, totalPages);
-	        if (totalPages > count) {
-	            if (end == totalPages) {
-	                start = end - count;
-	            } else if (start == 1) {
-	                end = start + count;
-	            }
+	        for (int i = start; i <= end; i++) {
+	            pageNumbers.add(i);
 	        }
-	        List<Integer> pageNumbers = IntStream.rangeClosed(start, end)
-	                .boxed()
-	                .collect(Collectors.toList());
-	        model.addAttribute("pageNumbers", pageNumbers);
 	    }
 
-	    model.addAttribute("categoryPage", resultPage);  // Add resultPage to the model
-	    return "admin/category-list";  // Return the view
+	    model.addAttribute("categoryPage", resultPage); 
+	    model.addAttribute("pageNumbers", pageNumbers);    
+	    model.addAttribute("name", name);  
+	    return "admin/category-list"; 
 	}
 
 }

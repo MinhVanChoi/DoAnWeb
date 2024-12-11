@@ -25,4 +25,6 @@ public interface CommissionService {
 
 	<S extends Commission> S save(S entity);
 
+	Page<Commission> findByNameContaining(String name, Pageable pageable);
+
 }

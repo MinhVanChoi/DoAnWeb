@@ -36,4 +36,6 @@ public interface UserService {
 
 	Role createRole(String roleName);
 
+	Page<User> findByFullnameContaining(String name, Pageable pageable);
+
 }

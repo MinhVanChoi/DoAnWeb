@@ -67,5 +67,11 @@ public class ProductServiceImp implements ProductService{
 	public List<Product> findBannedProduct() {
 		return productRepository.findBannedProduct();
 	}
+
+	@Override
+	public Page<Product> findByNameContaining(String name, Pageable pageable) {
+		return productRepository.findByNameContaining(name, pageable);
+	}
+	
 	
 }

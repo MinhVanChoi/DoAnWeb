@@ -95,5 +95,14 @@ public class UserServiceImp implements UserService{
 		        return user; 
 		    }
 		    return null;
+	}
+
+	@Override
+	public Page<User> findByFullnameContaining(String name, Pageable pageable) {
+		return userRepository.findByFullnameContaining(name, pageable);
 	}	
+	
+	
+	
+	
 }

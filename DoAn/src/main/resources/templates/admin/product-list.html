@@ -1,78 +1,78 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách Sản phẩm</title>
-    <link rel="stylesheet" href="path/to/your/styles.css">
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Danh sách Sản phẩm</h1>
+    <div class="container mt-5">
+        <h2>Product List</h2>
         
-        <!-- Các nút lọc sản phẩm -->
-        <div class="filter-buttons">
-            <a href="/admin/products" class="btn btn-secondary">Tất cả sản phẩm</a>
-            <a href="/admin/products/banned-product" class="btn btn-danger">Sản phẩm bị cấm</a>
-            <a href="/admin/products/unbanned-product" class="btn btn-success">Sản phẩm chưa cấm</a>
-        </div>
+        <form action="/admin/products/searchpaginated" method="get" class="mb-3">
+            <input type="text" name="name" placeholder="Search by name" class="form-control" value="">
+            <select name="size" id="size" onchange="this.form.submit()">
+                <option value="3" th:selected="${productPage != null && productPage.size == 3}">3</option>
+                <option value="5" th:selected="${productPage != null && productPage.size == 5}">5</option>
+                <option value="10" th:selected="${productPage != null && productPage.size == 10}">10</option>
+                <option value="15" th:selected="${productPage != null && productPage.size == 15}">15</option>
+                <option value="20" th:selected="${productPage != null && productPage.size == 20}">20</option>
+            </select>
+            <button type="submit" class="btn btn-secondary mt-2">Search</button>
+        </form>
 
-        <!-- Bảng Danh sách Sản phẩm -->
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Trạng thái bán</th>
-                    <th>Trạng thái cấm</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Duyệt qua danh sách sản phẩm -->
-                <th:block th:each="product : ${listproduct}">
-                    <tr>
-                        <!-- Hiển thị ID sản phẩm -->
-                        <td th:text="${product.id}"></td>
-                        
-                        <!-- Hiển thị tên sản phẩm -->
-                        <td th:text="${product.name}"></td>
-                        
-                        <!-- Hiển thị giá sản phẩm -->
-                        <td th:text="${product.price}"></td>
-                        
-                        <!-- Trạng thái bán: Hiển thị "Đang bán" hoặc "Ngừng bán" -->
-                        <td>
-                            <span th:if="${product.isSelling}">Đang bán</span>
-                            <span th:if="${not product.isSelling}">Ngừng bán</span>
-                        </td>
-                        
-                        <!-- Trạng thái cấm: Hiển thị "Đã cấm" hoặc "Chưa cấm" -->
-                        <td>
-                            <span th:if="${product.isBan}">Đã cấm</span>
-                            <span th:if="${not product.isBan}">Chưa cấm</span>
-                        </td>
-                        
-                        <!-- Hành động: Xem, Cấm, Mở cấm -->
-                        <td>
-                            <!-- Xem chi tiết sản phẩm -->
-                            <a th:href="@{/admin/products/{slug}(slug=${product.slug})}" class="btn btn-info">Xem</a>
-                            
-                            <!-- Cấm sản phẩm -->
-                            <form th:action="@{/admin/products/ban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
-                                <button type="submit" th:disabled="${product.isBan}" class="btn btn-danger">Cấm</button>
-                            </form>
-                            
-                            <!-- Mở cấm sản phẩm -->
-                            <form th:action="@{/admin/products/unban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
-                                <button type="submit" th:disabled="${not product.isBan}" class="btn btn-success">Mở cấm</button>
-                            </form>
-                        </td>
-                    </tr>
-                </th:block>
-            </tbody>
-        </table>
+		<table class="table table-bordered">
+		    <thead>
+		        <tr>
+		            <th>ID</th>
+		            <th>Name</th>
+		            <th>Price</th>
+		            <th>Sold</th>
+		            <th>IsActive</th>
+		            <th>IsBan</th>
+		            <th>IsSelling</th>
+		            <th>Promotion Price</th>
+		            <th>Description</th>
+		            <th>Actions</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr th:each="product : ${productPage}">
+		            <td th:text="${product.id}"></td>
+		            <td th:text="${product.name}"></td>
+		            <td th:text="${product.price}"></td>
+		            <td th:text="${product.sold}"></td>
+		            <td th:text="${product.isActice} ? 'true' : 'false'"></td> 
+		            <td th:text="${product.isBan} ? 'true' : 'false'"></td> 
+		            <td th:text="${product.isSelling} ? 'true' : 'false'"></td> 
+		            <td th:text="${product.promotionPrice}"></td>
+		            <td th:text="${product.description}"></td>
+					<td>
+					    <!-- Ban Product Form -->
+					    <form th:action="@{/admin/products/ban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
+					        <button type="submit" class="btn btn-warning">Ban</button>
+					    </form>
+
+					    <!-- Unban Product Form -->
+					    <form th:action="@{/admin/products/unban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
+					        <button type="submit" class="btn btn-success">Unban</button>
+					    </form>
+					</td>
+		        </tr>
+		    </tbody>
+		</table>
+
+        <div th:if="${productPage.totalPages > 1}">
+            <ul class="pagination">
+                <li th:each="pageNumber : ${#numbers.sequence(1, productPage.totalPages)}"
+                    th:classappend="${pageNumber == productPage.number + 1} ? 'page-item active' : 'page-item'">
+                    <a th:href="@{/admin/products/searchpaginated(name=${name != null ? name : ''}, size=${productPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"></a>
+                    <span class="mx-2"></span>
+                </li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>

@@ -30,4 +30,6 @@ public interface StoreService {
 
 	List<Store> findByOwner(User user);
 
+	Page<Store> findByNameContaining(String name, Pageable pageable);
+
 }
