@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import vn.iotstar.entity.Cart;
 import vn.iotstar.entity.CartItem;
@@ -38,8 +39,9 @@ public class CustomerCartController {
 	@Autowired
 	ProductService productService;
 	@GetMapping
-	public String viewCart(Model model) {
-		User user = new User();
+	
+	public String viewCart(Model model, HttpSession session) {
+		User user = (User)session.getAttribute("user");
 		List<Cart> carts = user.getCarts();
 		List<CartItem> cartItems = new ArrayList<>();
 		for (Cart cart : carts) {
@@ -51,12 +53,12 @@ public class CustomerCartController {
 		return "user/cart";
 	}
 	@PostMapping("/add/{slug}")
-	public void addProductToCart(@PathVariable("slug") String slugProduct) {
+	public void addProductToCart(@PathVariable("slug") String slugProduct, HttpSession session) {
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
+		User user = (User)session.getAttribute("user");
 		if(optProduct.isPresent()) {
 			Product product = optProduct.get();
 			Store store = product.getStore();
-			User user = new User();
 			Optional<Cart> optCart = cartService.findByUserAndStore(user, store);
 			if(optCart.isPresent()) {
 				Cart cart = optCart.get();

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 
 <head>
     <meta charset="utf-8">
@@ -63,9 +64,15 @@
                         <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
 						
                     </div>
+					    <div th:if="${session.user == null}">
+				        <a th:href="@{/login}">Login</a>
+				        <a th:href="@{/register}">Register</a>
+				    </div>
+				    <div th:unless="${session.user == null}">
+				        <a th:href="@{/profile}" th:text="${session.user.fullname}"></a>
+				        <a th:href="@{/logout}">Logout</a>
+				    </div>
 					
-					<a href="/login" class="nav-item nav-link">Đăng nhập</a>
-					<a href="/register" class="nav-item nav-link">Đăng kí</a>
 
 					
                 </div>
