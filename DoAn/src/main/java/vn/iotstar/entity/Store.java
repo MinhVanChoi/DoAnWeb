@@ -57,7 +57,7 @@ public class Store {
 	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
 	private List<Order> orders = new ArrayList<>();
 	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-	private List<Review> reviews = new ArrayList<>();
+	private List<ReviewOrder> reviews = new ArrayList<>();
 	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
 	private List<Cart> carts = new ArrayList<>();
 	@ManyToOne

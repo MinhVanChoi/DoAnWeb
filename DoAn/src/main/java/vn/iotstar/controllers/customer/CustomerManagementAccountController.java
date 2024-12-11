@@ -22,7 +22,7 @@ import vn.iotstar.services.UserService;
 public class CustomerManagementAccountController {
 	@Autowired
 	UserService userService;
-	@GetMapping
+	@RequestMapping("")
 	public String managementAccount(Model model, HttpSession session) {
 		User user = (User)session.getAttribute("user");
 		model.addAttribute("user", user);
