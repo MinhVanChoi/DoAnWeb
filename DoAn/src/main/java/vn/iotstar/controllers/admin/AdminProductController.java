@@ -78,6 +78,8 @@ public class AdminProductController {
 		model.addAttribute("listproduct", list);
 		return "admin/product-list";
 	}
+	
+	
 	@GetMapping("/{slug}")
 	public ModelAndView viewProduct(ModelMap model, @PathVariable("slug") String slugProduct) {
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
@@ -100,6 +102,8 @@ public class AdminProductController {
 		}
 		return new ModelAndView("forward:/admin/products");
 	}
+	
+	
 	@PostMapping("/unban/{slug}")	
 	public ModelAndView unbanProduct(ModelMap model, @PathVariable("slug") String slugProduct) {
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
@@ -112,7 +116,7 @@ public class AdminProductController {
 		}
 		return new ModelAndView("forward:/admin/products");
 	}
-
+	
 	
 	@RequestMapping("/searchpaginated")
 	public String search(ModelMap model,

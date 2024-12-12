@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="path/to/bootstrap.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Cart</h1>
+
+        <div class="row">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through the Cart Items -->
+                    <th:block th:each="cartItem : ${listcartItem}">
+                        <tr>
+                            <td th:text="${cartItem.product.name}"></td>
+                            <td>
+                                <!-- Quantity input field -->
+                                <form th:action="@{/carts/edit/{slug}(slug=${cartItem.product.slug})}" method="post">
+                                    <input type="number" name="count" th:value="${cartItem.count}" min="1" class="form-control" />
+                                    <button type="submit" class="btn btn-warning mt-2">Update</button>
+                                </form>
+                            </td>
+                            <td th:text="${cartItem.product.price}"></td>
+                            <td th:text="${cartItem.product.price * cartItem.count}"></td>
+                            <td>
+                                <!-- Delete button -->
+                                <form th:action="@{/carts/delete/{slug}(slug=${cartItem.product.slug})}" method="post">
+                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Display total cost -->
+        <div class="row">
+            <div class="col-md-6">
+                <strong>Total Price:</strong> 
+                <span th:text="${totalPrice}"></span>
+            </div>
+            <div class="col-md-6">
+                <a href="/checkout" class="btn btn-primary">Proceed to Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="path/to/bootstrap.bundle.js"></script>
+</body>
+</html>

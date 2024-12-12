@@ -39,6 +39,8 @@ public class CustomerReview {
 	ProductService productService;
 	@Autowired
 	ReviewProductService reviewProductService;
+	
+	
 	@GetMapping("/order/{id}")
 	public String reviewOrder(Model model, @PathVariable("id") Long idOrder,HttpSession session) {
 		User user = (User)session.getAttribute("user");

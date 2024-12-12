@@ -35,6 +35,8 @@ public class StoreController {
 		model.addAttribute("liststore", list);
 		return "user/store-list";
 	}
+	
+	
 	@GetMapping("/{slug}")
 	public String myStore(Model model,@PathVariable("slug") String slugStore, HttpSession session) {
 		User user = (User)session.getAttribute("user");

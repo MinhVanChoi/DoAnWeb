@@ -38,6 +38,9 @@ public class CustomerCartController {
 	CartItemSerice cartItemSerice;
 	@Autowired
 	ProductService productService;
+	
+	
+	
 	@RequestMapping("")
 	public String viewCart(Model model, HttpSession session) {
 		User user = (User)session.getAttribute("user");
@@ -47,13 +50,12 @@ public class CustomerCartController {
 			List<CartItem> temp = cart.getCartItem();
 			cartItems.addAll(temp);
 		}
-		model.addAttribute("listcart", carts);
 		model.addAttribute("listcartItem", cartItems);
 		return "user/cart";
 	}
 	
 	
-	@PostMapping("/add/{slug}")
+	@GetMapping("/add/{slug}")
 	public void addProductToCart(@PathVariable("slug") String slugProduct, HttpSession session) {
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
 		User user = (User)session.getAttribute("user");
@@ -72,6 +74,7 @@ public class CustomerCartController {
 				}
 				else {
 					CartItem cartItem = new CartItem();
+					cartItem.setId(cartItemId);
 					cartItem.setCart(cart);
 					cartItem.setProduct(product);
 					cartItem.setCount(1);
@@ -83,7 +86,9 @@ public class CustomerCartController {
 				cart.setStore(store);
 				cart.setUser(user);
 				cartService.save(cart);
+				CartItemId cartItemId = new CartItemId(cart.getId(), product.getId());
 				CartItem cartItem = new CartItem();
+				cartItem.setId(cartItemId);
 				cartItem.setCart(cart);
 				cartItem.setProduct(product);
 				cartItem.setCount(1);

@@ -46,16 +46,17 @@
 							<button type="submit" class="btn btn-warning">Order Now</button>
 						</form>
 						
-						<form th:action="@{/orders//product/{product.slug}}" method="post" style="display:inline;">
-							<button type="submit" class="btn btn-success">Order</button>
-						</form>
+						<form th:action="@{/carts/add/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
+													<button type="submit" class="btn btn-warning">Cart</button>
+												</form>
+												
 
-						<form th:action="@{/product/ban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
+						<form th:action="@{/follow-products/follow/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
 							<button type="submit" class="btn btn-info">Follow</button>
 						</form>
 
 						
-						<form th:action="@{/product/ban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
+						<form th:action="@{/product/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
 													<button type="submit" class="btn btn-primary">Detail</button>
 												</form>
 									
