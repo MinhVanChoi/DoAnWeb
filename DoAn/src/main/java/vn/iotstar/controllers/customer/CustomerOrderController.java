@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import vn.iotstar.entity.Cart;
 import vn.iotstar.entity.CartItem;
 import vn.iotstar.entity.Order;
 import vn.iotstar.entity.OrderItem;
+import vn.iotstar.entity.OrderItemId;
 import vn.iotstar.entity.Product;
 import vn.iotstar.entity.Store;
 import vn.iotstar.entity.User;
@@ -53,7 +55,9 @@ public class CustomerOrderController {
 		model.addAttribute("listorder", orders);
 		return "user/order";
 	}
-	@PostMapping("/product/{slug}")
+	
+	
+	@GetMapping("/product/{slug}")
 	public ModelAndView order(ModelMap model, @PathVariable("slug") String slugProduct, HttpSession session) {
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
 		User user = (User)session.getAttribute("user");
@@ -72,13 +76,18 @@ public class CustomerOrderController {
 			order.setAmountToGD(product.getPrice()*(0.2 - store.getStorelevel().getDiscount())+store.getCommission().getCost());
 			orderService.save(order);
 			OrderItem orderItem = new OrderItem();
+			OrderItemId id = new OrderItemId(order.getId(), product.getId());
 			orderItem.setOrder(order);
 			orderItem.setCount(1);
+			orderItem.setId(id);
 			orderItem.setProduct(product);
 			orderItemService.save(orderItem);
 		}
-		return new ModelAndView("cart");
+		return new ModelAndView("home");
+		
 	}
+	
+	
 	@PostMapping("/store/{slug}")
 	public ModelAndView orderFormStore(ModelMap model, @PathVariable("slug") String slugStore, HttpSession session) {
 		Optional<Store> optStore = storeService.findBySlug(slugStore);

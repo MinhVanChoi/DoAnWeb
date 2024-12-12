@@ -47,7 +47,6 @@ public class CustomerFollowProductController {
 			userFollowProduct.setProduct(product);
 			userFollowProductService.save(userFollowProduct);
 		}
-		//sua lai tra ve trang dang xem
 		return new ModelAndView("redirect:/follow-products");
 	}
 	@GetMapping("unfollow/{slug}")
@@ -62,7 +61,6 @@ public class CustomerFollowProductController {
 				userFollowProductService.deleteById(userFollowProductId);
 			}
 		}
-		//sua lai tra ve trang dang xem
 		return new ModelAndView("redirect:/follow-products");
 	}
 }

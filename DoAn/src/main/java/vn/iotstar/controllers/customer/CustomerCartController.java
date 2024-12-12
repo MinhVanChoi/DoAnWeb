@@ -51,6 +51,8 @@ public class CustomerCartController {
 		model.addAttribute("listcartItem", cartItems);
 		return "user/cart";
 	}
+	
+	
 	@PostMapping("/add/{slug}")
 	public void addProductToCart(@PathVariable("slug") String slugProduct, HttpSession session) {
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
@@ -89,6 +91,8 @@ public class CustomerCartController {
 			}
 		}
 	}
+	
+	
 	@PostMapping("/edit/{slug}")
 	public ModelAndView editCartItem(ModelMap model,@PathVariable("slug") String slugProduct, 
 			@Valid @ModelAttribute("cart") Cart cartModel, BindingResult result) {
@@ -110,6 +114,8 @@ public class CustomerCartController {
 		}
 		return new ModelAndView("foward:/carts", model);
 	}
+	
+	
 	@PostMapping("/delete/{slug}")
 	public ModelAndView deleteCartItem(ModelMap model,@PathVariable("slug") String slugProduct, 
 			@Valid @ModelAttribute("cart") Cart cartModel) {
