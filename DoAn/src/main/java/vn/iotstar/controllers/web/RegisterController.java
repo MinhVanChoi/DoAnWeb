@@ -53,7 +53,7 @@ public class RegisterController {
 		newUser.setFullname(fullname);
 		newUser.setPhone(phonenumber);
 		newUser.setSlug(slug);
-		newUser.setEmailActive(true);
+		newUser.setEmailActive(false);
 		newUser.setPhoneActive(true);
 		newUser.setBan(false);
 
@@ -64,7 +64,6 @@ public class RegisterController {
 		}
 		newUser.setRoles(roles);
 		userService.save(newUser);
-		return "redirect:/login";
-
+		return "redirect:/request-otp";
 	}
 }

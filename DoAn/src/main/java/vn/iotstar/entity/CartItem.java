@@ -31,7 +31,7 @@ public class CartItem {
 	private Cart cart;
 	@ManyToOne
 	@MapsId("productId")
-	@JoinColumn(name = "productId")
+	@JoinColumn(name = "product_id")
 	private Product product;
 	private int count;
 	@CreationTimestamp
