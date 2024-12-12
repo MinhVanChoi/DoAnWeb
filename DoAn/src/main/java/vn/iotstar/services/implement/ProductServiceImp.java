@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import vn.iotstar.entity.Product;
+import vn.iotstar.entity.Store;
 import vn.iotstar.repository.ProductRepository;
 import vn.iotstar.services.ProductService;
 
@@ -71,6 +72,21 @@ public class ProductServiceImp implements ProductService{
 	@Override
 	public Page<Product> findByNameContaining(String name, Pageable pageable) {
 		return productRepository.findByNameContaining(name, pageable);
+	}
+
+	@Override
+	public List<Product> findByStore(Store store) {
+		return productRepository.findByStore(store);
+	}
+
+	@Override
+	public List<Product> findSellingProduct() {
+		return productRepository.findSellingProduct();
+	}
+
+	@Override
+	public List<Product> findStoredProduct() {
+		return productRepository.findStoredProduct();
 	}
 	
 	

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import vn.iotstar.entity.Product;
+import vn.iotstar.entity.Store;
 
 public interface ProductService {
 
@@ -32,5 +33,11 @@ public interface ProductService {
 	Optional<Product> findBySlug(String slug);
 
 	Page<Product> findByNameContaining(String name, Pageable pageable);
+
+	List<Product> findByStore(Store store);
+
+	List<Product> findStoredProduct();
+
+	List<Product> findSellingProduct();
 	
 }

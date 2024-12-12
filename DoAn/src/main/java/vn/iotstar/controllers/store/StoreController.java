@@ -1,4 +1,4 @@
-package vn.iotstar.controllers.customer;
+package vn.iotstar.controllers.store;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +25,7 @@ import vn.iotstar.services.StoreService;
 
 @Controller
 @RequestMapping("/stores")
-public class CustomerStore {
+public class StoreController {
 	@Autowired
 	StoreService storeService;
 	@RequestMapping("")
@@ -43,6 +43,7 @@ public class CustomerStore {
 			Store store = optStore.get();
 			if(user.equals(store.getOwner())){
 				model.addAttribute("store", store);
+				session.setAttribute("store", store);
 				return "user/mystore";
 			}
 		}
