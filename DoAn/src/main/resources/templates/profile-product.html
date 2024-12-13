@@ -4,22 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi tiết sản phẩm</title>
-    <link rel="stylesheet" href="path/to/your/styles.css">
+     <link href="/css/profile-product.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <h1>Chi tiết sản phẩm</h1>
-
         <div class="product-details">
-            <p><strong>Tên sản phẩm:</strong> <span th:text="${product.name}"></span></p>
-            <p><strong>Mô tả:</strong> <span th:text="${product.description}"></span></p>
-            <p><strong>Giá:</strong> <span th:text="${product.price}"></span></p>
-            <p><strong>Giá khuyến mãi:</strong> <span th:text="${product.promotionPrice}"></span></p>
-            <p><strong>Đã bán:</strong> <span th:text="${product.sold}"></span></p>
+            <p><strong>Tên sản phẩm:</strong> <span th:text="${product.name}" class="product-name"></span></p>
+            <p><strong>Mô tả: <br></strong> <span th:text="${product.description}" class="product-description"></span></p>
+            <p><strong>Giá:</strong> <span th:text="${product.price}" class="product-price"></span></p>
+            <p><strong>Giá khuyến mãi:</strong> <span th:text="${product.promotionPrice}" class="product-price"></span></p>
+            <p><strong>Đã bán:</strong> <span th:text="${product.sold}" class="product-sold"></span></p>
+            <p><strong>Hình ảnh:</strong><br> <img th:src="${product.images}" alt="Hình ảnh sản phẩm" class="product-image"></p>
         </div>
         <div class="actions">
-           
-
             <a href="/product" class="btn btn-secondary">Quay lại</a>
         </div>
     </div>

@@ -52,7 +52,7 @@ public class ProductController {
 	public String travai(Model model, @RequestParam("page") Optional<Integer> page,
 	        @RequestParam("size") Optional<Integer> size) {
 
-	    Page<Product> resultPage = getPaginatedResult(page, size, "travai");
+	    Page<Product> resultPage = getPaginatedResult(page, size, "tra vai");
 	    
 	    int totalPages = resultPage.getTotalPages();
 	    List<Integer> pageNumbers = new ArrayList<>();
@@ -122,7 +122,7 @@ public class ProductController {
 	public String traxanh(Model model, @RequestParam("page") Optional<Integer> page,
 	        @RequestParam("size") Optional<Integer> size) {
 
-	    Page<Product> resultPage = getPaginatedResult(page, size, "tra xanh");
+	    Page<Product> resultPage = getPaginatedResult(page, size, "tra vai");
 	    
 	    int totalPages = resultPage.getTotalPages();
 	    List<Integer> pageNumbers = new ArrayList<>();

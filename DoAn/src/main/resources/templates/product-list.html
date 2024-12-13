@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link href="/css/product-list.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
         <h2>Product List</h2>
         
-        <form action="/product/searchpaginated" method="get" class="mb-3">
+        <form action="/product/searchpaginated " method="get" class="mb-3">
             <input type="text" name="name" placeholder="Search by name" class="form-control" value="">
             <select name="size" id="size" onchange="this.form.submit()">
                 <option value="3" th:selected="${productPage != null && productPage.size == 3}">3</option>
@@ -21,28 +22,30 @@
             </select>
             <button type="submit" class="btn btn-secondary mt-2">Search</button>
         </form>
+		
 
 		<table class="table table-bordered">
 		    <thead>
 		        <tr>
 		            <th>Name</th>
+					<th>Hình ảnh</th>
 		            <th>Price</th>
 		            <th>Sold</th>
 		            <th>Promotion Price</th>
-		            <th>Description</th>
 		            <th>Actions</th>
+					
 		        </tr>
 		    </thead>
 		    <tbody>
 		        <tr th:each="product : ${productPage}">
 		            <td th:text="${product.name}"></td>
+					<td><img th:src="${product.images}" alt="Hình ảnh sản phẩm" style="width: 100px;width: 100px"></td>
 		            <td th:text="${product.price}"></td>
 		            <td th:text="${product.sold}"></td>
 		            <td th:text="${product.promotionPrice}"></td>
-		            <td th:text="${product.description}"></td>
 					<td>
 						
-						<form th:action="@{/orders/product/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
+						<form th:action="@{/product}" method="get" style="display:inline;">
 							<button type="submit" class="btn btn-warning">Order Now</button>
 						</form>
 						
@@ -69,7 +72,7 @@
             <ul class="pagination">
                 <li th:each="pageNumber : ${#numbers.sequence(1, productPage.totalPages)}"
                     th:classappend="${pageNumber == productPage.number + 1} ? 'page-item active' : 'page-item'">
-                    <a th:href="@{/admin/products/searchpaginated(name=${name != null ? name : ''}, size=${productPage.size}, page=${pageNumber})}"
+                    <a th:href="@{/product/searchpaginated(name=${name != null ? name : ''}, size=${productPage.size}, page=${pageNumber})}"
                        th:text="${pageNumber}"></a>
                     <span class="mx-2"></span>
                 </li>

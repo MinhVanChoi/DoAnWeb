@@ -1,5 +1,8 @@
 package vn.iotstar.controllers.web;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import vn.iotstar.services.UserService;
+import vn.iotstar.entity.Role;
 import vn.iotstar.entity.User;
 
 
@@ -32,7 +36,9 @@ public class LoginController {
 			if (user == null) {
 				return "redirect:/login?error=true";
 			}
-			
+			if ("admin@gmail.com".equals(email)) {
+				session.setAttribute("user", user); 
+				return "redirect:/admin/home"; }
 			session.setAttribute("user", user); 
 
 			return "redirect:/home"; 
