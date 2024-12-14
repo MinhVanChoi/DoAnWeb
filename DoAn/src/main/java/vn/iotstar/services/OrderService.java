@@ -27,7 +27,6 @@ public interface OrderService {
 
 	<S extends Order> S save(S entity);
 
-	List<Order> findByStore(Store store);
 
 	List<Order> findByUser(User user);
 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .total-price {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #28a745;
+        }
+        .empty-cart {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Giỏ hàng của bạn</h2>
+    
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Lặp qua danh sách CartItem -->
+                <tr th:each="cartItem : ${listcaritems}">
+                    <td>
+                        <!-- Hiển thị ảnh sản phẩm -->
+                        <img th:src="@{${cartItem.product.images}}" alt="image" width="100">
+                    </td>
+                    <td>
+                        <!-- Hiển thị tên sản phẩm -->
+                        <span th:text="${cartItem.product.name}"></span>
+                    </td>
+                    <td>
+                        <!-- Hiển thị giá sản phẩm -->
+                        <span th:text="${cartItem.product.price}"></span>
+                    </td>
+                    <td>
+                        <!-- Hiển thị số lượng trong giỏ hàng -->
+                        <span th:text="${cartItem.count}"></span>
+                    </td>
+                    <td>
+                        <!-- Hiển thị tổng tiền của sản phẩm này trong giỏ -->
+                        <span th:text="${cartItem.product.price * cartItem.count}"></span>
+                    </td>
+                    <td>
+                        <!-- Thêm nút để chỉnh sửa số lượng -->
+                        <a th:href="@{'/carts/add/' + ${cartItem.product.slug}}" class="btn btn-warning btn-sm">Thêm 1</a>
+						<!-- Nút Giảm 1 -->
+						  <a th:href="@{'/carts/remove/' + ${cartItem.product.slug}}" class="btn btn-secondary btn-sm">Giảm 1</a>
+                        <!-- Nút để xóa sản phẩm khỏi giỏ -->
+                        <a th:href="@{'/carts/delete/' + ${cartItem.product.slug}}" class="btn btn-danger btn-sm">Xóa</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Nếu giỏ hàng trống -->
+    <div th:if="${#lists.isEmpty(listcaritems)}" class="empty-cart">
+        <p>Giỏ hàng của bạn hiện tại không có sản phẩm nào.</p>
+    </div>
+
+    <!-- Tổng tiền -->
+    <div th:if="${!#lists.isEmpty(listcaritems)}">
+        <h4 class="total-price">Tổng tiền: 
+			<span th:text="${totalAmount}"></span>
+        </h4>
+    </div>
+
+	
+    <br>
+    <a href="/product" class="btn btn-primary">Tiếp tục mua sắm</a>
+    <a href="/checkout" class="btn btn-success">Thanh toán</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

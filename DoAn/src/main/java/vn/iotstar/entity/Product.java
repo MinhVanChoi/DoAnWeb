@@ -52,23 +52,19 @@ public class Product {
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
-    @Column(name = "store_id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "store_id", nullable = false)
 	private Store store;
-    @Column(name = "category_id", nullable = false)
-	private Category category_id;
-	
-	
-	
-//	@ManyToMany
-//	@JoinTable(
-//			name = "product_stylevalue",
-//			joinColumns = @JoinColumn(name = "product_id"),
-//			inverseJoinColumns = @JoinColumn(name = "style_value_id"))
-//	private List<StyleValue> styleValueIds = new ArrayList<>();
-//	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-//	private List<ReviewProduct> reviews = new ArrayList<>();
-//	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-//	private List<OrderItem> orderItems = new ArrayList<>();
-//	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-//	private List<CartItem> cartItems = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "category_id", nullable = false)
+	private Category category;
+	@ManyToMany
+	@JoinTable(
+			name = "product_stylevalue",
+			joinColumns = @JoinColumn(name = "product_id"),
+			inverseJoinColumns = @JoinColumn(name = "style_value_id"))
+	private List<StyleValue> styleValueIds = new ArrayList<>();
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private List<ReviewProduct> reviews = new ArrayList<>();
+
 }	

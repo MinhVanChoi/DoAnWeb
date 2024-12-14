@@ -51,17 +51,8 @@ public class Store {
 	private User owner;
 	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
 	private List<UserFollowStore> followByUsers = new ArrayList<>(); 
-	@ManyToOne
-	@JoinColumn(name = "store_level")
-	private StoreLevel storelevel;
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-	private List<Order> orders = new ArrayList<>();
+
 	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
 	private List<ReviewOrder> reviews = new ArrayList<>();
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-	private List<Cart> carts = new ArrayList<>();
-	@ManyToOne
-	@JoinColumn(name = "commission_id")
-	private Commission commission;
 	
 }

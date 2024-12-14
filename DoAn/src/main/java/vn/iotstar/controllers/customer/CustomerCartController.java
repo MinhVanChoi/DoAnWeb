@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -25,7 +26,7 @@ import vn.iotstar.entity.CartItemId;
 import vn.iotstar.entity.Product;
 import vn.iotstar.entity.Store;
 import vn.iotstar.entity.User;
-import vn.iotstar.services.CartItemSerice;
+import vn.iotstar.services.CartItemService;
 import vn.iotstar.services.CartService;
 import vn.iotstar.services.ProductService;
 
@@ -34,107 +35,148 @@ import vn.iotstar.services.ProductService;
 public class CustomerCartController {
 	@Autowired
 	CartService cartService;
-	@Autowired
-	CartItemSerice cartItemSerice;
+
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	CartItemService cartitemService;
 	
 	
 	
 	@RequestMapping("")
+	@Transactional
 	public String viewCart(Model model, HttpSession session) {
 		User user = (User)session.getAttribute("user");
-		List<Cart> carts = user.getCarts();
-		List<CartItem> cartItems = new ArrayList<>();
-		for (Cart cart : carts) {
-			List<CartItem> temp = cart.getCartItem();
-			cartItems.addAll(temp);
+		Cart cart = user.getCart();
+		
+		List<CartItem> cartitems = cart.getCartItems();
+		List<Product> product_test = new ArrayList<>();
+		for(CartItem item : cartitems) {
+			Product product_1 = item.getProduct();
+			product_test.add(product_1);
 		}
-		model.addAttribute("listcartItem", cartItems);
-		return "user/cart";
+		
+		double totalAmount = 0;
+		for (CartItem item : cartitems) {
+		    totalAmount += item.getProduct().getPrice() * item.getCount();
+		}
+
+		model.addAttribute("listproduct",product_test);
+		model.addAttribute("listcaritems",cartitems); // trong đây mới có count 
+		model.addAttribute("totalAmount", totalAmount); 
+		return "cart";
 	}
 	
 	
+
+	// count 1 lay tu view
 	@GetMapping("/add/{slug}")
-	public void addProductToCart(@PathVariable("slug") String slugProduct, HttpSession session) {
+	public ModelAndView addProductToCart(ModelMap model, @PathVariable("slug") String slugProduct, HttpSession session) {
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
 		User user = (User)session.getAttribute("user");
 		if(optProduct.isPresent()) {
 			Product product = optProduct.get();
-			Store store = product.getStore();
-			Optional<Cart> optCart = cartService.findByUserAndStore(user, store);
+			Optional<Cart> optCart = cartService.findByUser(user);
 			if(optCart.isPresent()) {
 				Cart cart = optCart.get();
-				CartItemId cartItemId = new CartItemId(cart.getId(), product.getId());
-				Optional<CartItem> optCartItem = cartItemSerice.findById(cartItemId);
-				if(optCartItem.isPresent()) {
-					CartItem cartItem = optCartItem.get();
-					cartItem.setCount(cartItem.getCount() + 1);
-					cartItemSerice.save(cartItem);
+				List<CartItem> cartitems = cart.getCartItems();
+				List<Product> product_test = new ArrayList<>();
+				for(CartItem item : cartitems) {
+					Product product_1 = item.getProduct();
+					product_test.add(product_1);
+					if (product.equals(item.getProduct()))
+					{
+						CartItemId id_1 = new CartItemId(cart.getId(),product.getId());
+						Optional<CartItem> cartitemopt = cartitemService.findById(id_1);
+						CartItem cartitemold = cartitemopt.get();
+				        int currentCount = cartitemold.getCount();
+				        System.out.println("Current count of " + product.getName() + ": " + currentCount);				        System.out.println("Current count of " + product.getName() + ": " + currentCount);
+				        System.out.println("Current price of " + product.getPrice() + ": " + currentCount);
+
+				        cartitemold.setCount(currentCount + 1);
+				        System.out.println("Updated count: " + cartitemold.getCount());
+				        
+				        cartitemService.save(cartitemold);
+						
+					}
+					
 				}
-				else {
-					CartItem cartItem = new CartItem();
-					cartItem.setId(cartItemId);
-					cartItem.setCart(cart);
-					cartItem.setProduct(product);
-					cartItem.setCount(1);
-					cartItemSerice.save(cartItem);
+				if (!product_test.contains(product))
+				{
+					CartItemId id = new CartItemId(cart.getId(),product.getId());
+					CartItem cartitem = new CartItem();
+					cartitem.setId(id);
+					cartitem.setCart(cart);
+					cartitem.setProduct(product);
+					cartitem.setCount(1);
+					cartitemService.save(cartitem);
 				}
-			}
+				
+
+				}
 			else {
 				Cart cart = new Cart();
-				cart.setStore(store);
 				cart.setUser(user);
 				cartService.save(cart);
-				CartItemId cartItemId = new CartItemId(cart.getId(), product.getId());
-				CartItem cartItem = new CartItem();
-				cartItem.setId(cartItemId);
-				cartItem.setCart(cart);
-				cartItem.setProduct(product);
-				cartItem.setCount(1);
-				cartItemSerice.save(cartItem);
+				
+				CartItemId id = new CartItemId(cart.getId(),product.getId());
+				CartItem cartitem = new CartItem();
+				cartitem.setId(id);
+				cartitem.setCart(cart);
+				cartitem.setProduct(product);
+				cartitem.setCount(1);
+				cartitemService.save(cartitem);
+
+
 			}
+			
+
+
 		}
+        return new ModelAndView("product        return new ModelAndView(\"product/searchpaginated\", model);", model);
+
 	}
 	
 	
-	@PostMapping("/edit/{slug}")
-	public ModelAndView editCartItem(ModelMap model,@PathVariable("slug") String slugProduct, 
-			@Valid @ModelAttribute("cart") Cart cartModel, BindingResult result) {
-		if(result.hasErrors()) {
-			return new ModelAndView("user/cart");
-		}
-		Optional<Product> optProduct = productService.findBySlug(slugProduct);
-		if(optProduct.isPresent()) {
-			Product product = optProduct.get();
-			Cart cart = new Cart();
-			BeanUtils.copyProperties(cartModel, cart);
-			CartItemId cartItemId = new CartItemId(cart.getId(), product.getId());
-		    Optional<CartItem> optCartItem = cartItemSerice.findById(cartItemId);
-		    if(optCartItem.isPresent()) {
-		    	CartItem cartItem = optCartItem.get();
-		    	cartItem.setCount(cartItem.getCount() + 1);
-		    	cartItemSerice.save(cartItem);
-		    }
-		}
-		return new ModelAndView("foward:/carts", model);
-	}
-	
-	
-	@PostMapping("/delete/{slug}")
-	public ModelAndView deleteCartItem(ModelMap model,@PathVariable("slug") String slugProduct, 
-			@Valid @ModelAttribute("cart") Cart cartModel) {
-		Optional<Product> optProduct = productService.findBySlug(slugProduct);
-		if(optProduct.isPresent()) {
-			Product product = optProduct.get();
-			Cart cart = new Cart();
-			BeanUtils.copyProperties(cartModel, cart);
-			CartItemId cartItemId = new CartItemId(cart.getId(), product.getId());
-		    Optional<CartItem> optCartItem = cartItemSerice.findById(cartItemId);
-		    if(optCartItem.isPresent()) {
-		    	cartItemSerice.deleteById(cartItemId);
-		    }
-		}
-		return new ModelAndView("redirect:/carts", model);
-	}
+//	
+//	@PostMapping("/edit/{slug}")
+//	public ModelAndView editCartItem(ModelMap model,@PathVariable("slug") String slugProduct, 
+//			@Valid @ModelAttribute("cart") Cart cartModel, BindingResult result) {
+//		if(result.hasErrors()) {
+//			return new ModelAndView("user/cart");
+//		}
+//		Optional<Product> optProduct = productService.findBySlug(slugProduct);
+//		if(optProduct.isPresent()) {
+//			Product product = optProduct.get();
+//			Cart cart = new Cart();
+//			BeanUtils.copyProperties(cartModel, cart);
+//			CartItemId cartItemId = new CartItemId(cart.getId(), product.getId());
+//		    Optional<CartItem> optCartItem = cartItemSerice.findById(cartItemId);
+//		    if(optCartItem.isPresent()) {
+//		    	CartItem cartItem = optCartItem.get();
+//		    	cartItem.setCount(cartItem.getCount() + 1);
+//		    	cartItemSerice.save(cartItem);
+//		    }
+//		}
+//		return new ModelAndView("foward:/carts", model);
+//	}
+//	
+//	
+//	@PostMapping("/delete/{slug}")
+//	public ModelAndView deleteCartItem(ModelMap model,@PathVariable("slug") String slugProduct, 
+//			@Valid @ModelAttribute("cart") Cart cartModel) {
+//		Optional<Product> optProduct = productService.findBySlug(slugProduct);
+//		if(optProduct.isPresent()) {
+//			Product product = optProduct.get();
+//			Cart cart = new Cart();
+//			BeanUtils.copyProperties(cartModel, cart);
+//			CartItemId cartItemId = new CartItemId(cart.getId(), product.getId());
+//		    Optional<CartItem> optCartItem = cartItemSerice.findById(cartItemId);
+//		    if(optCartItem.isPresent()) {
+//		    	cartItemSerice.deleteById(cartItemId);
+//		    }
+//		}
+//		return new ModelAndView("redirect:/carts", model);
+//	}
 }

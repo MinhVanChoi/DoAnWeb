@@ -62,6 +62,7 @@ public class User {
 			name = "users_role",
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
+	
 	private Set<Role> roles = new HashSet<>();
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	private List<Store> stores = new ArrayList<>();
@@ -75,8 +76,9 @@ public class User {
 	private List<Order> oders = new ArrayList<>();
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<ReviewOrder> reviews = new ArrayList<>();
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Cart> carts = new ArrayList<>();
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Cart cart;
+	
     @ManyToOne
     @JoinColumn(name = "store_id", nullable = true)
     private Store store; 

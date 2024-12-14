@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import vn.iotstar.entity.Commission;
 import vn.iotstar.entity.Product;
 import vn.iotstar.services.ProductService;
 

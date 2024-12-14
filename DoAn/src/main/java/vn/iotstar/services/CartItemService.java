@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
 import vn.iotstar.entity.CartItem;
 import vn.iotstar.entity.CartItemId;
 
-public interface CartItemSerice {
+public interface CartItemService {
 
 	void deleteById(CartItemId id);
 

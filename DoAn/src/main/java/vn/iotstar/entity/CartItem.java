@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "cartitem")
 public class CartItem {
+	
 	@EmbeddedId
 	private CartItemId id;
 	@ManyToOne
@@ -40,4 +41,5 @@ public class CartItem {
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
+	
 }

@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 import vn.iotstar.entity.CartItem;
 import vn.iotstar.entity.CartItemId;
 import vn.iotstar.repository.CartItemRepository;
-import vn.iotstar.services.CartItemSerice;
+import vn.iotstar.services.CartItemService;
 
 @Service
-public class CartItemServiceImp implements CartItemSerice{
+public class CartItemServiceImp implements CartItemService{
 	@Autowired
 	CartItemRepository cartItemRepository;
 

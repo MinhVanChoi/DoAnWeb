@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import vn.iotstar.entity.Order;
 import vn.iotstar.entity.Store;
 import vn.iotstar.entity.User;
-import vn.iotstar.repository.OrderItemRepository;
 import vn.iotstar.repository.OrderRepository;
 import vn.iotstar.services.OrderService;
 
@@ -25,6 +24,7 @@ public class OrderServiceImp implements OrderService{
 	public <S extends Order> S save(S entity) {
 		return orderRepository.save(entity);
 	}
+	
 
 	@Override
 	public List<Order> findAll(Sort sort) {
@@ -61,8 +61,5 @@ public class OrderServiceImp implements OrderService{
 		return orderRepository.findByUser(user);
 	}
 
-	@Override
-	public List<Order> findByStore(Store store) {
-		return orderRepository.findByStore(store);
-	}
+
 }
