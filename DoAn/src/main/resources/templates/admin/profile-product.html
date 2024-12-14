@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm</title>
+    <link rel="stylesheet" href="path/to/your/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Chi tiết sản phẩm</h1>
+
+        <div class="product-details">
+            <p><strong>Tên sản phẩm:</strong> <span th:text="${product.name}"></span></p>
+            <p><strong>Mô tả:</strong> <span th:text="${product.description}"></span></p>
+            <p><strong>Giá:</strong> <span th:text="${product.price}"></span></p>
+            <p><strong>Giá khuyến mãi:</strong> <span th:text="${product.promotionPrice}"></span></p>
+            <p><strong>Đã bán:</strong> <span th:text="${product.sold}"></span></p>
+            <p><strong>Trạng thái bán:</strong> <span th:text="${product.isSelling} ? 'Đang bán' : 'Ngừng bán'"></span></p>
+            <p><strong>Trạng thái cấm:</strong> <span th:text="${product.isBan} ? 'Đã cấm' : 'Chưa cấm'"></span></p>
+        </div>
+
+        <div class="actions">
+            <!-- Cấm hoặc mở cấm sản phẩm -->
+            <form th:action="@{/admin/products/ban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
+                <button type="submit" th:disabled="${product.isBan}" class="btn btn-danger">Cấm</button>
+            </form>
+            <form th:action="@{/admin/products/unban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
+                <button type="submit" th:disabled="${not product.isBan}" class="btn btn-success">Mở cấm</button>
+            </form>
+
+            <a href="/admin/products" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </div>
+</body>
+</html>

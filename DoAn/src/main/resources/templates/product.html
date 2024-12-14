@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="/css/product-list.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>Tea House - Tea Shop Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<div th:replace="/fragments/header"></div>
+
+    <div class="product-list">
+    <h2>Sản phẩm</h2>
+        <form action="/product/searchpaginated" method="get" >
+            <input type="text" name="search" placeholder="Search by name" class="form-control" value="">
+            <select name="size" id="size" onchange="this.form.submit()">
+                <option value="3" th:selected="${productPage != null && productPage.size == 3}">3</option>
+                <option value="5" th:selected="${productPage != null && productPage.size == 5}">5</option>
+                <option value="10" th:selected="${productPage != null && productPage.size == 10}">10</option>
+                <option value="15" th:selected="${productPage != null && productPage.size == 15}">15</option>
+                <option value="20" th:selected="${productPage != null && productPage.size == 20}">20</option>
+            </select>
+            <button type="submit" class="btn ">Search</button>
+        </form>
+    </div>
+    <div class="pro-container">
+        <div th:each="product : ${productPage}" class="pro">
+            <img  th:if="${product.images != null && product.images.startsWith('https')}"
+                 th:src="${product.images}"
+                 alt="User Avatar" class="img-thumbnail mb-3">
+            <img  th:unless="${product.images != null && product.images.startsWith('https')}"
+                 th:src="@{'/image?fname=' + ${product.images}}"
+                 alt="User Avatar" class="img-thumbnail mb-3">
+            <div class="des">
+                <h5 th:text="${product.name}"></h5>
+                <h4 th:text="${product.price} +'vnđ'"></h4>
+            </div>
+            <div>
+                <form th:action="@{/product}" method="get">
+                    <button type="submit" class="btn1 ">Buy</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${productPage.totalPages > 1}">
+        <ul class="pagination1">
+            <li th:each="pageNumber : ${#numbers.sequence(1, productPage.totalPages)}"
+                th:classappend="${pageNumber == productPage.number + 1} ? 'page-item active' : 'page-item'">
+                <a th:href="@{/product/searchpaginated(name=${name != null ? name : ''}, size=${productPage.size}, page=${pageNumber})}"
+                   th:text="${pageNumber}"></a>
+                <span class="mx-2"></span>
+            </li>
+        </ul>
+    </div>
+    <div th:replace="/fragments/footer"></div>
+
+
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

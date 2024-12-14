@@ -1,0 +1,40 @@
+<!-- header.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header Fragment</title>
+</head>
+<body>
+    <div class="container-fluid bg-white sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="/admin/products" class="nav-item nav-link active">Quản lý sản phẩm</a>
+                        <a href="/admin/stores" class="nav-item nav-link">Quản lý cửa hàng</a>
+                        <a href="/admin/users" class="nav-item nav-link">Quản lý người dùng</a>
+                        <a href="/admin/categories" class="nav-item nav-link">Quản lý thể loại</a>
+                        <a href="/admin/styles" class="nav-item nav-link">Quản lý style</a>
+                    </div>
+                    <div class="border-start ps-4 d-none d-lg-block">
+                        <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
+                    </div>
+
+                    <div th:if="${session.user == null}">
+                        <a th:href="@{/login}">Login</a>
+                        <a th:href="@{/register}">Register</a>
+                    </div>
+                    <div th:unless="${session.user == null}">
+                        <a th:href="@{/profile}" th:text="${session.user.fullname}"></a>
+                        <a th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</body>
+</html>

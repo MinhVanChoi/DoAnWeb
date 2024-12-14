@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Người Dùng</title>
+    <link rel="stylesheet" href="path/to/your/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Thông Tin Người Dùng</h1>
+
+        <div class="user-profile">
+            <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
+            <p><strong>Tên:</strong> <span th:text="${user.fullname}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+            <p><strong>Số điện thoại:</strong> <span th:text="${user.phone}"></span></p>
+            <p><strong>Địa chỉ:</strong> <span th:text="${user.address}"></span></p>
+            <p><strong>Trạng thái:</strong> 
+                <span th:if="${user.isBan}">Bị Cấm</span>
+                <span th:if="${not user.isBan}">Hoạt động</span>
+            </p>
+            
+            <div>
+                <form th:action="@{/admin/users/ban/{slug}(slug=${user.slug})}" method="post">
+                    <button type="submit" class="btn btn-danger" th:disabled="${user.isBan}">Cấm Người Dùng</button>
+                </form>
+                <a href="/admin/users" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cấm Người Dùng</title>
+    <link rel="stylesheet" href="path/to/your/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cấm Người Dùng</h1>
+
+        <p>Are you sure you want to ban this user?</p>
+        <div>
+            <form th:action="@{/admin/users/ban/{slug}(slug=${user.slug})}" method="post">
+                <button type="submit" class="btn btn-danger">Yes, ban user</button>
+            </form>
+            <a href="/admin/users" class="btn btn-secondary">No, go back</a>
+        </div>
+    </div>
+</body>
+</html>

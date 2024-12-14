@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Add Product</h2>
+    <form th:action="@{/admin/products/update}" th:object="${product}" method="post" enctype="multipart/form-data">
+
+        <input type="text" th:field="*{id}"/>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" name="name" class="form-control" required/>
+        </div>
+        <div>
+            <img style="height: 100px;width: 100px" th:if="${product.images != null && product.images.startsWith('https')}"
+                 th:src="${product.images}"
+                 alt="User Avatar" class="img-thumbnail mb-3">
+            <img style="height: 100px;width: 100px" th:unless="${product.images != null && product.images.startsWith('https')}"
+                 th:src="@{'/image?fname=' + ${product.images}}"
+                 alt="User Avatar" class="img-thumbnail mb-3">
+        </div>
+        <input type="file" id="images" name="images" class="form-control"  required/>
+        <div class="form-group">
+            <label for="slug">Slug:</label>
+            <input type="text" id="slug" th:field="*{slug}" name="slug" class="form-control" required/>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" th:field="*{price}" name="price" step="0.01" class="form-control" required/>
+        </div>
+        <div class="form-group">
+            <label for="promotionPrice">Promotion Price:</label>
+            <input type="number" id="promotionPrice" th:field="*{promotionPrice}" name="promotion_price" step="0.01" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control" th:field="*{description}" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="sold">Sold:</label>
+            <input type="number" id="sold" th:field="*{sold}" name="sold" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a th:href="@{/admin/products}" class="btn btn-secondary">Cancel</a>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
