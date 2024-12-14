@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/product-list.css">
+    <style>
+        .form-group img {
+            max-width: 100%;
+            height: auto;
+        }
+        .form-row {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>User Profile</h2>
+        <form th:action="@{/profile/update/test}" method="post" enctype="multipart/form-data">
+            <input type="hidden" class="form-control" id="id" name="id" th:value="${user.id}">
+            
+            <div class="form-row">
+                <!-- Full Name -->
+                <div class="form-group col-md-6">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" class="form-control" id="fullname" name="fullname" th:value="${user.fullname}">
+                </div>
+
+                <!-- Email -->
+                <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" th:value="${user.email}">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Address -->
+                <div class="form-group col-md-6">
+                    <label for="address">Address</label>
+                    <div class="d-flex">
+                        <input type="text" class="form-control" id="address" name="address" th:value="${user.address}" readonly>
+                        <a href="/profile/map" class="btn btn-info ml-2">Select from Map</a>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="form-group col-md-6">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control" id="phone" name="phone" th:value="${user.phone}">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Avatar Image Display -->
+                <div class="form-group col-md-6">
+                    <label for="avatar">Avatar</label>
+                    <div>
+                        <img th:if="${user.avatar != null && user.avatar.startsWith('https')}"
+                             th:src="${user.avatar}"
+                             alt="User Avatar" class="img-thumbnail mb-3">
+                        <img th:unless="${user.avatar != null && user.avatar.startsWith('https')}"
+                             th:src="@{'/image?fname=' + ${user.avatar}}"
+                             alt="User Avatar" class="img-thumbnail mb-3">
+                    </div>
+                    <!-- Avatar upload -->
+                    <input type="file" class="form-control" id="avatar" name="avatar">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chọn Tọa Độ</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7_0AGO_aUGkJg30fegBKqKdMTKMRciQg&callback=initMap" async defer></script>
+  <script>
+    var map;
+    var marker;
+
+    function initMap() {
+      // Tạo bản đồ tại vị trí mặc định (ví dụ: TP.HCM, Việt Nam)
+      var defaultLocation = {lat: 10.8231, lng: 106.6297};
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: defaultLocation
+      });
+
+      // Tạo marker
+      marker = new google.maps.Marker({
+        position: defaultLocation,
+        map: map,
+        draggable: true // Cho phép kéo marker
+      });
+
+      // Lắng nghe sự kiện click trên bản đồ để chọn tọa độ
+      google.maps.event.addListener(map, 'click', function(event) {
+        var latLng = event.latLng;
+        marker.setPosition(latLng); // Cập nhật vị trí marker
+        document.getElementById('lat').value = latLng.lat(); // Cập nhật vĩ độ
+        document.getElementById('lng').value = latLng.lng(); // Cập nhật kinh độ
+      });
+    }
+
+    // Hàm gửi tọa độ vào cơ sở dữ liệu (sử dụng AJAX)
+    function saveCoordinates() {
+      var lat = document.getElementById('lat').value;
+      var lng = document.getElementById('lng').value;
+
+      // Sử dụng AJAX để gửi tọa độ đến máy chủ
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "save_coordinates.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.send("lat=" + lat + "&lng=" + lng);
+
+      xhr.onload = function() {
+        if (xhr.status == 200) {
+          alert("Tọa độ đã được lưu!");
+        }
+      };
+    }
+  </script>
+</head>
+<body>
+  <h1>Chọn Tọa Độ và Lưu vào Cơ Sở Dữ Liệu</h1>
+  <div id="map" style="width: 100%; height: 400px;"></div>
+
+  <br>
+  <label for="lat">Vĩ Độ:</label>
+  <input type="text" id="lat" readonly><br>
+
+  <label for="lng">Kinh Độ:</label>
+  <input type="text" id="lng" readonly><br>
+	
+  <label for="lng">Tên địa chỉ:</label>
+   <input type="text" id="na" readonly><br>
+
+  <button onclick="saveCoordinates()">Lưu Tọa Độ</button>
+</body>
+</html>

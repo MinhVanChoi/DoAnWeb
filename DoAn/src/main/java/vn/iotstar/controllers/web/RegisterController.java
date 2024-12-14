@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import vn.iotstar.Constain;
 import vn.iotstar.entity.Role;
 import vn.iotstar.entity.User;
 import vn.iotstar.repository.RoleRepository;
 import vn.iotstar.services.UserService;
+import vn.iotstar.utils.Constain;
 
 @Controller
 public class RegisterController {

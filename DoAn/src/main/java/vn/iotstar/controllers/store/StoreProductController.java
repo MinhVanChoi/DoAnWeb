@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpSession;
-import vn.iotstar.Constain;
 import vn.iotstar.entity.Product;
 import vn.iotstar.entity.Store;
 import vn.iotstar.services.ProductService;
+import vn.iotstar.utils.Constain;
 
 @Controller
 @RequestMapping("/stores/products")

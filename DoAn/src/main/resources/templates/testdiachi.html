@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenStreetMap with Locations</title>
+    
+    <!-- Link đến Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script type="text/javascript">
+        // Hàm để vẽ bản đồ
+        function drawMap() {
+            // Khởi tạo bản đồ với OpenStreetMap
+            var map = L.map('map_div').setView([10.762622, 106.660172], 13);  // Set vị trí mặc định (Hồ Chí Minh)
+
+            // Thêm lớp bản đồ từ OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Lấy dữ liệu từ API Spring Boot
+            fetch("/themdiadiem")
+                .then(response => response.json())
+                .then(addresses => {
+                    // Duyệt qua tất cả các địa chỉ và vẽ chúng lên bản đồ
+                    addresses.forEach(function(address) {
+                        // Tạo marker cho mỗi địa chỉ
+                        L.marker([address.latitude, address.longitude])
+                            .addTo(map)
+                            .bindPopup("<b>" + address.name + "</b><br>" + address.latitude + ", " + address.longitude);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+    </script>
+</head>
+<body onload="drawMap()">
+    <div id="map_div" style="width: 100%; height: 700px;"></div>
+</body>
+</html>

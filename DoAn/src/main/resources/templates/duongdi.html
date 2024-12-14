@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chỉ đường giữa hai địa điểm</title>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7_0AGO_aUGkJg30fegBKqKdMTKMRciQg&callback=initMap&libraries=directions" async defer></script>
+  <style>
+    /* Đặt chiều cao cho bản đồ */
+    #map {
+      height: 700px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chỉ đường giữa hai địa điểm</h1>
+  <div id="map"></div>
+  <div id="distance_label" style="margin-top: 20px; font-size: 18px; font-weight: bold;"></div>
+  
+  <script type="text/javascript">
+    var map;
+    var directionsService;
+    var directionsRenderer;
+
+    function initMap() {
+      // Vị trí mặc định của bản đồ (TP.HCM, Việt Nam)
+      var defaultLocation = { lat: 10.8231, lng: 106.6297 };
+
+      // Tạo bản đồ
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: defaultLocation
+      });
+
+      // Khởi tạo DirectionsService và DirectionsRenderer
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map
+      });
+
+      // Vị trí của các điểm
+      var location1 = { lat: 10.842209, lng: 106.827809 }; // Nguyen Xien
+      var location2 = { lat: 10.850262, lng: 106.771759 }; // SPKT
+
+      // Tạo marker cho từng địa điểm
+      new google.maps.Marker({
+        position: location1,
+        map: map,
+        title: 'Nguyen Xien'
+      });
+
+      new google.maps.Marker({
+        position: location2,
+        map: map,
+        title: 'SPKT'
+      });
+
+      // Yêu cầu chỉ đường giữa hai điểm
+      var request = {
+        origin: location1,  // Điểm xuất phát
+        destination: location2,  // Điểm đến
+        travelMode: google.maps.TravelMode.DRIVING  // Chế độ di chuyển (DRIVING, WALKING, BICYCLING, TRANSIT)
+      };
+
+      // Gửi yêu cầu tính toán chỉ đường và hiển thị trên bản đồ
+      directionsService.route(request, function(result, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          directionsRenderer.setDirections(result);
+          var distance = result.routes[0].legs[0].distance.text; // Lấy khoảng cách từ kết quả chỉ đường
+          document.getElementById('distance_label').innerHTML = "Khoảng cách giữa 'Nguyen Xien' và 'SPKT' là: " + distance;
+        } else {
+          alert("Không thể lấy chỉ đường: " + status);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

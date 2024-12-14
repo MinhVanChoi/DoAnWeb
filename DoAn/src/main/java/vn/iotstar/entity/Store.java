@@ -63,4 +63,5 @@ public class Store {
 	@ManyToOne
 	@JoinColumn(name = "commission_id")
 	private Commission commission;
+	
 }

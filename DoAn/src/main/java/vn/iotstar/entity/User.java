@@ -50,6 +50,13 @@ public class User {
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
+	
+    @Column(name = "latitude", nullable = false)
+    private double latitude;  // Vĩ độ
+
+    @Column(name = "longitude", nullable = false)
+    private double longitude;  // Kinh độ
+    
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
 			name = "users_role",
@@ -58,8 +65,7 @@ public class User {
 	private Set<Role> roles = new HashSet<>();
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	private List<Store> stores = new ArrayList<>();
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<UserFollowStore> followStores = new ArrayList<>();
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<UserFollowProduct> followProducts = new ArrayList<>();
 	@ManyToOne
