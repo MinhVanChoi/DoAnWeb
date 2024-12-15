@@ -1,74 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <title>Store Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>store List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>User List</title>
+
 </head>
 <body>
 <div class="sidebaradmin">
     <div th:replace="/fragments/sidebar-admin"></div>
-    <div class="container mt-5">
-        <h2>store List</h2>
-        
-        <form action="/admin/stores/searchpaginated" method="get" class="mb-3">
-            <input type="text" name="name" placeholder="Search by name" class="form-control" value="">
-            <select name="size" id="size" onchange="this.form.submit()">
-                <option value="3" th:selected="${storePage != null && storePage.size == 3}">3</option>
-                <option value="5" th:selected="${storePage != null && storePage.size == 5}">5</option>
-                <option value="10" th:selected="${storePage != null && storePage.size == 10}">10</option>
-                <option value="15" th:selected="${storePage != null && storePage.size == 15}">15</option>
-                <option value="20" th:selected="${storePage != null && storePage.size == 20}">20</option>
-            </select>
-            <button type="submit" class="btn btn-secondary mt-2">Search</button>
-        </form>
+<div class="container mt-5">
+    <h2>Store Management</h2>
 
-		<table class="table table-bordered">
-		    <thead>
-		        <tr>
-		            <th>ID</th>
-		            <th>Name</th>
-		            <th>IsActive</th>
-					<th>IsBan</th>
-		            <th>Actions</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-		        <tr th:each="store : ${storePage}">
-		            <td th:text="${store.id}"></td>
-		            <td th:text="${store.name}"></td>
-		            <td th:text="${store.isActive} ? 'true' : 'false'"></td> 
-		            <td th:text="${store.isBan} ? 'true' : 'false'"></td> 
+    <!-- Button to add new store -->
+    <a th:href="@{/admin/stores/add}" class="btn btn-primary mb-3">Add New Store</a>
 
-					<td>
-						<a th:href="@{/admin/stores/{slug}(slug=${store.slug})}" class="btn btn-warning">Xem</a>
-
-					    <form th:action="@{/admin/stores/ban/{slug}(slug=${store.slug})}" method="post" style="display:inline;">
-					        <button type="submit" class="btn btn-success">Ban</button>
-					    </form>
-					</td>
-		        </tr>
-		    </tbody>
-		</table>
-
-        <div th:if="${storePage.totalPages > 1}">
-            <ul class="pagination">
-                <li th:each="pageNumber : ${#numbers.sequence(1, storePage.totalPages)}"
-                    th:classappend="${pageNumber == storePage.number + 1} ? 'page-item active' : 'page-item'">
-                    <a th:href="@{/admin/stores/searchpaginated(name=${name != null ? name : ''}, size=${storePage.size}, page=${pageNumber})}"
-                       th:text="${pageNumber}"></a>
-                    <span class="mx-2"></span>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <!-- Table to display stores -->
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Chi nhánh</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="store : ${store}">
+            <td th:text="${store.id}"></td>
+            <td th:text="${store.name}"></td>
+            <td th:text="${store.address}"></td>
+            <td>
+                <a th:href="@{/admin/stores/edit/{id}(id=${store.id})}" class="btn btn-warning">Edit</a>
+                <a th:href="@{/admin/stores/delete/{id}(id=${store.id})}" class="btn btn-danger"
+                   onclick="return confirm('Are you sure you want to delete this store?');">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </div>
 </body>
 </html>

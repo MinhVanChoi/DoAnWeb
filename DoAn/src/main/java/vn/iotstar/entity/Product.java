@@ -1,8 +1,6 @@
 package vn.iotstar.entity;
 
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -47,6 +45,12 @@ public class Product {
 	private boolean isActice = false;
 	private boolean isSelling = false;
 	private boolean isBan = false;
+
+	@ManyToOne
+	@JoinColumn(name = "store_id")
+	private Store store;
+
+
 
 
 }	

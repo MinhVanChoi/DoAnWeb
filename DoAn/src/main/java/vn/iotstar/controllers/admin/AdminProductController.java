@@ -194,7 +194,7 @@ public class AdminProductController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditProductForm(@PathVariable("id") Long id, Model model) {
+    public String showEditProductForm(@PathVariable Long id, Model model) {
         Optional<Product> optionalProduct = productService.findById(id);
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();

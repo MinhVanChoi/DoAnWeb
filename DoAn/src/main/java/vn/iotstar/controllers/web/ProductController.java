@@ -30,17 +30,18 @@ public class ProductController {
 	ProductService productService;
 
 
-	private Page<Product> getPaginatedResult(Optional<Integer> page, Optional<Integer> size, String nameFilter) {
-	    int currentPage = page.orElse(1);  
-	    int pageSize = size.orElse(3);  
-	    Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("name"));
-	    
-	    if (StringUtils.hasText(nameFilter)) {
-	        return productService.findByNameContaining(nameFilter, pageable);
-	    } else {
-	        return productService.findAll(pageable);
-	    }
+	private Page<Product> getPaginatedResult(Optional<Integer> page, Optional<Integer> size, String name) {
+		int currentPage = page.orElse(1) - 1;  // Page index starts from 0
+		int pageSize = size.orElse(5);
+
+		Pageable pageable = PageRequest.of(currentPage, pageSize);
+		if (name != null && !name.isEmpty()) {
+			return productService.findByNameContaining(name, pageable);
+		} else {
+			return productService.findAll(pageable);
+		}
 	}
+
 
 
 	@RequestMapping("")
@@ -55,99 +56,7 @@ public class ProductController {
 
 
 
-	@GetMapping("/travai")
-	public String travai(Model model, @RequestParam("page") Optional<Integer> page,
-	        @RequestParam("size") Optional<Integer> size) {
 
-	    Page<Product> resultPage = getPaginatedResult(page, size, "tra vai");
-
-	    int totalPages = resultPage.getTotalPages();
-	    List<Integer> pageNumbers = new ArrayList<>();
-	    int currentPage = resultPage.getNumber() + 1;
-
-	    if (totalPages > 0) {
-	        int start = Math.max(1, currentPage - 2);
-	        int end = Math.min(currentPage + 2, totalPages);
-	        for (int i = start; i <= end; i++) {
-	            pageNumbers.add(i);
-	        }
-	    }
-
-	    model.addAttribute("productPage", resultPage);
-	    model.addAttribute("pageNumbers", pageNumbers);
-	    return "product-list";
-	}
-	
-
-	@GetMapping("/trasua")
-	public String trasua(Model model, @RequestParam("page") Optional<Integer> page,
-	        @RequestParam("size") Optional<Integer> size) {
-
-	    Page<Product> resultPage = getPaginatedResult(page, size, "tra sua");
-	    
-	    int totalPages = resultPage.getTotalPages();
-	    List<Integer> pageNumbers = new ArrayList<>();
-	    int currentPage = resultPage.getNumber() + 1;  
-
-	    if (totalPages > 0) {
-	        int start = Math.max(1, currentPage - 2);
-	        int end = Math.min(currentPage + 2, totalPages);
-	        for (int i = start; i <= end; i++) {
-	            pageNumbers.add(i);
-	        }
-	    }
-
-	    model.addAttribute("productPage", resultPage);  
-	    model.addAttribute("pageNumbers", pageNumbers);    
-	    return "product-list";
-	}
-	
-	@GetMapping("/hongtra")
-	public String hongtra(Model model, @RequestParam("page") Optional<Integer> page,
-	        @RequestParam("size") Optional<Integer> size) {
-
-	    Page<Product> resultPage = getPaginatedResult(page, size, "hong tra");
-	    
-	    int totalPages = resultPage.getTotalPages();
-	    List<Integer> pageNumbers = new ArrayList<>();
-	    int currentPage = resultPage.getNumber() + 1;  
-
-	    if (totalPages > 0) {
-	        int start = Math.max(1, currentPage - 2);
-	        int end = Math.min(currentPage + 2, totalPages);
-	        for (int i = start; i <= end; i++) {
-	            pageNumbers.add(i);
-	        }
-	    }
-
-	    model.addAttribute("productPage", resultPage);  
-	    model.addAttribute("pageNumbers", pageNumbers);    
-	    return "product-list";
-	}
-	
-	@GetMapping("/traxanh")
-	public String traxanh(Model model, @RequestParam("page") Optional<Integer> page,
-	        @RequestParam("size") Optional<Integer> size) {
-
-	    Page<Product> resultPage = getPaginatedResult(page, size, "tra vai");
-	    
-	    int totalPages = resultPage.getTotalPages();
-	    List<Integer> pageNumbers = new ArrayList<>();
-	    int currentPage = resultPage.getNumber() + 1;  
-
-	    if (totalPages > 0) {
-	        int start = Math.max(1, currentPage - 2);
-	        int end = Math.min(currentPage + 2, totalPages);
-	        for (int i = start; i <= end; i++) {
-	            pageNumbers.add(i);
-	        }
-	    }
-
-	    model.addAttribute("productPage", resultPage);  
-	    model.addAttribute("pageNumbers", pageNumbers);    
-	    return "product-list";
-	}
-	
 	
 	@GetMapping("/{slug}")
 	public ModelAndView viewProduct(ModelMap model, @PathVariable("slug") String slugProduct) {
@@ -157,7 +66,7 @@ public class ProductController {
 			model.addAttribute("product", product);
 			return new ModelAndView("profile-product", model);
 		}
-		return new ModelAndView("forward:/admin/products");
+		return new ModelAndView("forward:/admin/product");
 	}
 	
 	
