@@ -1,5 +1,5 @@
 package vn.iotstar.controllers.customer;
 
-public class CheckOutController {
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-}
