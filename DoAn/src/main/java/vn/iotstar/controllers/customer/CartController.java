@@ -18,17 +18,10 @@ import vn.iotstar.entity.User;
 public class CartController {
 	
 	  
-//	  @GetMapping("cart")
-//		public String viewCart(Model model, HttpSession session) {
-//			User user = (User)session.getAttribute("user");
-//			List<Cart> carts = user.getCarts();
-//			List<CartItem> cartItems = new ArrayList<>();
-//			for (Cart cart : carts) {
-//				List<CartItem> temp = cart.getCartItem();
-//				cartItems.addAll(temp);
-//			}
-//			model.addAttribute("listcartItem", cartItems);
-//			return "customer/usercart";
-//		}
+	  @GetMapping("checkout")
+		public String viewCart(Model model, HttpSession session) {
+			
+			return "checkout";
+		}
 	
 }
