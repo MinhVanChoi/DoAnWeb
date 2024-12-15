@@ -28,7 +28,6 @@ public interface StoreService {
 
 	Optional<Store> findBySlug(String slug);
 
-	List<Store> findByOwner(User user);
 
 	Page<Store> findByNameContaining(String name, Pageable pageable);
 

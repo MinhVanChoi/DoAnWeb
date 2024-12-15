@@ -44,9 +44,15 @@ public class ProductController {
 	
 
 	@RequestMapping("")
-	public String index() {
+	public String listProducts(Model model,
+							   @RequestParam(defaultValue = "0") int page,
+							   @RequestParam(defaultValue = "3") int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Product> productPage = productService.findAll(pageable);
+		model.addAttribute("productPage", productPage);
 		return "product";
 	}
+
 
 	@GetMapping("/travai")
 	public String travai(Model model, @RequestParam("page") Optional<Integer> page,
@@ -92,7 +98,7 @@ public class ProductController {
 
 	    model.addAttribute("productPage", resultPage);  
 	    model.addAttribute("pageNumbers", pageNumbers);    
-	    return "product-list"; 
+	    return "product"; 
 	}
 	
 	@GetMapping("/hongtra")
@@ -138,7 +144,7 @@ public class ProductController {
 
 	    model.addAttribute("productPage", resultPage);  
 	    model.addAttribute("pageNumbers", pageNumbers);    
-	    return "product-list";
+	    return "product";
 	}
 	
 	
@@ -178,7 +184,7 @@ public class ProductController {
 	    model.addAttribute("productPage", resultPage); 
 	    model.addAttribute("pageNumbers", pageNumbers);   
 	    model.addAttribute("name", name);  
-	    return "product-list";  
+	    return "product";  
 	}
 	
 	

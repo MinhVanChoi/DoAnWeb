@@ -44,27 +44,21 @@ public class LoginController {
 	                            HttpSession session) {
 
 	      User user = userService.login(email, password);
-
+	      System.out.println(user.getFullname());
 	      if (user == null) {
 	          return "redirect:/login?error=true";
 	      }
-
 	      if ("admin@gmail.com".equals(email)) {
 	          session.setAttribute("user", user); 
 	          return "redirect:/admin/home";
 	      }
-
 	      session.setAttribute("user", user);
-
-	      // Nếu Remember Me được chọn, lưu cookie
 	      if (rememberMe) {
 	          saveRememberMe(response, email);
 	      }
-
 	      return "redirect:/home"; 
 	  }
 	  
-	// Lưu cookie "Remember Me"
 	    @GetMapping("/remember-me")
 	    public ResponseEntity<String> saveRememberMe(HttpServletResponse response, @RequestParam String username) {
 	        Cookie cookie = new Cookie("COOKIE_REMEMBER", username);

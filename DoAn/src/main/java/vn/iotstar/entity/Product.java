@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -43,9 +44,7 @@ public class Product {
 	private float price;
 	private float promotionPrice;
 	private int sold;
-	private boolean isActice = false;
 	private boolean isSelling = false;
-	private boolean isBan = false;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
@@ -55,16 +54,11 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "store_id", nullable = false)
 	private Store store;
-	@ManyToOne
-	@JoinColumn(name = "category_id", nullable = false)
-	private Category category;
-	@ManyToMany
-	@JoinTable(
-			name = "product_stylevalue",
-			joinColumns = @JoinColumn(name = "product_id"),
-			inverseJoinColumns = @JoinColumn(name = "style_value_id"))
-	private List<StyleValue> styleValueIds = new ArrayList<>();
+
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<ReviewProduct> reviews = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<CartItem> cartitem = new ArrayList<>();
 
 }	

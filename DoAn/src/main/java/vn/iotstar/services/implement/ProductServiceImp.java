@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import vn.iotstar.entity.Product;
 import vn.iotstar.entity.Store;
@@ -15,6 +16,7 @@ import vn.iotstar.repository.ProductRepository;
 import vn.iotstar.services.ProductService;
 
 @Service
+@Transactional
 public class ProductServiceImp implements ProductService{
 	@Autowired
 	private ProductRepository productRepository;
@@ -59,15 +61,7 @@ public class ProductServiceImp implements ProductService{
 		productRepository.deleteById(id);
 	}
 
-	@Override
-	public List<Product> findUnBannedProduct() {
-		return productRepository.findUnBannedProduct();
-	}
 
-	@Override
-	public List<Product> findBannedProduct() {
-		return productRepository.findBannedProduct();
-	}
 
 	@Override
 	public Page<Product> findByNameContaining(String name, Pageable pageable) {

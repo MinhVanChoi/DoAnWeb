@@ -25,8 +25,11 @@
         <h2>User Profile</h2>
         <form th:action="@{/profile/update/test}" method="post" enctype="multipart/form-data">
             <input type="hidden" class="form-control" id="id" name="id" th:value="${user.id}">
+			<input type="hidden" class="form-control" id="slug" name="slug" th:value="${user.slug}">
+
             
             <div class="form-row">
+
                 <!-- Full Name -->
                 <div class="form-group col-md-6">
                     <label for="fullname">Full Name</label>

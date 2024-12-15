@@ -9,12 +9,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import vn.iotstar.entity.CartItem;
 import vn.iotstar.entity.CartItemId;
 import vn.iotstar.repository.CartItemRepository;
 import vn.iotstar.services.CartItemService;
 
 @Service
+@Transactional
 public class CartItemServiceImp implements CartItemService{
 	@Autowired
 	CartItemRepository cartItemRepository;
@@ -53,5 +55,13 @@ public class CartItemServiceImp implements CartItemService{
 	public void deleteById(CartItemId id) {
 		cartItemRepository.deleteById(id);
 	}
+
+	@Override
+	public void delete(CartItem entity) {
+		System.out.println("thuc hien delete cartitem");
+		cartItemRepository.delete(entity);
+	}
+	
+	
 	
 }

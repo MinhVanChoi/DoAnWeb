@@ -40,6 +40,7 @@ public class CustomerProfileController {
 	public String profile(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		model.addAttribute("user", user);
+		System.out.println(user.getEmail());
 		return "customer/user-profile";
 	}
 
@@ -71,16 +72,18 @@ public class CustomerProfileController {
 	    User user = new User();
 	    BeanUtils.copyProperties(userModel, user);
 
-	    Optional<User> optuser = userService.findById(user.getId());
-	    if (!optuser.isPresent()) {
-	        return new ModelAndView("redirect:/profile", model);
-	    }
+	    Optional<User> optuser = userService.findBySlug(user.getSlug());
+	    
+//	    if (!optuser.isPresent()) {
+//	        return new ModelAndView("redirect:/profile", model);
+//	    }
 
 	    User userold = optuser.get();
 	    user.setPassword(userold.getPassword());
 	    user.setLongitude(userold.getLongitude());
 	    user.setLatitude(userold.getLatitude());
 	    user.setSlug(userold.getSlug());
+	    
 	    String avatarFilename = userold.getAvatar();  
 	    String avatarFullPath = userold.getAvatar();  
 
@@ -138,7 +141,7 @@ public class CustomerProfileController {
 		User user = new User();
 		BeanUtils.copyProperties(sessionUser, user);
 
-		Optional<User> optuser = userService.findById(user.getId());
+		Optional<User> optuser = userService.findBySlug(user.getSlug());
 		if (!optuser.isPresent()) {
 			model.addAttribute("error", "User not found");
 			return new ModelAndView("profile", model);

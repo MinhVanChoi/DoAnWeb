@@ -12,6 +12,7 @@ import vn.iotstar.entity.User;
 
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, CartItemId> {
-	
-	
+    Optional<CartItem> findById(CartItemId cartItemId);
+    
+    void deleteById(CartItemId cartItemId);
 }

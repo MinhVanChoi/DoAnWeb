@@ -5,79 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<link href="/css/product-list.css" rel="stylesheet">
+    <link href="/css/product-list.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap"
+          rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/css/style.css" rel="stylesheet">
 </head>
+
+
 <body>
-    <div class="container mt-5">
-        <h2>Product List</h2>
-        
-        <form action="/product/searchpaginated " method="get" class="mb-3">
-            <input type="text" name="name" placeholder="Search by name" class="form-control" value="">
-            <select name="size" id="size" onchange="this.form.submit()">
-                <option value="3" th:selected="${productPage != null && productPage.size == 3}">3</option>
-                <option value="5" th:selected="${productPage != null && productPage.size == 5}">5</option>
-                <option value="10" th:selected="${productPage != null && productPage.size == 10}">10</option>
-                <option value="15" th:selected="${productPage != null && productPage.size == 15}">15</option>
-                <option value="20" th:selected="${productPage != null && productPage.size == 20}">20</option>
-            </select>
-            <button type="submit" class="btn btn-secondary mt-2">Search</button>
-        </form>
-		
-
-		<table class="table table-bordered">
-		    <thead>
-		        <tr>
-		            <th>Name</th>
-					<th>Hình ảnh</th>
-		            <th>Price</th>
-		            <th>Sold</th>
-		            <th>Promotion Price</th>
-		            <th>Actions</th>
-					
-		        </tr>
-		    </thead>
-		    <tbody>
-		        <tr th:each="product : ${productPage}">
-		            <td th:text="${product.name}"></td>
-					<td><img th:src="${product.images}" alt="Hình ảnh sản phẩm" style="width: 100px;width: 100px"></td>
-		            <td th:text="${product.price}"></td>
-		            <td th:text="${product.sold}"></td>
-		            <td th:text="${product.promotionPrice}"></td>
-					<td>
-						
-						<form th:action="@{/product}" method="get" style="display:inline;">
-							<button type="submit" class="btn btn-warning">Order Now</button>
-						</form>
-						
-						<form th:action="@{/carts/add/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
-													<button type="submit" class="btn btn-warning">Cart</button>
-												</form>
-												
-
-						<form th:action="@{/follow-products/follow/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
-							<button type="submit" class="btn btn-info">Follow</button>
-						</form>
-
-						
-						<form th:action="@{/product/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
-													<button type="submit" class="btn btn-primary">Detail</button>
-												</form>
-									
-					</td>
-		        </tr>
-		    </tbody>
-		</table>
-
-        <div th:if="${productPage.totalPages > 1}">
-            <ul class="pagination">
-                <li th:each="pageNumber : ${#numbers.sequence(1, productPage.totalPages)}"
-                    th:classappend="${pageNumber == productPage.number + 1} ? 'page-item active' : 'page-item'">
-                    <a th:href="@{/product/searchpaginated(name=${name != null ? name : ''}, size=${productPage.size}, page=${pageNumber})}"
-                       th:text="${pageNumber}"></a>
-                    <span class="mx-2"></span>
-                </li>
-            </ul>
+<div th:replace="/fragments/header"></div>
+<div class="product-list">
+    <h2>Product List</h2>
+    <form action="/product/searchpaginated" method="get" >
+        <input type="text" name="search" placeholder="Search by name" class="form-control" value="">
+        <select name="size" id="size" onchange="this.form.submit()">
+            <option value="3" th:selected="${productPage != null && productPage.size == 3}">3</option>
+            <option value="5" th:selected="${productPage != null && productPage.size == 5}">5</option>
+            <option value="10" th:selected="${productPage != null && productPage.size == 10}">10</option>
+            <option value="15" th:selected="${productPage != null && productPage.size == 15}">15</option>
+            <option value="20" th:selected="${productPage != null && productPage.size == 20}">20</option>
+        </select>
+        <button type="submit" class="btn ">Search</button>
+    </form>
+</div>
+<div class="pro-container">
+    <div th:each="product : ${productPage}" class="pro">
+        <img th:src="${product.images}" alt="Hình ảnh sản phẩm">
+        <div class="des">
+            <h5 th:text="${product.name}"></h5>
+            <h4 th:text="${product.price} +'vnđ'"></h4>
+        </div>
+        <div>
+            <form th:action="@{/product}" method="get">
+                <button type="submit" class="btn1 ">Buy</button>
+            </form>
         </div>
     </div>
+</div>
+
+<div th:if="${productPage.totalPages > 1}">
+    <ul class="pagination1">
+        <li th:each="pageNumber : ${#numbers.sequence(1, productPage.totalPages)}"
+            th:classappend="${pageNumber == productPage.number + 1} ? 'page-item active' : 'page-item'">
+            <a th:href="@{/product/searchpaginated(name=${name != null ? name : ''}, size=${productPage.size}, page=${pageNumber})}"
+               th:text="${pageNumber}"></a>
+            <span class="mx-2"></span>
+        </li>
+    </ul>
+</div>
+<div th:replace="/fragments/footer"></div>
 </body>
 </html>

@@ -8,14 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Embeddable
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserFollowStoreId implements Serializable{
+@Data
+public class OrderItemId implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-    private long userId;
-    private long storeId;
+	private long orderId;
+	private long productId;
 }

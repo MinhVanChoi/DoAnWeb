@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="section-1">
+        <!-- <div class="header-link-1">
+            <p>Trang chủ</p><p>/</p><p>Thanh toán</p>
+        </div> -->
+        <div class="main-section">
+            <div class="left-main-section">
+                <div class="btn-header">
+                    <div class="btn">
+                        <div class="btn-ship delivery active">
+                            <button class="deli">Giao hàng</button>
+                        </div>
+                        <div class="btn-ship takeplace">
+                            <button class="take">Đến lấy</button>
+                        </div>
+                    </div>
+                    <div class="line" >
+                        <hr>
+                    </div>
+                </div>
+                <div class="main-form">
+                    <div class="location main-element">
+                        <div class="element-header">
+                            <div class="left-element">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>Vinhome Grandpark</p>
+                            </div>
+                            <div class="right-element">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </div>
+                        </div>
+                        <div class="location-content">
+                            Tòa Park 3, 208 Đ.Nguyễn Hữu Cảnh, Vinhomes Tân Cảng, Bình Thạnh, Hồ Chí Minh, VietNam
+                        </div>
+                    </div>
+                    <div class="phone main-element">
+                        <div class="element-header">
+                            <div class="left-element">
+                                <i class="fa-solid fa-phone"></i>
+                                <p>0859246378</p>
+                            </div>
+                            <div class="right-element">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </div>
+                        </div>
+                        <div class="phone-content">
+                            Số điện thoại: 0859246378
+                        </div>
+                    </div>
+                    <div class="time main-element">
+                        <div class="element-header">
+                            <div class="left-element">
+                                <i class="fa-solid fa-clock"></i>
+                                <p>Thời gian nhận hàng</p>
+                            </div>
+                            <div class="right-element">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </div>
+                        </div>
+                        <div class="time-content">
+                            Hết thời gian giao hàng trong ngày
+                        </div>
+                    </div>
+                    <div class="note main-element">
+                        <div class="element-header">
+                            <div class="left-element">
+                                <i class="fa-solid fa-note-sticky"></i>
+                                <p>Ghi chú cho cửa hàng</p>
+                            </div>
+                            <div class="right-element">
+                                <button id="btn-note" style="border: none; background-color: transparent;"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                        <div class="time-content">
+                            Ghi chú: 
+                        </div>
+                    </div>
+                    <div class="check-input-bill main-element">
+                        <input type="checkbox" name="check-bill">
+                        <p>Yêu cầu xuất hóa đơn</p>
+                    </div>
+                </div>
+            </div>
+            <div class="right-main-section">
+                <div class="right-header">
+                    <div class="right">
+                        <div class="right-cart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <p class="deli">Giỏ hàng của bạn (1 món)</p>
+                        </div>
+                    </div>
+                    <div class="line" >
+                        <hr>
+                    </div>
+                </div>
+                <div class="main-form">
+                    <div class="detail-product">
+                        <div class="left-detail">
+                            <img src="./bbbtea.jpg" alt="" width="100px" height="140px">
+                            <div class="content-product">
+                                <p class="name-product">Trà sữa khoai môn</p>
+                                <p class="size-product">Kích cỡ: L</p>
+                                <p class="price-product">65.000</p>
+                            </div>
+                        </div>
+                        <div class="right-detail">
+                            <div class="quantity">
+                                <div class="action-detail">
+                                    <i class="fa-solid fa-pencil"></i>
+                                    <i class="fa-solid fa-trash-can" style="color: red;"></i>
+                                </div>
+                                <div class="quantity-content">
+                                    <button class="minus">-</button>
+                                    <input type="text" value="1">
+                                    <button class="plus">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-payment">
+                        <div class="detail-payment-header">
+                            <p>Thông tin thanh toán</p>
+                        </div>
+                        <div class="detail-payment-content">
+                            <div class="total">
+                                <p>Tổng tiền tạm tính</p>
+                                <p>65.000</p>
+                            </div>
+                            <div class="ship-fee">
+                                <p>Phí vận chuyển</p>
+                                <p>25.000</p>
+                            </div>
+                            <div class="dis-coup">
+                                <p>Mã giảm giá</p>
+                                <button id="btn-dis" style="border: none; background-color: transparent;"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                            <div class="last-price">
+                                <p>Tổng tiền (Đã có VAT)</p>
+                                <p class="lp-p">90.000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="method-payment">
+                        <div class="detail-payment-header">
+                            <p>Phương thức thanh toán</p>
+                        </div>
+                        <div class="detail-payment-method">
+                            <label class="radio-container">
+                                <input type="radio" name="time-option" value="bank">
+                                <span class="radio-button">Thẻ ngân hàng/Thẻ tín dụng/Ví điện tử</span>
+                            </label>
+                            <label class="radio-container">
+                                <input type="radio" name="time-option" value="momo">
+                                <span class="radio-button">Ví MoMo</span>
+                            </label>
+                            <label class="radio-container">
+                                <input type="radio" name="time-option" value="zalopay">
+                                <span class="radio-button">Ví ZaloPay</span>
+                            </label>
+                            <label class="radio-container">
+                                <input type="radio" name="time-option" value="shopeepay">
+                                <span class="radio-button">Ví ShopeePay</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="btn-confirm-payment">
+                        <div class="confirm-input-bill">
+                            <input type="checkbox" name="confirm-bill">
+                            <p>Tôi đã đọc, hiểu và đồng ý với tất cả các <span class="s-rules">điều khoản, điều kiện và chính sách</span> liên quan</p>
+                        </div>
+                        <button class="confirm-payment">Tiến hành thanh toán</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal-discount" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content-category">
+            <span class="close-dis">&times;</span>
+            <div class="left-modal-category">
+                <h2>Nhập mã giảm giá</h2>
+                <form action="" class="form-fill-info" method="POST">
+                    <div class="info-product">
+                        <span>Mã giảm giá</span>
+                        <input type="text" placeholder="VD: Sale 12/12" name="productName" required>
+                    </div>
+                    <div class="btn-confirm-info">
+                        <input type="submit" value="iscount">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="myModal-note" class="modal-note">
+        <!-- Modal content -->
+        <div class="modal-content-note">
+            <span class="close-note">&times;</span>
+            <div class="left-modal-note">
+                <h2>Ghi chú cho quán</h2>
+                <form action="" class="form-fill-note" method="POST">
+                    <div class="info-note">
+                        <span>Ghi chú</span>
+                        <input type="text" placeholder="VD: Ghi chú" name="productName" required>
+                    </div>
+                    <div class="btn-confirm-note">
+                        <input type="submit" value="Add Note">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        <script>
+            // Get the modal
+        // Get modal elements
+var modal_add = document.getElementById("myModal-discount");
+var modal_note = document.getElementById("myModal-note");
+
+// Get button elements to open modals
+var btn_add = document.getElementById("btn-dis"); // Assuming you have a button with this ID to open discount modal
+var btn_note = document.getElementById("btn-note");
+
+// Get <span> elements to close modals
+var span_add = document.getElementsByClassName("close-dis")[0];
+var span_note = document.getElementsByClassName("close-note")[0];
+
+// Open modal_add when btn_add is clicked
+btn_add.addEventListener('click', function() {
+    console.log("Opening modal_add"); // Debug log
+    modal_add.style.display = 'block';
+    modal_note.style.display = 'none'; // Hide modal_note
+});
+
+// Open modal_note when btn_note is clicked
+btn_note.addEventListener('click', function() {
+    console.log("Opening modal_note"); // Debug log
+    modal_note.style.display = 'block';
+    modal_add.style.display = 'none'; // Hide modal_add
+});
+
+// Close modal_add when <span> (x) is clicked
+span_add.onclick = function() {
+    modal_add.style.display = "none";
+}
+
+// Close modal_note when <span> (x) is clicked
+span_note.onclick = function() {
+    modal_note.style.display = "none";
+}
+
+// Close modals when clicking anywhere outside the modal content
+window.onclick = function(event) {
+    if (event.target == modal_add) {
+        modal_add.style.display = "none";
+    }
+    if (event.target == modal_note) {
+        modal_note.style.display = "none";
+    }
+}
+
+        </script>
+</body>
+</html>

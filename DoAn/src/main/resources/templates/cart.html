@@ -101,13 +101,7 @@
                             <span th:text="${cartItem.product.price * cartItem.count}"></span>
                         </td>
                         <td>
-                            <!-- Thêm nút để chỉnh sửa số lượng -->
-                            <a th:href="@{'/carts/add/' + ${cartItem.product.slug}}" class="btn btn-warning btn-sm">
-                                <i class="fas fa-plus"></i> Thêm 1
-                            </a>
-                            <a th:href="@{'/carts/remove/' + ${cartItem.product.slug}}" class="btn btn-secondary btn-sm">
-                                <i class="fas fa-minus"></i> Giảm 1
-                            </a>
+
                             <a th:href="@{'/carts/delete/' + ${cartItem.product.slug}}" class="btn btn-danger btn-sm">
                                 <i class="fas fa-trash"></i> Xóa
                             </a>

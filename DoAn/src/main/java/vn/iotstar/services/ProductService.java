@@ -26,9 +26,6 @@ public interface ProductService {
 
 	<S extends Product> S save(S entity);
 
-	List<Product> findBannedProduct();
-
-	List<Product> findUnBannedProduct();
 
 	Optional<Product> findBySlug(String slug);
 

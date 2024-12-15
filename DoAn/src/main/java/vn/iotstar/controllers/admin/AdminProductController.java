@@ -65,19 +65,6 @@ public class AdminProductController {
         return "admin/product-list";
     }
 
-    @GetMapping("/banned-product")
-    public String bannedProduct(Model model) {
-        List<Product> list = productService.findBannedProduct();
-        model.addAttribute("listproduct", list);
-        return "admin/product-list";
-    }
-
-    @GetMapping("/unbanned-product")
-    public String unBannedProduct(Model model) {
-        List<Product> list = productService.findUnBannedProduct();
-        model.addAttribute("listproduct", list);
-        return "admin/product-list";
-    }
 
 
     @GetMapping("/{slug}")
@@ -91,32 +78,6 @@ public class AdminProductController {
         return new ModelAndView("forward:/admin/products");
     }
 
-    @PostMapping("/ban")
-    public ModelAndView banProduct(ModelMap model, @PathVariable("slug") String slugProduct) {
-        Optional<Product> optProduct = productService.findBySlug(slugProduct);
-        if (optProduct.isPresent()) {
-            Product product = optProduct.get();
-            product.setBan(true);
-            productService.save(product);
-            model.addAttribute("product", product);
-            return new ModelAndView("admin/profile-product", model);
-        }
-        return new ModelAndView("forward:/admin/products");
-    }
-
-
-    @PostMapping("/unban/{slug}")
-    public ModelAndView unbanProduct(ModelMap model, @PathVariable("slug") String slugProduct) {
-        Optional<Product> optProduct = productService.findBySlug(slugProduct);
-        if (optProduct.isPresent()) {
-            Product product = optProduct.get();
-            product.setBan(false);
-            model.addAttribute("product", product);
-            productService.save(product);
-            return new ModelAndView("admin/profile-product", model);
-        }
-        return new ModelAndView("forward:/admin/products");
-    }
 
 
     @RequestMapping("/searchpaginated")

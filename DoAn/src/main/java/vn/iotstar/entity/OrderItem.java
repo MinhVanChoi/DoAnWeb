@@ -21,18 +21,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "userfollowstore")
-public class UserFollowStore {
+@Table(name = "orderitem")
+public class OrderItem {
 	@EmbeddedId
-	private UserFollowStoreId id;
+	private OrderItemId id;
 	@ManyToOne
-	@MapsId("userId")
-	@JoinColumn(name = "user_id")
-	private User user;
+	@MapsId("orderId")
+	@JoinColumn(name = "order_id")
+	private Order order;
 	@ManyToOne
-	@MapsId("storeId")
-	@JoinColumn(name = "store_id")
-	private Store store;
+	@MapsId("productId")
+	@JoinColumn(name = "product_id")
+	private Product product;
+	private int count;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;

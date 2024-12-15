@@ -24,35 +24,24 @@ public class Store {
 	private long id;
 	@Column(columnDefinition = "nvarchar(100)", unique = true, nullable = false)
 	private String name;
-	@Column(columnDefinition = "nvarchar(100)", nullable = false)
-	private String bio;
 	@Column(unique = true)
 	private String slug;
 	@Column(columnDefinition = "nvarchar(255)")
 	private String address;
+    @Column(nullable = false)
+    private double latitude;  // Vĩ độ
+    @Column(nullable = false)
+    private double longitude;  // Kinh độ
 	private String images;
-	private boolean isActive = false;
 	private boolean isOpen = false;
-	private boolean isBan = false;
-	private float point;
-	private float rating;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-	private List<User> staffIds;
 	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
 	private List<Product> products = new ArrayList<>();
-	@ManyToOne
-	@JoinColumn(name = "owner_id", nullable = false)
-	private User owner;
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-	private List<UserFollowStore> followByUsers = new ArrayList<>(); 
 
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-	private List<ReviewOrder> reviews = new ArrayList<>();
 	
 }

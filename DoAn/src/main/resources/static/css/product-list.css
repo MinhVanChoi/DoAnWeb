@@ -1,27 +1,25 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
+body{
+    background-color: wheat;
 }
-
-.container {
+.product-list {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
 }
 
 h2 {
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     font-size: 2em;
     text-align: center;
 }
 
-.input-group {
+.mb-3 .input-group {
     display: flex;
     align-items: center;
+
 }
 
 .custom-select {
@@ -56,10 +54,124 @@ h2 {
     transform: scale(1.1);
 }
 
-.btn {
-    margin: 2px 0;
+.btn1 {
+    padding: 10px 20px;
+    background-color: #28a745; /* Màu nền xanh lá cây */
+    border: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    display: block;
+    text-align: center;
+    margin: 10px auto;
+    border-radius: 5px; /* Bo góc */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    width: 70px;
+    height: 40px;
 }
 
-.pagination {
+.btn1:hover {
+    background-color: #218838; /* Màu nền khi hover */
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Tăng đổ bóng khi hover */
+}
+
+.pagination1 {
     margin-top: 20px;
+}
+
+.menu {
+    display: flex;
+
+}
+
+.pro-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    flex-wrap: wrap;
+    gap: 100px;
+
+}
+
+.pro {
+    flex-basis: calc(33.33% - 300px);
+    max-width: calc(33.33% - 300px);
+    width: 24%;
+    min-width: 250px;
+    padding: 10px 12px;
+    border: 1px solid #cce7d0;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.02);
+    margin: 15px 0;
+    transition: 0.2S ease;
+    position: relative;
+    background-color: white;
+}
+
+.pro:hover {
+    box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.2);
+}
+
+.pro img {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.pro .des {
+
+    color: black;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.pro .des h5 {
+    font-size: 30px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    color: red;
+}
+
+.pro .des h4 {
+    padding-top: 7px;
+    font-size: 22px;
+}
+
+.pagination1 {
+    display: flex;
+    text-align: center;
+    list-style: none;
+    justify-content: center;
+    color: black;
+}
+.product-list{
+    margin-top: -10px;
+}
+.product-list h2 {
+    font-size: 52px;
+    margin-top: 20px;
+}
+
+.product-list input {
+    width: 300px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+}
+
+.product-list .btn {
+    display: flex;
+    background-color: #e38754;
+    height: 25px;
+    margin: 10px 0 0 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    align-content: center;
+    align-self: center;
+
+}
+.product-list select{
+    border-radius: 10px;
 }

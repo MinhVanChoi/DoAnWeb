@@ -29,6 +29,7 @@ import vn.iotstar.entity.User;
 import vn.iotstar.services.CartItemService;
 import vn.iotstar.services.CartService;
 import vn.iotstar.services.ProductService;
+import vn.iotstar.services.UserService;
 
 @Controller
 @RequestMapping("/carts")
@@ -42,6 +43,8 @@ public class CustomerCartController {
 	@Autowired
 	CartItemService cartitemService;
 	
+	@Autowired
+	UserService userService;
 	
 	
 	@RequestMapping("")
@@ -62,7 +65,6 @@ public class CustomerCartController {
 		    totalAmount += item.getProduct().getPrice() * item.getCount();
 		}
 
-		model.addAttribute("listproduct",product_test);
 		model.addAttribute("listcaritems",cartitems); // trong đây mới có count 
 		model.addAttribute("totalAmount", totalAmount); 
 		return "cart";
@@ -75,9 +77,23 @@ public class CustomerCartController {
 	public ModelAndView addProductToCart(ModelMap model, @PathVariable("slug") String slugProduct, HttpSession session) {
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
 		User user = (User)session.getAttribute("user");
+		System.out.println(user.getId());
+		
+		Optional<User> optuser = userService.findBySlug(user.getSlug());
+		if(optuser.isPresent()) {
+			System.out.println(1234567);
+		}
+		
+		user = optuser.get();
+		System.out.println(user.getEmail());
+		Product product = optProduct.get();
+		System.out.println(product.getName());
+
+		System.out.println();
 		if(optProduct.isPresent()) {
-			Product product = optProduct.get();
+			Product product1 = optProduct.get();
 			Optional<Cart> optCart = cartService.findByUser(user);
+			System.out.println(user.getEmail());
 			if(optCart.isPresent()) {
 				Cart cart = optCart.get();
 				List<CartItem> cartitems = cart.getCartItems();
@@ -134,6 +150,7 @@ public class CustomerCartController {
 
 
 		}
+		
 		return new ModelAndView("redirect:/product", model);
 	}
 	

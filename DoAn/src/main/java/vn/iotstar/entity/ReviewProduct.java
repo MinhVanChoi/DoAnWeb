@@ -32,9 +32,8 @@ public class ReviewProduct {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
-	@ManyToOne
-	@JoinColumn(name = "store_id", nullable = false)
-	private Store store;
+
+	
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;

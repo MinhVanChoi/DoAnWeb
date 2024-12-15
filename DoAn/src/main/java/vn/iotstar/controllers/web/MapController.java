@@ -12,7 +12,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import vn.iotstar.entity.Address;
-import vn.iotstar.entity.Category;
 import vn.iotstar.services.AddressService;
 
 @Controller

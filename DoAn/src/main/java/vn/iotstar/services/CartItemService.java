@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import vn.iotstar.entity.CartItem;
 import vn.iotstar.entity.CartItemId;
 
+
 public interface CartItemService {
 
 	void deleteById(CartItemId id);
@@ -25,5 +26,7 @@ public interface CartItemService {
 	List<CartItem> findAll(Sort sort);
 
 	<S extends CartItem> S save(S entity);
+
+	void delete(CartItem entity);
 
 }

@@ -62,24 +62,20 @@ public class User {
 			name = "users_role",
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
-	
 	private Set<Role> roles = new HashSet<>();
-	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-	private List<Store> stores = new ArrayList<>();
+
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<UserFollowProduct> followProducts = new ArrayList<>();
-	@ManyToOne
-	@JoinColumn(name = "user_level_id", nullable = true)
-	private UserLevel userlevel;
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Order> oders = new ArrayList<>();
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<ReviewOrder> reviews = new ArrayList<>();
+	private List<Order>  orders = new ArrayList<>();
+
+	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Cart cart;
-	
     @ManyToOne
     @JoinColumn(name = "store_id", nullable = true)
     private Store store; 
+    
 }

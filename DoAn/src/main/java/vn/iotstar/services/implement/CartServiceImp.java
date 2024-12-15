@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import vn.iotstar.entity.Cart;
 import vn.iotstar.entity.Product;
@@ -17,6 +18,7 @@ import vn.iotstar.repository.CartRepository;
 import vn.iotstar.services.CartService;
 
 @Service
+@Transactional
 public class CartServiceImp implements CartService{
 	@Autowired
 	private CartRepository cartRepository;

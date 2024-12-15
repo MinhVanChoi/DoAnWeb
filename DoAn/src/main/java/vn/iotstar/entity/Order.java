@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -37,23 +38,16 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
-	@ManyToOne
-	@JoinColumn(name = "product_id")
-	private Product product;
 	private String address;
-    @Column(nullable = false)
-    private double latitude;  // Vĩ độ
-    @Column(nullable = false)
-    private double longitude;  // Kinh độ
 	private String phone;
+	private double totalAmount;
 	private OrderStatus status = OrderStatus.NOT_PROCESSED;
-	private boolean isPaidBefore = false;
+//	private boolean isPaidBefore = false;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-	private List<ReviewOrder> reivews = new ArrayList<>(); 
+
 }

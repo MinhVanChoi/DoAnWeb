@@ -15,10 +15,7 @@ import vn.iotstar.entity.Store;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>{
 	Optional<Product> findBySlug(String slug);
-	@Query("SELECT p FROM Product p WHERE p.isBan = false")
-	List<Product> findUnBannedProduct();
-	@Query("SELECT p FROM Product p WHERE p.isBan = true")
-	List<Product> findBannedProduct();
+	
 	Page<Product> findByNameContaining (String name, Pageable pageable);
 	List<Product> findByStore(Store store);
 	@Query("SELECT p FROM Product p WHERE p.isSelling = true")
