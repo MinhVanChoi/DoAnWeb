@@ -134,8 +134,7 @@ public class CustomerCartController {
 
 
 		}
-        return new ModelAndView("product        return new ModelAndView(\"product/searchpaginated\", model);", model);
-
+		return new ModelAndView("redirect:/product", model);
 	}
 	
 	

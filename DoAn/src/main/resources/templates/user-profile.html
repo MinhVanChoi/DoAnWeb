@@ -10,7 +10,7 @@
 <body>
     <div class="container mt-5">
         <h2>User Profile</h2>
-        <form th:action="@{/profile/update}" method="post">
+        <form th:action="@{/profile/update/test}" method="post">
 			<input  type="hidden" class="form-control" id="id" name="id" th:value="${user.id}">
             <div class="form-group">
                 <label for="fullname">Full Name</label>
@@ -22,7 +22,9 @@
                 <input type="text" class="form-control" id="address" name="address" th:value="${user.address}">
             </div>
 			
-            <div class="form-group"> <label for="avatar">Avatar</label> <div> <img th:src="${user.avatar}" alt="User Avatar" class="img-thumbnail mb-3" style="max-width: 150px;"> </div> <input type="text" class="form-control" id="avatar" name="avatar" th:value="${user.avatar}"> </div>
+            <div class="form-group"> <label for="avatar">Avatar</label> 
+				<div> <img th:src="${user.avatar}" alt="User Avatar" class="img-thumbnail mb-3" style="max-width: 150px;"> 
+				</div> <input type="text" class="form-control" id="avatar" name="avatar" th:value="${user.avatar}"> </div>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" th:value="${user.email}">

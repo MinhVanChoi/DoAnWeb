@@ -5,7 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ hàng</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+        body {
+            background-color: #f8f9fa; /* Màu nền nhẹ nhàng */
+        }
+        .cart-container {
+            background-color: #ffffff; /* Màu nền trắng cho khung */
+            border: 1px solid #dee2e6; /* Đường viền */
+            border-radius: 0.5rem; /* Bo góc */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+            padding: 30px; /* Khoảng cách bên trong */
+            margin-top: 20px; /* Khoảng cách trên */
+        }
         .total-price {
             font-weight: bold;
             font-size: 1.5rem;
@@ -15,79 +27,128 @@
             text-align: center;
             margin-top: 20px;
         }
+        .table th, .table td {
+            vertical-align: middle; /* Căn giữa theo chiều dọc */
+            text-align: center; /* Căn giữa theo chiều ngang */
+        }
+        .table th {
+            background-color: #f2f2f2; /* Màu nền cho tiêu đề bảng */
+        }
+        .table tr:hover {
+            background-color: #e9ecef; /* Màu nền khi hover */
+        }
+        .btn {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        .btn-secondary:hover {
+            background-color: #6c757d;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container mt-5">
-    <h2 class="mb-4">Giỏ hàng của bạn</h2>
-    
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Hình ảnh</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                    <th>Tổng tiền</th>
-                    <th>Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Lặp qua danh sách CartItem -->
-                <tr th:each="cartItem : ${listcaritems}">
-                    <td>
-                        <!-- Hiển thị ảnh sản phẩm -->
-                        <img th:src="@{${cartItem.product.images}}" alt="image" width="100">
-                    </td>
-                    <td>
-                        <!-- Hiển thị tên sản phẩm -->
-                        <span th:text="${cartItem.product.name}"></span>
-                    </td>
-                    <td>
-                        <!-- Hiển thị giá sản phẩm -->
-                        <span th:text="${cartItem.product.price}"></span>
-                    </td>
-                    <td>
-                        <!-- Hiển thị số lượng trong giỏ hàng -->
-                        <span th:text="${cartItem.count}"></span>
-                    </td>
-                    <td>
-                        <!-- Hiển thị tổng tiền của sản phẩm này trong giỏ -->
-                        <span th:text="${cartItem.product.price * cartItem.count}"></span>
-                    </td>
-                    <td>
-                        <!-- Thêm nút để chỉnh sửa số lượng -->
-                        <a th:href="@{'/carts/add/' + ${cartItem.product.slug}}" class="btn btn-warning btn-sm">Thêm 1</a>
-						<!-- Nút Giảm 1 -->
-						  <a th:href="@{'/carts/remove/' + ${cartItem.product.slug}}" class="btn btn-secondary btn-sm">Giảm 1</a>
-                        <!-- Nút để xóa sản phẩm khỏi giỏ -->
-                        <a th:href="@{'/carts/delete/' + ${cartItem.product.slug}}" class="btn btn-danger btn-sm">Xóa</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <div class="cart-container">
+        <h2 class="mb-4 text-center">Giỏ hàng của bạn</h2>
+        
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Tổng tiền</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Lặp qua danh sách CartItem -->
+                    <tr th:each="cartItem : ${listcaritems}">
+                        <td>
+                            <!-- Hiển thị ảnh sản phẩm -->
+                            <img th:src="@{${cartItem.product.images}}" alt="image" width="100">
+                        </td>
+                        <td>
+                            <!-- Hiển thị tên sản phẩm -->
+                            <span th:text="${cartItem.product.name}"></span>
+                        </td>
+                        <td>
+                            <!-- Hiển thị giá sản phẩm -->
+                            <span th:text="${cartItem.product.price}"></span>
+                        </td>
+                        <td>
+                            <!-- Hiển thị số lượng trong giỏ hàng -->
+                            <span th:text="${cartItem.count}"></span>
+                        </td>
+                        <td>
+                            <!-- Hiển thị tổng tiền của sản phẩm này trong giỏ -->
+                            <span th:text="${cartItem.product.price * cartItem.count}"></span>
+                        </td>
+                        <td>
+                            <!-- Thêm nút để chỉnh sửa số lượng -->
+                            <a th:href="@{'/carts/add/' + ${cartItem.product.slug}}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-plus"></i> Thêm 1
+                            </a>
+                            <a th:href="@{'/carts/remove/' + ${cartItem.product.slug}}" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-minus"></i> Giảm 1
+                            </a>
+                            <a th:href="@{'/carts/delete/' + ${cartItem.product.slug}}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i> Xóa
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    <!-- Nếu giỏ hàng trống -->
-    <div th:if="${#lists.isEmpty(listcaritems)}" class="empty-cart">
-        <p>Giỏ hàng của bạn hiện tại không có sản phẩm nào.</p>
-    </div>
+        <!-- Nếu giỏ hàng trống -->
+        <div th:if="${#lists.isEmpty(listcaritems)}" class="empty-cart">
+            <p>Giỏ hàng của bạn hiện tại không có sản phẩm nào.</p>
+        </div>
 
-    <!-- Tổng tiền -->
-    <div th:if="${!#lists.isEmpty(listcaritems)}">
-        <h4 class="total-price">Tổng tiền: 
-			<span th:text="${totalAmount}"></span>
-        </h4>
-    </div>
+        <!-- Tổng tiền -->
+        <div th:if="${!#lists.isEmpty(listcaritems)}">
+            <h4 class="total-price text-center">Tổng tiền: 
+                <span th:text="${totalAmount}"></span>
+            </h4>
+        </div>
 
-	
-    <br>
-    <a href="/product" class="btn btn-primary">Tiếp tục mua sắm</a>
-    <a href="/checkout" class="btn btn-success">Thanh toán</a>
+        <br>
+        <div class="text-center">
+            <a href="/product" class="btn btn-primary">Tiếp tục mua sắm</a>
+            <a th:href="@{'/thanhtoan/vnpay?totalAmount=' + ${totalAmount}}" class="btn btn-success">Thanh toán</a>
+        </div>
+        
+        <div class="loading" th:if="${loading}">
+            <p><i class="fas fa-spinner fa-spin"></i> Đang xử lý...</p>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Example of showing loading spinner
+    document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelector('.loading').style.display = 'block';
+        });
+    });
+</script>
 </body>
 </html>

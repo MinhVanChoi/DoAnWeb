@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
+    <!-- Custom fonts for this template-->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link href="/img/favicon.ico" rel="icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<div class="sidebaradmin">
+    <div th:replace="/fragments/sidebar-admin"></div>
     <div class="container mt-5">
         <h2>Product List</h2>
-        
+        <a href="/admin/products/add" class="btn btn-primary mb-3">Add Product</a>
         <form action="/admin/products/searchpaginated" method="get" class="mb-3">
             <input type="text" name="name" placeholder="Search by name" class="form-control" value="">
             <select name="size" id="size" onchange="this.form.submit()">
@@ -22,46 +52,51 @@
             <button type="submit" class="btn btn-secondary mt-2">Search</button>
         </form>
 
-		<table class="table table-bordered">
-		    <thead>
-		        <tr>
-		            <th>ID</th>
-		            <th>Name</th>
-		            <th>Price</th>
-		            <th>Sold</th>
-		            <th>IsActive</th>
-		            <th>IsBan</th>
-		            <th>IsSelling</th>
-		            <th>Promotion Price</th>
-		            <th>Description</th>
-		            <th>Actions</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-		        <tr th:each="product : ${productPage}">
-		            <td th:text="${product.id}"></td>
-		            <td th:text="${product.name}"></td>
-		            <td th:text="${product.price}"></td>
-		            <td th:text="${product.sold}"></td>
-		            <td th:text="${product.isActice} ? 'true' : 'false'"></td> 
-		            <td th:text="${product.isBan} ? 'true' : 'false'"></td> 
-		            <td th:text="${product.isSelling} ? 'true' : 'false'"></td> 
-		            <td th:text="${product.promotionPrice}"></td>
-		            <td th:text="${product.description}"></td>
-					<td>
-					    <!-- Ban Product Form -->
-					    <form th:action="@{/admin/products/ban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
-					        <button type="submit" class="btn btn-warning">Ban</button>
-					    </form>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Images</th>
+                <th>Cấm bán</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${productPage}">
+                <td th:text="${product.id}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td>
 
-					    <!-- Unban Product Form -->
-					    <form th:action="@{/admin/products/unban/{slug}(slug=${product.slug})}" method="post" style="display:inline;">
-					        <button type="submit" class="btn btn-success">Unban</button>
-					    </form>
-					</td>
-		        </tr>
-		    </tbody>
-		</table>
+                        <img style="width: 100px; height: 100px" th:if="${product.images != null && product.images.startsWith('https')}"
+                             th:src="${product.images}"
+                             alt="User Avatar" class="img-thumbnail mb-3">
+                        <img style="width: 100px; height: 100px" th:unless="${product.images != null && product.images.startsWith('https')}"
+                             th:src="@{'/image?fname=' + ${product.images}}"
+                             alt="User Avatar" class="img-thumbnail mb-3">
+                </td>
+
+                <td th:text="${product.isBan} ? 'Đang cấm' : 'Bình thường'"></td>
+                <td>
+                    <!-- Ban Product Form -->
+                    <form th:action="@{/admin/products/ban/{slug}(slug=${product.slug})}" method="post"
+                          style="display:inline;">
+                        <button type="submit" class="btn btn-warning">Ban</button>
+                    </form>
+                    <form th:action="@{/admin/products/edit/{id}(id=${product.id})}" method="get"
+                          style="display:inline ; ">
+                        <button type="submit" class="btn btn-success">Sửa</button>
+                    </form>
+                    <form th:action="@{/admin/products/delete/{id}(id=${product.id})}" method="post"
+                          style="display:inline;">
+                        <button type="submit" class="btn btn-success">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
         <div th:if="${productPage.totalPages > 1}">
             <ul class="pagination">
@@ -74,5 +109,6 @@
             </ul>
         </div>
     </div>
+</div>
 </body>
 </html>

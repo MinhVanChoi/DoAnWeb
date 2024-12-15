@@ -78,10 +78,11 @@ public class CustomerProfileController {
 
 	    User userold = optuser.get();
 	    user.setPassword(userold.getPassword());
-
-	    // Xử lý ảnh avatar
-	    String avatarFilename = userold.getAvatar();  // Giữ lại tên avatar cũ nếu không có file mới
-	    String avatarFullPath = userold.getAvatar();  // Giữ lại đường dẫn cũ
+	    user.setLongitude(userold.getLongitude());
+	    user.setLatitude(userold.getLatitude());
+	    user.setSlug(userold.getSlug());
+	    String avatarFilename = userold.getAvatar();  
+	    String avatarFullPath = userold.getAvatar();  
 
 	    if (file != null && !file.isEmpty()) {
 	        String filename = file.getOriginalFilename();
@@ -90,27 +91,24 @@ public class CustomerProfileController {
 	        avatarFilename = generateNewFileName(extension);
 
 	        String uploadDir = Constain.UPLOAD_DIRECTORY;
-	        // Đảm bảo đường dẫn chứa dấu "/"
-	        uploadDir = uploadDir.replace("\\", "/");  // Thay thế \ thành /
+	        uploadDir = uploadDir.replace("\\", "/");  
 
 	        File uploadDirectory = new File(uploadDir);
 	        if (!uploadDirectory.exists()) {
 	            uploadDirectory.mkdirs(); 
 	        }
 
-	        avatarFullPath = uploadDir + "/" + avatarFilename;  // Dùng "/" thay vì File.separator
+	        avatarFullPath = uploadDir + "/" + avatarFilename; 
 
-	        // Lưu file vào thư mục đã chỉ định
 	        file.transferTo(new File(avatarFullPath));
 	    }
 	    
-	    // Lưu thông tin của người dùng (chưa bao gồm phần lưu vào DB)
 	    user.setAvatar(avatarFullPath);
+	    
 	    userService.save(user);
 
-	    // Chuyển hướng hoặc trả về view
 	    model.addAttribute("user", user);
-	    return new ModelAndView("redirect:/profile", model);
+	    return new ModelAndView("redirect:/home", model);
 	}
 
 	
