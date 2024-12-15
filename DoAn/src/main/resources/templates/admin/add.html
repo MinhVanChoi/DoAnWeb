@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Store Management</title>
+    <title>Add Product</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <!-- Custom styles for this template-->
-    <link href="/css/sb-admin-2.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
@@ -41,42 +36,52 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>User List</title>
-
 </head>
 <body>
 <div class="sidebaradmin">
     <div th:replace="/fragments/sidebar-admin"></div>
 <div class="container mt-5">
-    <h2>Store Management</h2>
+    <h2>Add Product</h2>
+    <form th:action="@{/admin/products/insert}" method="post" enctype="multipart/form-data">
 
-    <!-- Button to add new store -->
-    <a th:href="@{/admin/stores/add}" class="btn btn-primary mb-3">Add New Store</a>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required/>
+        </div>
+        <div class="form-group">
+            <label for="images">Image:</label>
+            <input type="file" id="images" name="images" class="form-control-file" required/>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" class="form-control" required/>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="slug">Slug:</label>
+            <input id="slug" name="slug" class="form-control" required></input>
+        </div>
+        <div class="form-group">
+            <label for="sold">Sold:</label>
+            <input type="number" id="sold" name="sold" class="form-control"/>
+        </div>
+        <div class="form-group"><label for="storeId">Store:</label> <select id="storeId" name="storeId"
+                                                                            class="form-control" required>
+            <option value="">Select a Store</option>
+            <option th:each="store : ${store}" th:value="${store.id}" th:text="${store.name}"></option>
+        </select>
+        </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Add Product</button>
+                <a th:href="@{/admin/home}" class="btn btn-secondary">Cancel</a>
+            </div>
 
-    <!-- Table to display stores -->
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Chi nhánh</th>
-            <th>Address</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="store : ${store}">
-            <td th:text="${store.id}"></td>
-            <td th:text="${store.name}"></td>
-            <td th:text="${store.address}"></td>
-            <td>
-                <a th:href="@{/admin/stores/edit/{id}(id=${store.id})}" class="btn btn-warning">Edit</a>
-                <a th:href="@{/admin/stores/delete/{id}(id=${store.id})}" class="btn btn-danger"
-                   onclick="return confirm('Are you sure you want to delete this store?');">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    </form>
 </div>
 </div>
+<div th:replace="/fragments/footer-admin"></div>
 </body>
 </html>

@@ -5,7 +5,9 @@
     --light: #F5F8F2;
     --dark: #252C30;
 }
-
+body{
+    background-color: #f3efeb;
+}
 
 
 
@@ -464,7 +466,6 @@
     background: var(--dark);
 }
 
-
 /*** Footer ***/
 .footer {
     color: #B0B9AE;
@@ -484,14 +485,14 @@
 .footer .btn.btn-link::before {
     position: relative;
     content: "\f105";
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Free", serif;
     font-weight: 900;
-    color: var(--primary);
+    color: #88B44E;
     margin-right: 10px;
 }
 
 .footer .btn.btn-link:hover {
-    color: var(--light);
+    color: #F5F8F2;
     letter-spacing: 1px;
     box-shadow: none;
 }
