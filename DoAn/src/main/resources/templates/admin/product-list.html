@@ -60,7 +60,7 @@
                 <th>Price</th>
                 <th>Images</th>
                 <th>Tình trạng</th>
-                <th>Store</th>
+
                 <th>Actions</th>
             </tr>
             </thead>
@@ -78,9 +78,8 @@
                              th:src="@{'/image?fname=' + ${product.images}}"
                              alt="User Avatar" class="img-thumbnail mb-3">
                 </td>
-
                 <td th:text="${product.isBan} ? 'Đang cấm' : 'Đang bán'"></td>
-                <td th:text="${product.store}"></td>
+
                 <td>
                     <!-- Ban Product Form -->
                     <form th:action="@{/admin/products/ban/{slug}(slug=${product.slug})}" method="post"
@@ -111,6 +110,8 @@
             </ul>
         </div>
     </div>
+
 </div>
+<div th:replace="/fragments/footer-admin"></div>
 </body>
 </html>
