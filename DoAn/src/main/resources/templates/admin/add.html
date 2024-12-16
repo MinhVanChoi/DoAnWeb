@@ -60,20 +60,7 @@
             <label for="description">Description:</label>
             <textarea id="description" name="description" class="form-control" required></textarea>
         </div>
-        <div class="form-group">
-            <label for="slug">Slug:</label>
-            <input id="slug" name="slug" class="form-control" required></input>
-        </div>
-        <div class="form-group">
-            <label for="sold">Sold:</label>
-            <input type="number" id="sold" name="sold" class="form-control"/>
-        </div>
-        <div class="form-group"><label for="storeId">Store:</label> <select id="storeId" name="storeId"
-                                                                            class="form-control" required>
-            <option value="">Select a Store</option>
-            <option th:each="store : ${store}" th:value="${store.id}" th:text="${store.name}"></option>
-        </select>
-        </div>
+		
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Add Product</button>
                 <a th:href="@{/admin/home}" class="btn btn-secondary">Cancel</a>

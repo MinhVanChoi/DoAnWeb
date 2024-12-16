@@ -60,28 +60,12 @@
             <label for="price">Price:</label>
             <input type="number" id="price" th:field="*{price}" name="price" step="0.01" class="form-control" required/>
         </div>
-        <div class="form-group">
-            <label for="slug">Slug:</label>
-            <input id="slug" name="slug" th:field="*{slug}" class="form-control" required></input>
-        </div>
-        <div class="form-group">
-            <label for="promotionPrice">Promotion Price:</label>
-            <input type="number" id="promotionPrice" th:field="*{promotionPrice}" name="promotion_price" step="0.01" class="form-control"/>
-        </div>
-        <div class="form-group"><label for="storeId">Store:</label> <select id="storeId" name="storeId"
-                                                                            class="form-control" required>
 
-            <option th:each="store : ${store}" th:value="${store.id}" th:text="${store.name}"></option>
-        </select>
-        </div>
         <div class="form-group">
             <label for="description">Description:</label>
             <textarea id="description" name="description" class="form-control" th:field="*{description}" required></textarea>
         </div>
-        <div class="form-group">
-            <label for="sold">Sold:</label>
-            <input type="number" id="sold" th:field="*{sold}" name="sold" class="form-control"/>
-        </div>
+
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Update</button>

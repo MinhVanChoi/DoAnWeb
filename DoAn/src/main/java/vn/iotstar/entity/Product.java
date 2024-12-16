@@ -42,8 +42,6 @@ public class Product {
 	private String description;
 	private String images;
 	private float price;
-	private float promotionPrice;
-	private int sold;
 	private boolean isSelling = false;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -51,9 +49,6 @@ public class Product {
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
-	@ManyToOne
-	@JoinColumn(name = "store_id", nullable = false)
-	private Store store;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<ReviewProduct> reviews = new ArrayList<>();

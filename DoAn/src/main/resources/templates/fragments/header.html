@@ -33,13 +33,15 @@
 				        <a th:href="@{/login}">Login</a>
 				        <a th:href="@{/register}">Register</a>
 				    </div>
-				    <div th:unless="${session.user == null}">
-					<img th:src="@{'/image?fname='+${session.user.avatar}}" alt="User Avatar" class="rounded-circle" style="width: 40px; height: 40px; margin-right: 10px;">				        <a th:href="@{/profile}" th:text="${session.user.fullname}"></a>
-				        <a th:href="@{/logout}">    Logout</a>
-						
-				    </div>
-					
+					<div th:unless="${session.user == null}" style="margin-bottom: 10px;">
+					    <img th:src="@{'/image?fname='+${session.user.avatar}}" alt="User Avatar" class="rounded-circle" style="width: 40px; height: 40px; margin-right: 10px;">				       
+					    <a th:href="@{/profile}" th:text="${session.user.fullname}"></a>
+					    <a th:href="@{/logout}"> Logout</a>
+					</div>
 
+					<div th:unless="${session.user == null}" style="display: flex; margin-left: 20px;"> 
+					    <a th:href="@{/customer/checkout}"> Giỏ hàng</a>
+					</div>
 					
 	            </div>
 	        </nav>

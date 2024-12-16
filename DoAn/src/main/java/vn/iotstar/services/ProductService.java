@@ -31,8 +31,6 @@ public interface ProductService {
 
 	Page<Product> findByNameContaining(String name, Pageable pageable);
 
-	List<Product> findByStore(Store store);
-
 	List<Product> findStoredProduct();
 
 	List<Product> findSellingProduct();

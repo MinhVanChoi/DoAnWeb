@@ -65,7 +65,7 @@ public class CustomerCartController {
 		    totalAmount += item.getProduct().getPrice() * item.getCount();
 		}
 
-		model.addAttribute("listcaritems",cartitems); // trong đây mới có count 
+		model.addAttribute("listcaritems",cartitems);
 		model.addAttribute("totalAmount", totalAmount); 
 		return "cart";
 	}
@@ -179,20 +179,20 @@ public class CustomerCartController {
 //	}
 //	
 //	
-//	@PostMapping("/delete/{slug}")
-//	public ModelAndView deleteCartItem(ModelMap model,@PathVariable("slug") String slugProduct, 
-//			@Valid @ModelAttribute("cart") Cart cartModel) {
-//		Optional<Product> optProduct = productService.findBySlug(slugProduct);
-//		if(optProduct.isPresent()) {
-//			Product product = optProduct.get();
-//			Cart cart = new Cart();
-//			BeanUtils.copyProperties(cartModel, cart);
-//			CartItemId cartItemId = new CartItemId(cart.getId(), product.getId());
-//		    Optional<CartItem> optCartItem = cartItemSerice.findById(cartItemId);
-//		    if(optCartItem.isPresent()) {
-//		    	cartItemSerice.deleteById(cartItemId);
-//		    }
-//		}
-//		return new ModelAndView("redirect:/carts", model);
-//	}
+	@GetMapping("/delete/{slug}")
+	public ModelAndView deleteCartItem(ModelMap model,@PathVariable("slug") String slugProduct, 
+			@Valid @ModelAttribute("cart") Cart cartModel) {
+		Optional<Product> optProduct = productService.findBySlug(slugProduct);
+		System.out.println(1);
+		if(optProduct.isPresent()) {
+			Product product = optProduct.get();
+			Cart cart = new Cart();
+			BeanUtils.copyProperties(cartModel, cart);
+			CartItemId cartItemId = new CartItemId(cart.getId(), product.getId());
+			System.out.println(cartItemId);
+			cartitemService.deleteCartItem(cart.getId(), product.getId());
+		    
+		}
+		return new ModelAndView("redirect:/customer/checkout", model);
+	}
 }

@@ -68,10 +68,6 @@ public class ProductServiceImp implements ProductService{
 		return productRepository.findByNameContaining(name, pageable);
 	}
 
-	@Override
-	public List<Product> findByStore(Store store) {
-		return productRepository.findByStore(store);
-	}
 
 	@Override
 	public List<Product> findSellingProduct() {

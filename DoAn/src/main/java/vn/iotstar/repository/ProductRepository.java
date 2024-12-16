@@ -17,7 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	Optional<Product> findBySlug(String slug);
 	
 	Page<Product> findByNameContaining (String name, Pageable pageable);
-	List<Product> findByStore(Store store);
 	@Query("SELECT p FROM Product p WHERE p.isSelling = true")
 	List<Product> findSellingProduct();
 	@Query("SELECT p FROM Product p WHERE p.isSelling = false")

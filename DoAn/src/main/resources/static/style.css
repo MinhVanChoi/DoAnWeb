@@ -438,5 +438,78 @@ a{
     cursor: pointer;
 }
 
+/* Basic Table Styling */
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+/* Header Styling */
+.table th {
+    background-color: #f8f9fa;
+    text-align: center;
+    font-weight: bold;
+    padding: 12px;
+}
+
+/* Table Cell Styling */
+.table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Image Styling */
+.product-image {
+    width: 80px; /* Adjust image size */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Button Styling */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    padding: 6px 12px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .table th, .table td {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .product-image {
+        width: 60px;
+    }
+
+    .btn-danger {
+        padding: 5px 10px;
+    }
+}
+
+.table td {
+    white-space: nowrap; /* Ngăn không cho nội dung bị xuống dòng */
+    overflow: hidden; /* Ẩn nội dung tràn ra ngoài */
+    text-overflow: ellipsis; /* Hiển thị dấu "..." nếu nội dung quá dài */
+}
+
+.product-image {
+    max-width: 50px; /* Giới hạn kích thước hình ảnh */
+    max-height: 50px; /* Giới hạn kích thước hình ảnh */
+}
+
 /* image upload modal */
 /* MODAL */

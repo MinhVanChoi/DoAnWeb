@@ -52,6 +52,7 @@ public class CartItemServiceImp implements CartItemService{
 	}
 
 	@Override
+	@Transactional
 	public void deleteById(CartItemId id) {
 		cartItemRepository.deleteById(id);
 	}
@@ -61,7 +62,18 @@ public class CartItemServiceImp implements CartItemService{
 		System.out.println("thuc hien delete cartitem");
 		cartItemRepository.delete(entity);
 	}
+
+	 @Override
+	public void deleteCartItem(Long cartId, Long productId) {
+
+	        CartItemId cartItemId = new CartItemId(cartId, productId);
+
+	        cartItemRepository.deleteById(cartItemId);
+
+	    }
 	
+	
+
 	
 	
 }

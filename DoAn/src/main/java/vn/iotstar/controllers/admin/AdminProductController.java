@@ -23,8 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import vn.iotstar.entity.Product;
 import vn.iotstar.entity.Store;
+import vn.iotstar.entity.User;
 import vn.iotstar.services.ProductService;
 import vn.iotstar.services.StoreService;
+import vn.iotstar.utils.Constain;
 
 @Controller
 @RequestMapping("/admin/products")
@@ -151,7 +153,7 @@ public class AdminProductController {
 
     @PostMapping("/insert")
     public ModelAndView insert(ModelMap model, @Valid @ModelAttribute("product") Product product,
-                               BindingResult result,@RequestParam("storeId") Long storeId, @RequestParam("images") MultipartFile file) throws IOException {
+                               BindingResult result, @RequestParam("images") MultipartFile file) throws IOException {
 
 
         String imagesFullPath = product.getImages();  // Giữ lại đường dẫn cũ
@@ -161,7 +163,7 @@ public class AdminProductController {
 
             String imagesFilename = generateNewFileName(extension);
 
-            String uploadDir = "D:";
+	        String uploadDir = Constain.UPLOAD_DIRECTORY;
             // Đảm bảo đường dẫn chứa dấu "/"
             uploadDir = uploadDir.replace("\\", "/");  // Thay thế \ thành /
 
@@ -176,8 +178,8 @@ public class AdminProductController {
             file.transferTo(new File(imagesFullPath));
 
         }
-        Store store = storeService.findById(storeId).orElseThrow(() -> new IllegalArgumentException("Invalid store Id:" + storeId));
-        product.setStore(store);
+		String slug = Constain.generateSlug(product.getName());
+		product.setSlug(slug);
         product.setImages(imagesFullPath);
         productService.save(product);
         return new ModelAndView("redirect:/admin/products", model);
@@ -206,7 +208,7 @@ public class AdminProductController {
 
     @PostMapping("/update")
     public ModelAndView update(ModelMap model, @Valid @ModelAttribute("product") Product product,
-                               BindingResult result,@RequestParam("storeId") Long storeId, @RequestParam("images") MultipartFile file) throws IOException {
+                               BindingResult result, @RequestParam("images") MultipartFile file) throws IOException {
 
         String imagesFullPath = product.getImages();  // Giữ lại đường dẫn cũ
         if (file != null && !file.isEmpty()) {
@@ -215,7 +217,7 @@ public class AdminProductController {
 
             String imagesFilename = generateNewFileName(extension);
 
-            String uploadDir = "D:";
+	        String uploadDir = Constain.UPLOAD_DIRECTORY;
             // Đảm bảo đường dẫn chứa dấu "/"
             uploadDir = uploadDir.replace("\\", "/");  // Thay thế \ thành /
 
@@ -230,9 +232,9 @@ public class AdminProductController {
             file.transferTo(new File(imagesFullPath));
 
         }
-        Store store = storeService.findById(storeId).orElseThrow(() -> new IllegalArgumentException("Invalid store Id:" + storeId));
-        product.setStore(store);
         product.setImages(imagesFullPath);
+    	String slug = Constain.generateSlug(product.getName());
+		product.setSlug(slug);
         productService.save(product);
         return new ModelAndView("redirect:/admin/products", model);
     }

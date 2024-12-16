@@ -40,8 +40,6 @@ public class Store {
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-	private List<Product> products = new ArrayList<>();
 
 	
 }

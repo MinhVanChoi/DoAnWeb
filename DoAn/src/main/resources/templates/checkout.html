@@ -1,11 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Document</title>
+	    <link rel="stylesheet" href="/style.css">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	   
+		
+	   
+	   
+	   <title>OpenStreetMap with Locations</title>
+	   
+	   <!-- Link đến Leaflet CSS -->
+	   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+	   
+	   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+	   <script type="text/javascript">
+	       // Hàm để vẽ bản đồ
+	       function drawMap() {
+	           // Khởi tạo bản đồ với OpenStreetMap
+	           var map = L.map('map_div').setView([10.762622, 106.660172], 13);  // Set vị trí mặc định (Hồ Chí Minh)
+
+	           // Thêm lớp bản đồ từ OpenStreetMap
+	           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	               attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+	           }).addTo(map);
+
+	           // Lấy dữ liệu từ API Spring Boot
+	           fetch("/customer/khoangcach2vitri")
+	               .then(response => response.json())
+	               .then(addresses => {
+	                   addresses.forEach(function(address) {
+	                       // Tạo marker cho mỗi địa chỉ
+	                       L.marker([address.latitude, address.longitude])
+	                           .addTo(map)
+	                           .bindPopup("<b>" + address.name + "</b><br>" + address.latitude + ", " + address.longitude);
+	                   });
+	               })
+	               .catch(error => console.error('Error fetching data:', error));
+	       }
+
+	       // Chạy hàm vẽ bản đồ khi trang đã tải xong
+	       window.onload = function() {
+	           drawMap();
+	       };
+	   </script>
 </head>
 <body>
     <div class="section-1">
@@ -29,62 +69,80 @@
                         <div class="element-header">
                             <div class="left-element">
                                 <i class="fa-solid fa-location-dot"></i>
-                                <p>Vinhome Grandpark</p>
+                                <p>Địa chỉ</p>
                             </div>
                             <div class="right-element">
                                 <i class="fa-solid fa-chevron-right"></i>
                             </div>
                         </div>
-                        <div class="location-content">
-                            Tòa Park 3, 208 Đ.Nguyễn Hữu Cảnh, Vinhomes Tân Cảng, Bình Thạnh, Hồ Chí Minh, VietNam
-                        </div>
+						<div class="location-content" th:if="${session.user.address == null}">
+						    <a th:href="@{/profile/map}">Hãy chọn địa chỉ của bạn</a>
+						</div>
+
+						<div class="location-content" th:if="${session.user.address != null}">
+						    <p th:text="${session.user.address}"></p>
+						</div>
+
                     </div>
                     <div class="phone main-element">
                         <div class="element-header">
                             <div class="left-element">
                                 <i class="fa-solid fa-phone"></i>
-                                <p>0859246378</p>
+                                <p>Số điện thoại</p>
                             </div>
                             <div class="right-element">
                                 <i class="fa-solid fa-chevron-right"></i>
                             </div>
                         </div>
                         <div class="phone-content">
-                            Số điện thoại: 0859246378
+							<p th:text="${session.user.phone}"></p>
                         </div>
                     </div>
                     <div class="time main-element">
                         <div class="element-header">
-                            <div class="left-element">
-                                <i class="fa-solid fa-clock"></i>
-                                <p>Thời gian nhận hàng</p>
-                            </div>
+							<div class="left-element">
+													<i class="fa-solid fa-location-dot"></i>
+													<p>Cửa hàng</p>
+													</div>
                             <div class="right-element">
                                 <i class="fa-solid fa-chevron-right"></i>
                             </div>
                         </div>
                         <div class="time-content">
-                            Hết thời gian giao hàng trong ngày
+							<p th:text="${nearestStore.name}"></p>
                         </div>
                     </div>
-                    <div class="note main-element">
-                        <div class="element-header">
-                            <div class="left-element">
-                                <i class="fa-solid fa-note-sticky"></i>
-                                <p>Ghi chú cho cửa hàng</p>
-                            </div>
-                            <div class="right-element">
-                                <button id="btn-note" style="border: none; background-color: transparent;"><i class="fa-solid fa-chevron-right"></i></button>
-                            </div>
-                        </div>
-                        <div class="time-content">
-                            Ghi chú: 
-                        </div>
-                    </div>
-                    <div class="check-input-bill main-element">
-                        <input type="checkbox" name="check-bill">
-                        <p>Yêu cầu xuất hóa đơn</p>
-                    </div>
+					
+					<div class="time main-element">
+					                   <div class="element-header">
+										<div class="left-element">
+																<i class="fa-solid fa-location-dot"></i>
+																<p>Địa chỉ chi nhánh</p>
+																</div>
+					                       <div class="right-element">
+					                           <i class="fa-solid fa-chevron-right"></i>
+					                       </div>
+					                   </div>
+					                   <div class="time-content">
+										<p th:text="${nearestStore.address}"></p>
+					                   </div>
+					               </div>
+								   <div class="time main-element">
+								   					                   <div class="element-header">
+								   										<div class="left-element">
+								   																<i class="fa-solid fa-location-dot"></i>
+								   																<p>Khoảng cách:</p>
+								   																</div>
+								   					                       <div class="right-element">
+								   					                           <i class="fa-solid fa-chevron-right"></i>
+								   					                       </div>
+								   					                   </div>
+								   					                   <div class="time-content">
+								   										<p th:text="${minDistance}"></p>
+								   					                   </div>
+								   					               </div>							   
+                 
+																   <div id="map_div" style="width: 750px; height: 250px"></div>		   
                 </div>
             </div>
             <div class="right-main-section">
@@ -92,30 +150,38 @@
                     <div class="right">
                         <div class="right-cart">
                             <i class="fa-solid fa-cart-shopping"></i>
-                            <p class="deli">Giỏ hàng của bạn (1 món)</p>
+                            <p class="deli">Giỏ hàng của bạn</p>
                         </div>
                     </div>
                     <div class="line" >
                         <hr>
                     </div>
                 </div>
-                <div class="main-form">
-                    <div class="detail-product">
-n 
-                        <div class="right-detail">
-                            <div class="quantity">
-                                <div class="action-detail">
-                                    <i class="fa-solid fa-pencil"></i>
-                                    <i class="fa-solid fa-trash-can" style="color: red;"></i>
-                                </div>
-                                <div class="quantity-content">
-                                    <button class="minus">-</button>
-                                    <input type="text" value="1">
-                                    <button class="plus">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+				<div class="main-form">
+    <div class="detail-product" style="max-height: 400px; overflow-y: auto;">
+						        <ul class="list-group">
+				            <li class="list-group-item" th:each="cartItem : ${listcaritems}">
+				                <div class="d-flex justify-content-between align-items-center">
+				                    <div class="d-flex align-items-center">
+				                        <img th:src="@{'/image?fname=' +${cartItem.product.images}}" alt="image" class="product-image" style="max-width: 100px; max-height: 100px; margin-right: 150px;">
+			
+										<span th:text="${cartItem.product.name}"></span>
+				                    </div>
+				                    <div>
+				                        <span><strong>Số lượng:</strong> <span th:text="${cartItem.count}"></span></span><br>
+				                        <span><strong>Giá:</strong> <span th:text="${cartItem.product.price}"></span></span><br>
+				                        <span><strong>Tổng:</strong> <span th:text="${cartItem.product.price * cartItem.count}"></span></span>
+				                    </div>
+				                    <a th:href="@{'/carts/delete/' + ${cartItem.product.slug}}" class="btn btn-danger btn-sm">
+				                        Xóa
+				                    </a>
+				                </div>
+				            </li>
+				        </ul>
+				    </div>
+				</div>
+					
+					
                     <div class="detail-payment">
                         <div class="detail-payment-header">
                             <p>Thông tin thanh toán</p>
@@ -123,11 +189,12 @@ n
                         <div class="detail-payment-content">
                             <div class="total">
                                 <p>Tổng tiền tạm tính</p>
-                                <p>65.000</p>
+								               <p th:text="${totalAmount}"></p>
+								          
                             </div>
                             <div class="ship-fee">
                                 <p>Phí vận chuyển</p>
-                                <p>25.000</p>
+                                 <p th:text="${shippingCost}"></p>
                             </div>
                             <div class="dis-coup">
                                 <p>Mã giảm giá</p>
@@ -135,7 +202,9 @@ n
                             </div>
                             <div class="last-price">
                                 <p>Tổng tiền (Đã có VAT)</p>
-                                <p class="lp-p">90.000</p>
+								<p th:text="${MaxTotalAmount}"></p>
+
+								
                             </div>
                         </div>
                     </div>
@@ -147,24 +216,16 @@ n
                             <label class="radio-container">
                                 <input type="radio" name="time-option" value="bank">
                                 <span class="radio-button">Thẻ ngân hàng/Thẻ tín dụng/Ví điện tử</span>
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="time-option" value="momo">
-                                <span class="radio-button">Ví MoMo</span>
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="time-option" value="zalopay">
-                                <span class="radio-button">Ví ZaloPay</span>
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="time-option" value="shopeepay">
-                                <span class="radio-button">Ví ShopeePay</span>
-                            </label>
+                            </label>              
                         </div>
                     </div>
                     <div class="btn-confirm-payment">
                  
-                        <button class="confirm-payment">Tiến hành thanh toán</button>
+						<a th:href="@{'/thanhtoan/vnpay?totalAmount=' + ${MaxTotalAmount}}" class="confirm-payment">
+						    <button type="button" class="btn">Tiến hành thanh toán</button>
+						</a>
+						
+
                     </div>
                 </div>
             </div>
@@ -207,6 +268,9 @@ n
             </div>
         </div>
     </div>
+	
+	
+	
         <script>
             // Get the modal
         // Get modal elements
