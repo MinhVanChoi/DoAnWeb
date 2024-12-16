@@ -69,6 +69,7 @@ public class CustomerOrderController {
 			order.setUser(user);
 			order.setAddress(user.getAddress());
 			order.setPhone(user.getPhone());
+			order.setStatus(true);
 			orderService.save(order);
 			double totalamount = 0; 
 			List<CartItem> listcartitem = cart.getCartItems();
@@ -84,7 +85,7 @@ public class CustomerOrderController {
 				totalamount += product.getPrice()*item.getCount();
 				CartItemId cartitemid = new CartItemId(cart.getId(),product.getId());
 				System.out.println("Chỗ này có chữ nè: " + cartitemid.getCartId());
-				cartItemService.delete(item);
+				cartItemService.deleteCartItemsByCartId(cartitemid.getCartId());
 			}
 			order.setTotalAmount(totalamount);
 			orderService.save(order);

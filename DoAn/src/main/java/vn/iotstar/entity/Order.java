@@ -41,7 +41,7 @@ public class Order {
 	private String address;
 	private String phone;
 	private double totalAmount;
-	private OrderStatus status = OrderStatus.NOT_PROCESSED;
+	private boolean status;
 //	private boolean isPaidBefore = false;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)

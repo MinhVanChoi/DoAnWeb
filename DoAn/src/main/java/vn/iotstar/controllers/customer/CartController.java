@@ -92,6 +92,7 @@ public class CartController {
 	        double shippingCost = calculateShippingCost(minDistance);
 			
 	        double MaxTotalAmount = totalAmount + shippingCost;
+	        
 	        model.addAttribute("listcaritems",cartitems);
 			model.addAttribute("totalAmount", totalAmount); 
 		    model.addAttribute("nearestStore", nearestStore);
