@@ -3,11 +3,20 @@ package vn.iotstar.controllers.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.validation.Valid;
 import vn.iotstar.entity.Product;
 import vn.iotstar.entity.Store;
 import vn.iotstar.services.StoreService;
+import vn.iotstar.utils.Constain;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -57,7 +66,8 @@ public class AdminStoreController {
         storeService.save(store);
         return "redirect:/admin/stores";
     }
-
+    
+   
     @GetMapping("/delete/{id}")
     public String deleteStore(@PathVariable Long id) {
         storeService.deleteById(id);

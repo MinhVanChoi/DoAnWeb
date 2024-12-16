@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import vn.iotstar.entity.CartItem;
 import vn.iotstar.entity.CartItemId;
@@ -20,6 +22,9 @@ import vn.iotstar.services.CartItemService;
 public class CartItemServiceImp implements CartItemService{
 	@Autowired
 	CartItemRepository cartItemRepository;
+	
+    @PersistenceContext
+    private EntityManager entityManager;
 
 	@Override
 	public <S extends CartItem> S save(S entity) {
@@ -70,6 +75,29 @@ public class CartItemServiceImp implements CartItemService{
 
 	        cartItemRepository.deleteById(cartItemId);
 
+	    }
+	 
+	  @Override
+		@Transactional
+		    public void deleteCartItemsByCartId(Long cartId) {
+		        // JPQL để xóa các CartItem có cart_id tương ứng
+		      String sql = "DELETE FROM cartitem WHERE cart_id = :cartId";
+		        entityManager.createNativeQuery(sql)
+		                     .setParameter("cartId", cartId)
+		                     .executeUpdate();
+		        System.out.println("Deleting CartItems with cartId: " + cartId);
+		    }
+		
+	  
+	  @Override
+	@Transactional
+	public void deleteCartItemsByCartIdAndProductId(Long cartId, Long productId){
+		   // Xóa các CartItem theo cartId và productId
+		    String deleteSql = "DELETE FROM cartitem WHERE cart_id = :cartId AND product_id = :productId";
+		    entityManager.createNativeQuery(deleteSql)
+		                 .setParameter("cartId", cartId)
+		                 .setParameter("productId", productId)
+		                 .executeUpdate();
 	    }
 	
 	

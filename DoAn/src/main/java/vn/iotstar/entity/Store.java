@@ -32,7 +32,6 @@ public class Store {
     private double latitude;  // Vĩ độ
     @Column(nullable = false)
     private double longitude;  // Kinh độ
-	private String images;
 	private boolean isOpen = false;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)

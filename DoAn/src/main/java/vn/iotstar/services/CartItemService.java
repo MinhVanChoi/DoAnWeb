@@ -32,6 +32,10 @@ public interface CartItemService {
 
 	void deleteCartItem(Long cartId, Long productId);
 
+	void deleteCartItemsByCartIdAndProductId(Long cartId, Long productId);
+
+	void deleteCartItemsByCartId(Long cartId);
+
 
 
 }

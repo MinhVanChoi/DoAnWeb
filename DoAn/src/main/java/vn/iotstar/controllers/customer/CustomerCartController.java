@@ -67,6 +67,7 @@ public class CustomerCartController {
 
 		model.addAttribute("listcaritems",cartitems);
 		model.addAttribute("totalAmount", totalAmount); 
+
 		return "cart";
 	}
 	
@@ -181,16 +182,16 @@ public class CustomerCartController {
 //	
 	@GetMapping("/delete/{slug}")
 	public ModelAndView deleteCartItem(ModelMap model,@PathVariable("slug") String slugProduct, 
-			@Valid @ModelAttribute("cart") Cart cartModel) {
+			@Valid @ModelAttribute("cart") Cart cartModel,  HttpSession session) {
+		User user = (User)session.getAttribute("user");
+		Cart cart = user.getCart();
 		Optional<Product> optProduct = productService.findBySlug(slugProduct);
-		System.out.println(1);
 		if(optProduct.isPresent()) {
 			Product product = optProduct.get();
-			Cart cart = new Cart();
-			BeanUtils.copyProperties(cartModel, cart);
+			System.out.println("in ra product: " + product.getId());
 			CartItemId cartItemId = new CartItemId(cart.getId(), product.getId());
-			System.out.println(cartItemId);
-			cartitemService.deleteCartItem(cart.getId(), product.getId());
+			
+			cartitemService.deleteCartItemsByCartIdAndProductId(cart.getId(),product.getId());
 		    
 		}
 		return new ModelAndView("redirect:/customer/checkout", model);

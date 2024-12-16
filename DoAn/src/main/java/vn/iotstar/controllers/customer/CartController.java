@@ -98,6 +98,7 @@ public class CartController {
 		    model.addAttribute("minDistance", minDistance);
 	        model.addAttribute("shippingCost", shippingCost);
 	        model.addAttribute("MaxTotalAmount", MaxTotalAmount);
+			model.addAttribute("cart",cart);
 
 			return "checkout";
 		}
