@@ -20,15 +20,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import vn.iotstar.utils.Constain;
+
 import vn.iotstar.entity.Product;
+import vn.iotstar.entity.Store;
 import vn.iotstar.services.ProductService;
+import vn.iotstar.services.StoreService;
 
 @Controller
 @RequestMapping("/admin/products")
 public class AdminProductController {
     @Autowired
     ProductService productService;
+
+    private final StoreService storeService;
+    public AdminProductController(StoreService storeService)
+    { this.storeService = storeService; }
 
     private Page<Product> getPaginatedResult(Optional<Integer> page, Optional<Integer> size, String nameFilter) {
         int currentPage = page.orElse(1);
@@ -78,6 +84,31 @@ public class AdminProductController {
         return new ModelAndView("forward:/admin/products");
     }
 
+    @PostMapping("/ban")
+    public ModelAndView banProduct(ModelMap model, @PathVariable("slug") String slugProduct) {
+        Optional<Product> optProduct = productService.findBySlug(slugProduct);
+        if (optProduct.isPresent()) {
+            Product product = optProduct.get();
+            productService.save(product);
+            model.addAttribute("product", product);
+            return new ModelAndView("admin/profile-product", model);
+        }
+        return new ModelAndView("forward:/admin/products");
+    }
+
+
+    @PostMapping("/unban/{slug}")
+    public ModelAndView unbanProduct(ModelMap model, @PathVariable("slug") String slugProduct) {
+        Optional<Product> optProduct = productService.findBySlug(slugProduct);
+        if (optProduct.isPresent()) {
+            Product product = optProduct.get();
+
+            model.addAttribute("product", product);
+            productService.save(product);
+            return new ModelAndView("admin/profile-product", model);
+        }
+        return new ModelAndView("forward:/admin/products");
+    }
 
 
     @RequestMapping("/searchpaginated")
@@ -111,14 +142,16 @@ public class AdminProductController {
 
     @GetMapping("/add")
     public String add(Model model) {
+        List<Store> store = storeService.findAll();
         Product product = new Product();
         model.addAttribute("product", product);
-        return "/admin/add-product";
+        model.addAttribute("store", store);
+        return "/admin/add";
     }
 
     @PostMapping("/insert")
     public ModelAndView insert(ModelMap model, @Valid @ModelAttribute("product") Product product,
-                               BindingResult result, @RequestParam("images") MultipartFile file) throws IOException {
+                               BindingResult result,@RequestParam("storeId") Long storeId, @RequestParam("images") MultipartFile file) throws IOException {
 
 
         String imagesFullPath = product.getImages();  // Giữ lại đường dẫn cũ
@@ -143,6 +176,8 @@ public class AdminProductController {
             file.transferTo(new File(imagesFullPath));
 
         }
+        Store store = storeService.findById(storeId).orElseThrow(() -> new IllegalArgumentException("Invalid store Id:" + storeId));
+        product.setStore(store);
         product.setImages(imagesFullPath);
         productService.save(product);
         return new ModelAndView("redirect:/admin/products", model);
@@ -155,14 +190,15 @@ public class AdminProductController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditProductForm(@PathVariable("id") Long id, Model model) {
+    public String showEditProductForm(@PathVariable Long id, Model model) {
+        List<Store> store = storeService.findAll();
         Optional<Product> optionalProduct = productService.findById(id);
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
             model.addAttribute("product", product);
+            model.addAttribute("store", store);
             return "admin/edit";
         } else {
-            // Xử lý trường hợp không tìm thấy sản phẩm
             return "redirect:/admin/products";
         }
     }
@@ -170,7 +206,7 @@ public class AdminProductController {
 
     @PostMapping("/update")
     public ModelAndView update(ModelMap model, @Valid @ModelAttribute("product") Product product,
-                               BindingResult result, @RequestParam("images") MultipartFile file) throws IOException {
+                               BindingResult result,@RequestParam("storeId") Long storeId, @RequestParam("images") MultipartFile file) throws IOException {
 
         String imagesFullPath = product.getImages();  // Giữ lại đường dẫn cũ
         if (file != null && !file.isEmpty()) {
@@ -194,6 +230,8 @@ public class AdminProductController {
             file.transferTo(new File(imagesFullPath));
 
         }
+        Store store = storeService.findById(storeId).orElseThrow(() -> new IllegalArgumentException("Invalid store Id:" + storeId));
+        product.setStore(store);
         product.setImages(imagesFullPath);
         productService.save(product);
         return new ModelAndView("redirect:/admin/products", model);

@@ -59,7 +59,6 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Images</th>
-                <th>Cấm bán</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -78,13 +77,8 @@
                              alt="User Avatar" class="img-thumbnail mb-3">
                 </td>
 
-                <td th:text="${product.isBan} ? 'Đang cấm' : 'Bình thường'"></td>
                 <td>
-                    <!-- Ban Product Form -->
-                    <form th:action="@{/admin/products/ban/{slug}(slug=${product.slug})}" method="post"
-                          style="display:inline;">
-                        <button type="submit" class="btn btn-warning">Ban</button>
-                    </form>
+
                     <form th:action="@{/admin/products/edit/{id}(id=${product.id})}" method="get"
                           style="display:inline ; ">
                         <button type="submit" class="btn btn-success">Sửa</button>
@@ -109,6 +103,8 @@
             </ul>
         </div>
     </div>
+
 </div>
+<div th:replace="/fragments/footer-admin"></div>
 </body>
 </html>
