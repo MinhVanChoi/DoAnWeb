@@ -21,7 +21,7 @@ public class Controllers {
 
     
     @GetMapping("thanhtoan/vnpay")
-    public String home(@RequestParam("totalAmount") Double totalAmount, Model model){
+    public String home(@RequestParam("MaxTotalAmount") Double totalAmount, Model model){
 
 
           // Kiểm tra và chuyển đổi để bỏ phần thập phân nếu là .0
