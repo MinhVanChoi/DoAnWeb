@@ -91,7 +91,7 @@ public class UserServiceImp implements UserService{
 		    if (user == null) {
 		        return null; 
 		    }
-		    if (password.equals(user.getPassword())) {
+		    if (password.equals(user.getPassword()) && !user.isBan()) {
 		        return user; 
 		    }
 		    return null;

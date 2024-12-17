@@ -48,15 +48,29 @@
             <div class="col-md-3">
                 <div class="card text-white bg-info">
                     <div class="card-body"><h5 class="card-title">Total Products</h5>
-                        <p class="card-text" th:text="${totalProducts}">0</p></div>
+                        <p class="card-text" th:text="${productCount}">0</p></div>
                 </div>
             </div>
+			<div class="col-md-3">
+			             <div class="card text-white bg-info">
+			                 <div class="card-body"><h5 class="card-title">Total Store</h5>
+			                     <p class="card-text" th:text="${storeCount}">0</p></div>
+			             </div>
+			         </div>
             <div class="col-md-3">
                 <div class="card text-white bg-success">
                     <div class="card-body"><h5 class="card-title">Total Users</h5>
-                        <p class="card-text" th:text="${totalUsers}">0</p></div>
+                        <p class="card-text" th:text="${userCount}">0</p></div>
                 </div>
             </div>
+			<div class="col-md-3">
+						             <div class="card text-white bg-success">
+						                 <div class="card-body"><h5 class="card-title">Doanh thu</h5>
+						                     <p class="card-text" th:text="${totalAmountSum}">0</p></div>
+						             </div>
+						         </div>
+								 
+								 
         </div>
     </div>
 </div>

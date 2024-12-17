@@ -34,7 +34,6 @@
                                     <th>Phone</th>
                                     <th>Total Amount</th>
                                     <th>Status</th>
-                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,11 +42,9 @@
                                     <td th:text="${order.id}"></td>
                                     <td th:text="${order.address}"></td>
                                     <td th:text="${order.phone}"></td>
-                                    <td th:text="${order.totalAmount}"></td>
+                                    <td th:text="${order.totalAmount}">s</td>
                                     <td th:text="${order.status}"></td>
-                                    <td>
-                                        <a th:href="@{/orders/detail/{id}(id=${order.id})}" class="btn btn-info">View Details</a>
-                                    </td>
+                            
                                 </tr>
                             </tbody>
                         </table>

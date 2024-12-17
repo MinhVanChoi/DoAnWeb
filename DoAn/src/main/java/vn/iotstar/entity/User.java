@@ -41,9 +41,8 @@ public class User {
 	private String slug;
 	private String password;
 	private String avatar;
-	private boolean isEmailActive = false;
-	private boolean isPhoneActive = false;
 	private boolean isBan = false;
+	private int role;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;

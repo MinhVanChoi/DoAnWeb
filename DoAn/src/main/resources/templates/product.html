@@ -62,24 +62,15 @@
                 <h5 th:text="${product.name}"></h5>
                 <h4 th:text="${product.price} +'vnđ'"></h4>
             </div>
-			<td>
-									<form th:action="@{/carts/add/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
-																<button type="submit" class="btn btn-warning">Cart</button>
-															</form>
-															
+			<td style="text-align: center;">
+			    <form th:action="@{/carts/add/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
+			        <button type="submit" class="btn btn-warning">Order</button>
+			    </form>
+			    <form th:action="@{/product/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
+			        <button type="submit" class="btn btn-primary">Detail</button>
+			    </form>
+			</td>
 
-									<form th:action="@{/follow-products/follow/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
-										<button type="submit" class="btn btn-info">Follow</button>
-									</form>
-
-									
-									<form th:action="@{/product/{slug}(slug=${product.slug})}" method="get" style="display:inline;">
-																<button type="submit" class="btn btn-primary">Detail</button>
-															</form>
-												
-								</td>
-			
-        </div>
     </div>
 
     <div th:if="${productPage.totalPages > 1}">

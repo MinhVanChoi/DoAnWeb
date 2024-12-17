@@ -61,6 +61,7 @@ public class CustomerOrderController {
 	@GetMapping("/add")
 	public ModelAndView order(ModelMap model, HttpSession session) {
 		User user = (User)session.getAttribute("user");
+	//	double totalamount = (double)session.getAttribute("totalAmount");
 		Optional<User> useropt = userService.findBySlug(user.getSlug());
 		user = useropt.get();
 		System.out.println(user.getId());
@@ -92,6 +93,8 @@ public class CustomerOrderController {
 			
 		return new ModelAndView("redirect:/home");
 	}
+	
+	
 }
 	
 	

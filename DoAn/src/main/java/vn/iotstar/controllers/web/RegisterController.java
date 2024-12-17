@@ -53,8 +53,7 @@ public class RegisterController {
 		newUser.setFullname(fullname);
 		newUser.setPhone(phonenumber);
 		newUser.setSlug(slug);
-		newUser.setEmailActive(true);
-		newUser.setPhoneActive(true);
+		newUser.setRole(0);
 		newUser.setBan(false);
 
 		Set<Role> roles = new HashSet<>();

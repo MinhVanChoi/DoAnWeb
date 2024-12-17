@@ -44,14 +44,15 @@ public class LoginController {
 	                            HttpSession session) {
 
 	      User user = userService.login(email, password);
-	      System.out.println(user.getFullname());
 	      if (user == null) {
 	          return "redirect:/login?error=true";
 	      }
-	      if ("admin@gmail.com".equals(email)) {
+	      
+	      if (user.getRole() == 1) {
 	          session.setAttribute("user", user); 
 	          return "redirect:/admin/home";
 	      }
+	      
 	      session.setAttribute("user", user);
 	      if (rememberMe) {
 	          saveRememberMe(response, email);

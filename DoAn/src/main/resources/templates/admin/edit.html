@@ -39,7 +39,7 @@
 <div class="sidebaradmin">
     <div th:replace="/fragments/sidebar-admin"></div>
 <div class="container mt-5">
-    <h2>Add Product</h2>
+    <h2>Edit Product</h2>
     <form th:action="@{/admin/products/update}" th:object="${product}" method="post" enctype="multipart/form-data">
 
         <input type="hidden" th:field="*{id}"/>
@@ -55,7 +55,7 @@
                  th:src="@{'/image?fname=' + ${product.images}}"
                  alt="User Avatar" class="img-thumbnail mb-3">
         </div>
-        <input type="file" id="images" name="images" class="form-control"  required/>
+        <input type="file" id="images" name="images" class="form-control"/>
         <div class="form-group">
             <label for="price">Price:</label>
             <input type="number" id="price" th:field="*{price}" name="price" step="0.01" class="form-control" required/>
